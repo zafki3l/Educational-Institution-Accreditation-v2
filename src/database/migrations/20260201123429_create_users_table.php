@@ -19,7 +19,7 @@ final class CreateUsersTable extends AbstractMigration
      */
     public function change(): void
     {
-        ($this->table('users'))
+        $this->table('users')
             ->addColumn('name', 'string')
             ->addColumn('email', 'string')
             ->addTimestamps()

@@ -7,8 +7,8 @@ $dotenv->load();
 return
 [
     'paths' => [
-        'migrations' => './src/db/migrations',
-        'seeds' => './src/db/seeds'
+        'migrations' => './src/database/migrations',
+        'seeds' => './src/database/seeds'
     ],
 
     'environments' => [
