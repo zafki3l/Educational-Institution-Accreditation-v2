@@ -11,3 +11,5 @@ $route->post('/process', [HomeController::class, 'process']);
 
 // Roles
 $route->get('/roles', [RoleController::class, 'index']);
+$route->post('/roles', [RoleController::class, 'store']);
+$route->delete('/roles/{id}', [RoleController::class, 'destroy']);
