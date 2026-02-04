@@ -12,7 +12,7 @@ services:
     build:
       context: .
       dockerfile: php/Dockerfile
-    container_name: php_app_v1
+    container_name: php_eia
     volumes:
       - ./:/var/www/html 
     depends_on:
@@ -33,10 +33,10 @@ services:
 
   mongo:
     image: mongo:7
-    container_name: mongo_v1
+    container_name: mongo_eia
     restart: always
     ports:
-      - "27018:27017"
+      - "27019:27017"
     volumes:
       - mongo_data:/data/db
 
