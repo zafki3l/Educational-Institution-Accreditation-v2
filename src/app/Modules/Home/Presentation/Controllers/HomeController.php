@@ -11,7 +11,13 @@ class HomeController extends Controller
 
     public function index()
     {
-        return $this->view('home', 'main.layouts');
+        return $this->view(
+            'homepage/main', 
+            'main.layouts',
+            [
+                'title' => 'Trang chủ | Hệ thống kiểm định minh chứng'
+            ]
+        );
     }
 
     public function click()
