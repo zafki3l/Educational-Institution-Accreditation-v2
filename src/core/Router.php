@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use App\Shared\Middlewares\CSRF_Authenticator;
 use Exception;
 
 /**
@@ -93,6 +94,13 @@ class Router
      * @param string $method
      * @return void
      */
+    /**
+     * Dispatch the request to the matched route
+     * 
+     * @param string $path
+     * @param string $method
+     * @return void
+     */
     public function dispatch(string $path, string $method): void
     {
         // Override PUT/PATCH and DELETE method
@@ -106,6 +114,18 @@ class Router
 
         [$route, $params] = $result;
 
+        $middlewares = $route['middlewares'];
+        if (!empty($middlewares)) {
+            foreach ($middlewares as $middlwareClass) {
+                $middleware = new $middlwareClass();
+                $middleware->handle();
+            }
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $middleware = new CSRF_Authenticator();
+            $middleware->handle();
+        }
 
         $action = $route['action'];
         if (is_array($action)) {

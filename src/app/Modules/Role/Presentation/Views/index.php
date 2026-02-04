@@ -1,5 +1,9 @@
+<?php
+print_r($_SESSION['CSRF-token'])
+?>
 <main>
     <form action="/roles" method="post">
+        <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
         <input type="text" name="name" placeholder="Create new role">
         <button type="submit">submit</button>
     </form>
