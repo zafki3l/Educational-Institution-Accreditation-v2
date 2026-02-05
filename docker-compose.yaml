@@ -10,6 +10,7 @@ services:
       - app
 
   app:
+    user: "${DOCKER_UID}:${DOCKER_GID}"
     build:
       context: .
       dockerfile: php/Dockerfile
