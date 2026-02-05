@@ -41,19 +41,13 @@
     border-radius: 30px;
     border: 2px solid #8db5c0;
     outline: none;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .input-group input:focus {
     border-color: #1c3e95;
 }
 
-.forgot {
-    font-size: 13px;
-    margin: 8px 0 25px;
-    color: #999;
-    cursor: pointer;
-}
 
 .login-btn {
     width: 500px;
@@ -62,7 +56,7 @@
     border: none;
     background: #1c3e95;
     color: white;
-    font-size: 15px;
+    font-size: 16   px;
     cursor: pointer;
     transition: 0.2s;
 }
@@ -72,7 +66,7 @@
 }
 
 a {
-    color: #1c3e95;
+    color: #000000;
 }
 
 /* RIGHT */

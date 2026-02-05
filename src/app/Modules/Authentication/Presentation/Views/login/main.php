@@ -38,7 +38,6 @@
         </div>
 
         <div class="right">
-            <!-- Thay link ảnh này -->
             <img src="http://localhost/assets/banner/thhazspn.png" alt="building">
         </div>
     </div>
