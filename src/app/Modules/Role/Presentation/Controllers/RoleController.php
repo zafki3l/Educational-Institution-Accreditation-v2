@@ -7,9 +7,8 @@ use App\Modules\Role\Application\UseCases\DeleteRoleUseCase;
 use App\Modules\Role\Application\UseCases\FindAllRoleUseCase;
 use App\Modules\Role\Presentation\Requests\CreateRoleRequest;
 use App\Shared\Http\Traits\HttpResponse;
-use Core\Controller;
 
-class RoleController extends Controller
+class RoleController
 {
     use HttpResponse;
 

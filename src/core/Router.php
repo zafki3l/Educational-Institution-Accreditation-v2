@@ -101,7 +101,7 @@ class Router
      * @param string $method
      * @return void
      */
-    public function dispatch(string $path, string $method): void
+    public function dispatch(string $path, string $method): Response
     {
         // Override PUT/PATCH and DELETE method
         $method = $this->overrideMethod($method);
@@ -133,11 +133,10 @@ class Router
 
             $class = App::resolve($class);
 
-            call_user_func_array([$class, $action], $params);
-            return;
+            return call_user_func_array([$class, $action], $params);
         }
 
-        call_user_func_array($action, $params);
+        return call_user_func_array($action, $params);
     }
 
     /**

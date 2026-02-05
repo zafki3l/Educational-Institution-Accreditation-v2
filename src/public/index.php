@@ -1,8 +1,11 @@
 <?php
 
+use App\Shared\Response\ViewResponse;
 use Core\Router;
+use Core\ViewRender;
 
 require_once '../configs/path.php';
+require_once '../configs/name.php';
 
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
@@ -17,4 +20,10 @@ foreach (glob(dirname(__DIR__) . '/routes/*.php') as $filename) {
     require_once $filename;
 }
 
-$route->dispatch($path, $_SERVER['REQUEST_METHOD']);
+$response = $route->dispatch($path, $_SERVER['REQUEST_METHOD']);
+
+if ($response instanceof ViewResponse) {
+    $viewRender = new ViewRender();
+
+    $viewRender->view($response);
+}

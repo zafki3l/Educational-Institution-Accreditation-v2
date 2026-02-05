@@ -3,30 +3,23 @@
 namespace App\Modules\Home\Presentation\Controllers;
 
 use App\Shared\Http\Traits\HttpResponse;
-use Core\Controller;
+use App\Shared\Response\ViewResponse;
 
-class HomeController extends Controller
+class HomeController
 {
     use HttpResponse;
 
-    public function index()
+    private const MODULE_NAME = 'Home';
+
+    public function index(): ViewResponse
     {
-        return $this->view(
+        return new ViewResponse(
+            self::MODULE_NAME,
             'homepage/main', 
             'main.layouts',
             [
-                'title' => 'Trang chủ | Hệ thống kiểm định minh chứng'
+                'title' => 'Trang chủ | ' . SYSTEM_NAME
             ]
         );
-    }
-
-    public function click()
-    {
-        return $this->view('clickme', 'main.layouts');
-    }
-
-    public function process()
-    {
-        $this->redirect('/');
     }
 }
