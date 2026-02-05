@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Role\Domain\Exceptions;
+namespace App\Modules\Role\Domain\Exception;
 
-use App\Shared\Domain\Exceptions\DomainException;
+use App\Shared\Exception\DomainException;
 
 class InvalidRoleName extends DomainException
 {

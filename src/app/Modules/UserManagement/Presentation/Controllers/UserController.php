@@ -2,6 +2,9 @@
 
 namespace App\Modules\UserManagement\Presentation\Controllers;
 
+use App\Modules\UserManagement\Application\UseCases\CreateUserUseCase;
+use App\Modules\UserManagement\Infrastructure\Models\User;
+use App\Modules\UserManagement\Presentation\Requests\CreateUserRequest;
 use App\Shared\Contracts\RoleReaderInterface;
 use App\Shared\Http\Traits\HttpResponse;
 use App\Shared\Response\ViewResponse;
@@ -12,9 +15,10 @@ class UserController
 
     private const MODULE_NAME = 'UserManagement';
 
-    public function __construct(private RoleReaderInterface $role_reader)
-    {
-    }
+    public function __construct(
+        private RoleReaderInterface $role_reader,
+        private CreateUserUseCase $createUserUseCase
+    ) {}
 
     public function index(): ViewResponse
     {
@@ -28,9 +32,10 @@ class UserController
         );
     }
 
-    public function create()
+    public function create(): ViewResponse
     {
         $roles = $this->role_reader->readAll();
+
         return new ViewResponse(
             self::MODULE_NAME, 
             'create/main', 
@@ -40,5 +45,12 @@ class UserController
                 'roles' => $roles
             ]
         );
+    }
+
+    public function store(CreateUserRequest $request)
+    {
+        $this->createUserUseCase->execute($request);
+
+        $this->redirect(ROOT_URL . '/users');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Exceptions;
+namespace App\Shared\Exception;
 
 class DomainException extends \Exception
 {

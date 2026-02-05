@@ -18,3 +18,4 @@ $route->delete('/roles/{id}', [RoleController::class, 'destroy']);
 // Users
 $route->get('/users', [UserController::class, 'index']);
 $route->get('/users/create', [UserController::class, 'create']);
+$route->post('/users', [UserController::class, 'store']);

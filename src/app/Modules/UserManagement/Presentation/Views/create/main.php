@@ -8,9 +8,8 @@
 <body>
     <h1>THÊM NGƯỜI DÙNG MỚI</h1>
 
-    <form action="" method="post">
+    <form action="<?= HOST ?>/users" method="post">
         <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
-        <input type="text" name="auth_id" placeholder="Mã xác thực">
         <input type="text" name="first_name" placeholder="Họ">
         <input type="text" name="last_name" placeholder="Tên">
         <input type="text" name="email" placeholder="Email">

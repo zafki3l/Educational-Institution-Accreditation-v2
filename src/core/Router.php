@@ -4,6 +4,7 @@ namespace Core;
 
 use App\Shared\Middlewares\CSRF_Authenticator;
 use Exception;
+use ReflectionMethod;
 
 /**
  * Class Router
@@ -122,7 +123,7 @@ class Router
             }
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE'])) {
             $middleware = new CSRF_Authenticator();
             $middleware->handle();
         }
@@ -133,10 +134,10 @@ class Router
 
             $class = App::resolve($class);
 
-            return call_user_func_array([$class, $action], $params);
+            return $this->invokeAction($class, $action, $params);
         }
 
-        return call_user_func_array($action, $params);
+        return $this->invokeClosure($action, $params);
     }
 
     /**
@@ -149,12 +150,19 @@ class Router
     private function match(string $path, string $method): mixed
     {
         foreach ($this->routes[$method] as $route => $callback) {
+            preg_match_all('#\{([^/]+)\}#', $route, $paramNames);
+
             $pattern = preg_replace('#\{[^/]+\}#', '([^/]+)', $route);
 
             if (preg_match("#^$pattern$#", $path, $matches)) {
                 array_shift($matches);
 
-                return [$callback, $matches];
+                $params = [];
+                foreach ($paramNames[1] as $i => $name) {
+                    $params[$name] = $matches[$i];
+                }
+
+                return [$callback, $params];
             }
         }
 
@@ -185,5 +193,64 @@ class Router
     private function isAllowedMethod(string $override): bool
     {
         return $override === 'PUT' || $override === 'DELETE' || $override === 'PATCH';
+    }
+
+    private function invokeAction(object $controller, string $method, array $routeParams): mixed
+    {
+        if (!method_exists($controller, $method)) {
+            throw new Exception("Method $method not found in " . $controller::class);
+        }
+
+        $reflection = new ReflectionMethod($controller, $method);
+        $dependencies = [];
+
+        foreach ($reflection->getParameters() as $param) {
+            $type = $param->getType();
+            $name = $param->getName();
+
+            // Class → container
+            if ($type && !$type->isBuiltin()) {
+                $dependencies[] = App::resolve($type->getName());
+            }
+            // Route param theo tên
+            elseif (isset($routeParams[$name])) {
+                $dependencies[] = $routeParams[$name];
+            }
+            // Default value
+            elseif ($param->isDefaultValueAvailable()) {
+                $dependencies[] = $param->getDefaultValue();
+            }
+            else {
+                throw new Exception("Cannot resolve parameter \${$name}");
+            }
+        }
+
+        return $reflection->invokeArgs($controller, $dependencies);
+    }
+
+    private function invokeClosure(callable $closure, array $routeParams): mixed
+    {
+        $reflection = new \ReflectionFunction($closure);
+        $dependencies = [];
+
+        foreach ($reflection->getParameters() as $param) {
+            $type = $param->getType();
+            $name = $param->getName();
+
+            if ($type && !$type->isBuiltin()) {
+                $dependencies[] = App::resolve($type->getName());
+            }
+            elseif (isset($routeParams[$name])) {
+                $dependencies[] = $routeParams[$name];
+            }
+            elseif ($param->isDefaultValueAvailable()) {
+                $dependencies[] = $param->getDefaultValue();
+            }
+            else {
+                throw new Exception("Cannot resolve parameter \${$name}");
+            }
+        }
+
+        return $closure(...$dependencies);
     }
 }
