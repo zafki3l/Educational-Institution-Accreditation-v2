@@ -7,10 +7,13 @@ use App\Modules\Role\Application\UseCases\DeleteRoleUseCase;
 use App\Modules\Role\Application\UseCases\FindAllRoleUseCase;
 use App\Modules\Role\Presentation\Requests\CreateRoleRequest;
 use App\Shared\Http\Traits\HttpResponse;
+use App\Shared\Response\ViewResponse;
 
 class RoleController
 {
     use HttpResponse;
+
+    public const MODULE_NAME = 'Role';
 
     public function __construct(
         private FindAllRoleUseCase $findAllRoleUseCase,
@@ -22,10 +25,15 @@ class RoleController
     {
         $roles = $this->findAllRoleUseCase->execute();
 
-        return $this->view('index', 'main.layouts', [
-            'title' => 'roles',
-            'roles' => $roles
-        ]);
+        return new ViewResponse(
+            self::MODULE_NAME,
+            'index', 
+            'main.layouts', 
+            [
+                'title' => 'roles',
+                'roles' => $roles
+            ]
+        );
     }
 
     public function store(): void

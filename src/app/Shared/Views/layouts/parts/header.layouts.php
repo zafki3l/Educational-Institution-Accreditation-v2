@@ -4,7 +4,7 @@
             <li>
                 <img src="http://localhost/assets/icon/fbu.png">
             </li>
-            <li><a href="">Trang chủ</a></li>
+            <li><a href="<?= HOST ?>">Trang chủ</a></li>
             <li><a href="">Tìm kiếm minh chứng</a></li>
 
             <li><a href="">Admin Dashboard</a></li> <!--show dashboard for admin-->
@@ -21,7 +21,7 @@
                 <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
                 <input type="hidden" name="logout" value="1">
             </form>
-            <li><a href="">Đăng nhập</a></li>
+            <li><a href="<?= HOST ?>/login">Đăng nhập</a></li>
         </ul>
     </div>
 </header>

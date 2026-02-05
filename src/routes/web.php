@@ -1,14 +1,13 @@
 <?php
 
+use App\Modules\Authentication\Presentation\Controllers\AuthController;
 use App\Modules\Home\Presentation\Controllers\HomeController;
 use App\Modules\Role\Presentation\Controllers\RoleController;
 use App\Modules\UserManagement\Presentation\Controllers\UserController;
 
 $route->get('/', [HomeController::class, 'index']);
 
-$route->get('/clickme', [HomeController::class, 'click']);
-
-$route->post('/process', [HomeController::class, 'process']);
+$route->get('/login', [AuthController::class, 'showLogin']);
 
 // Roles
 $route->get('/roles', [RoleController::class, 'index']);
