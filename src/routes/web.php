@@ -8,6 +8,7 @@ use App\Modules\UserManagement\Presentation\Controllers\UserController;
 $route->get('/', [HomeController::class, 'index']);
 
 $route->get('/login', [AuthController::class, 'showLogin']);
+$route->post('/login', [AuthController::class, 'login']);
 
 // Roles
 $route->get('/roles', [RoleController::class, 'index']);
@@ -18,3 +19,4 @@ $route->delete('/roles/{id}', [RoleController::class, 'destroy']);
 $route->get('/users', [UserController::class, 'index']);
 $route->get('/users/create', [UserController::class, 'create']);
 $route->post('/users', [UserController::class, 'store']);
+$route->get('/user/{id}', [UserController::class, 'edit']);

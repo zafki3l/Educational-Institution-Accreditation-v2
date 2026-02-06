@@ -2,6 +2,7 @@
 
 namespace App\Modules\Authentication\Presentation\Controllers;
 
+use App\Modules\Authentication\Presentation\Requests\LoginRequest;
 use App\Shared\Http\Traits\HttpResponse;
 use App\Shared\Response\ViewResponse;
 
@@ -23,8 +24,8 @@ class AuthController
         );
     }
 
-    public function login()
+    public function login(LoginRequest $request)
     {
-
+        
     }
 }

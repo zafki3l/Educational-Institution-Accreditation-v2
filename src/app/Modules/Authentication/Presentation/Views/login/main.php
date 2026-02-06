@@ -25,6 +25,7 @@
             <br>
             <br>
             <form method="POST" action="/login">
+                <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
                 <div class="input-group">
                     <input type="text" name="auth_id" placeholder="Nhập mã xác thực" required>
                 </div>

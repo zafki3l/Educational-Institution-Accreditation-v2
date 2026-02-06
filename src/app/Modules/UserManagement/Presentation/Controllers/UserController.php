@@ -53,4 +53,16 @@ class UserController
 
         $this->redirect(ROOT_URL . '/users');
     }
+
+    public function edit()
+    {
+        return new ViewResponse(
+            self::MODULE_NAME,
+            'update/main',
+            'main.layouts',
+            [
+                'title' => 'Cập nhật người dùng | ' . SYSTEM_NAME
+            ]
+        );
+    }
 }
