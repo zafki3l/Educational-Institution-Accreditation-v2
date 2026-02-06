@@ -19,10 +19,20 @@
         }
     },
 
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+
     "scripts": {
         "phinx": "phinx",
         "migrate": "phinx migrate",
         "rollback": "phinx rollback",
-        "create-migration": "phinx create"
+        "create-migration": "phinx create",
+        "test": "vendor/bin/phpunit"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
     }
 }

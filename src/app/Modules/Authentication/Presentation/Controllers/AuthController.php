@@ -53,7 +53,7 @@ class AuthController
         $this->redirect(HOST . '/users');
     }
 
-    public function logout()
+    public function logout(): void
     {
         $this->logoutUseCase->execute();
 

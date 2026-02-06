@@ -28,5 +28,3 @@ if ($response instanceof ViewResponse) {
 
     $viewRender->view($response);
 }
-
-print_r($_SESSION['auth_user']);

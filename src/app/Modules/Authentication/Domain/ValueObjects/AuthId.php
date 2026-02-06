@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Authentication\Domain\ValueObject;
+namespace App\Modules\Authentication\Domain\ValueObjects;
 
 class AuthId 
 {

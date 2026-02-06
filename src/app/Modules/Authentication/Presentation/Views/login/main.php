@@ -47,7 +47,7 @@
         </div>
 
         <div class="right">
-            <img src="http://localhost/assets/banner/thhazspn.png" alt="building">
+            <img src="<?= HOST ?>/assets/banner/thhazspn.png">
         </div>
     </div>
 
