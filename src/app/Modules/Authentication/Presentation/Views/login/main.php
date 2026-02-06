@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link rel="stylesheet" href="<?= HOST ?>/css/login/main.css">
+    <link rel="stylesheet" href="<?= HOST ?>/css/login/error.css">
 </head>
 
 <body>
@@ -27,15 +28,22 @@
             <form method="POST" action="/login">
                 <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
                 <div class="input-group">
-                    <input type="text" name="auth_id" placeholder="Nhập mã xác thực" required>
+                    <input type="text" name="auth_id" placeholder="Nhập mã xác thực">
                 </div>
 
                 <div class="input-group">
-                    <input type="password" name="password" placeholder="Nhập mật khẩu" required>
+                    <input type="password" name="password" placeholder="Nhập mật khẩu">
                 </div>
                 <br>
                 <button class="login-btn">ĐĂNG NHẬP</button>
             </form>
+
+            <?php if (!empty($_SESSION['login_errors'])): ?>
+                <div class="error-msg">
+                    <?= htmlspecialchars($_SESSION['login_errors']) ?>
+                </div>
+                <?php unset($_SESSION['login_errors']); ?>
+            <?php endif; ?>
         </div>
 
         <div class="right">

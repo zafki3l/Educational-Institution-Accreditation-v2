@@ -6,6 +6,7 @@ use Core\ViewRender;
 
 require_once '../configs/path.php';
 require_once '../configs/name.php';
+require_once '../helpers/authHelper.php';
 
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
 
@@ -27,3 +28,5 @@ if ($response instanceof ViewResponse) {
 
     $viewRender->view($response);
 }
+
+print_r($_SESSION['auth_user']);
