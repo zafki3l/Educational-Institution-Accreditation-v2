@@ -14,14 +14,17 @@
 
         <ul class="right-nav">
             <li><a href="">Tài khoản của tôi</a></li>
-            <li>
-                <a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">Đăng xuất</a>
-            </li>
-            <form id="logoutForm" action="" method="post" style="display:none;">
-                <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
-                <input type="hidden" name="logout" value="1">
-            </form>
-            <li><a href="<?= HOST ?>/login">Đăng nhập</a></li>
+            <?php if (isAuth()): ?>
+                <li>
+                    <a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">Đăng xuất</a>
+                </li>
+                <form id="logoutForm" action="<?= HOST ?>/logout" method="post" style="display:none;">
+                    <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
+                    <input type="hidden" name="logout" value="1">
+                </form>
+            <?php else: ?>
+                <li><a href="<?= HOST ?>/login">Đăng nhập</a></li>
+            <?php endif; ?>
         </ul>
     </div>
 </header>

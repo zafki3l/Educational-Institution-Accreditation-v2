@@ -9,16 +9,29 @@ class AuthSession
      * @param array $db_user
      * @return array{department_id: mixed, email: mixed, first_name: mixed, gender: mixed, last_name: mixed, role_id: mixed, user_id: mixed}
      */
-    public function set(array $db_user): array
+    public static function set(array $data = []): void
     {
-        return [
-            'user_id' => $db_user[0]['id'],
-            'first_name' => $db_user[0]['first_name'],
-            'last_name' => $db_user[0]['last_name'],
-            'email' => $db_user[0]['email'],
-            'gender' => $db_user[0]['gender'],
-            'role_id' => $db_user[0]['role_id'],
-            'department_id' => $db_user[0]['department_id']
-        ];
+        $_SESSION['auth_user'] = $data; 
+    }
+
+    public static function clear(): void
+    {
+        $_SESSION = [];
+
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+        session_regenerate_id(true);
+        session_destroy();
     }
 }

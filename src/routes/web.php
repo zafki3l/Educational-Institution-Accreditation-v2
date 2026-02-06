@@ -9,6 +9,7 @@ $route->get('/', [HomeController::class, 'index']);
 
 $route->get('/login', [AuthController::class, 'showLogin']);
 $route->post('/login', [AuthController::class, 'login']);
+$route->post('/logout', [AuthController::class, 'logout']);
 
 // Roles
 $route->get('/roles', [RoleController::class, 'index']);
