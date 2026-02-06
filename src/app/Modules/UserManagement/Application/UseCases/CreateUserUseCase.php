@@ -2,7 +2,7 @@
 
 namespace App\Modules\UserManagement\Application\UseCases;
 
-use App\Modules\Authentication\Domain\ValueObject\AuthId;
+use App\Modules\Authentication\Domain\ValueObjects\AuthId;
 use App\Modules\Role\Domain\Repositories\RoleRepositoryInterface;
 use App\Modules\Role\Infrastructure\Models\Role;
 use App\Modules\UserManagement\Application\Requests\CreateUserRequestInterface;

@@ -2,7 +2,7 @@
 
 namespace App\Modules\Authentication\Domain\Entities;
 
-use App\Modules\Authentication\Domain\ValueObject\AuthId;
+use App\Modules\Authentication\Domain\ValueObjects\AuthId;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
 
