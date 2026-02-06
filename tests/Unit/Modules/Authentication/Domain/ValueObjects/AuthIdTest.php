@@ -22,4 +22,14 @@ class AuthIdTest extends TestCase
 
         $this->assertNotEmpty($authId->value());
     }
+
+    public function testTwoSameIdsAreEqual(): void
+    {
+        $id = AuthId::generate()->value();
+
+        $id1 = AuthId::fromString($id);
+        $id2 = AuthId::fromString($id);
+
+        $this->assertTrue($id1->value() == $id2->value());
+    }
 }
