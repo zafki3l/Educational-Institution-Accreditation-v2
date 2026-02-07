@@ -41,12 +41,12 @@ You should see:
 
 6. Run 'composer install' to install dependencies
 ```bash
-var/www/html $ composer install
+composer install
 ```
 
 7. Run 'composer migrate' to create database
 ```bash
-var/www/html $ composer migrate
+composer migrate
 ```
 
 After setup, open your browser:
