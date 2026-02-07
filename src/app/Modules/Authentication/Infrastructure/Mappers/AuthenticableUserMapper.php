@@ -8,7 +8,7 @@ use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
 use App\Modules\UserManagement\Infrastructure\Models\User as ModelsUser;
 
-class AuthenticableUserMapper
+final class AuthenticableUserMapper
 {
     public static function toDomain(ModelsUser $user): AuthenticableUser
     {

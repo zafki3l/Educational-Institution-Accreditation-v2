@@ -7,7 +7,7 @@ use App\Modules\Authentication\Domain\Repositories\AuthenticableUserRepositoryIn
 use App\Modules\Authentication\Infrastructure\Mappers\AuthenticableUserMapper;
 use App\Modules\UserManagement\Infrastructure\Models\User as ModelsUser;
 
-class AuthenticableUserRepository implements AuthenticableUserRepositoryInterface
+final class AuthenticableUserRepository implements AuthenticableUserRepositoryInterface
 {
     public function findByAuthId(string $auth_id): ?AuthenticableUser
     {

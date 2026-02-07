@@ -1,15 +1,16 @@
 <?php
 
-use App\Modules\Authentication\Presentation\Controllers\AuthController;
+use App\Modules\Authentication\Presentation\Controllers\LoginController;
+use App\Modules\Authentication\Presentation\Controllers\LogoutController;
 use App\Modules\Home\Presentation\Controllers\HomeController;
 use App\Modules\Role\Presentation\Controllers\RoleController;
 use App\Modules\UserManagement\Presentation\Controllers\UserController;
 
 $route->get('/', [HomeController::class, 'index']);
 
-$route->get('/login', [AuthController::class, 'showLogin']);
-$route->post('/login', [AuthController::class, 'login']);
-$route->post('/logout', [AuthController::class, 'logout']);
+$route->get('/login', [LoginController::class, 'showLogin']);
+$route->post('/login', [LoginController::class, 'login']);
+$route->post('/logout', [LogoutController::class, 'logout']);
 
 // Roles
 $route->get('/roles', [RoleController::class, 'index']);

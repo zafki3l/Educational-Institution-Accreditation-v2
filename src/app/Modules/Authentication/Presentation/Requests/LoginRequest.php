@@ -4,7 +4,7 @@ namespace App\Modules\Authentication\Presentation\Requests;
 
 use App\Modules\Authentication\Application\Requests\LoginRequestInterface;
 
-class LoginRequest implements LoginRequestInterface
+final class LoginRequest implements LoginRequestInterface
 {
     private string $auth_id;
     private string $password;

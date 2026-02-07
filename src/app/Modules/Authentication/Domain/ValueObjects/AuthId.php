@@ -2,7 +2,7 @@
 
 namespace App\Modules\Authentication\Domain\ValueObjects;
 
-class AuthId 
+final class AuthId 
 {
     private string $value;
 

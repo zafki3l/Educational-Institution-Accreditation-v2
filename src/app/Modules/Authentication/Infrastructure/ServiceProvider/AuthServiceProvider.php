@@ -9,7 +9,7 @@ use App\Modules\Authentication\Presentation\Requests\LoginRequest;
 use Core\ServiceProvider;
 use Illuminate\Container\Container;
 
-class AuthServiceProvider extends ServiceProvider
+final class AuthServiceProvider extends ServiceProvider
 {
     public function register(Container $container): void
     {
