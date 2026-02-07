@@ -29,14 +29,27 @@ DOCKER_UID=1000 # Run `id -u` to get your user id
 docker compose up -d --build
 ```
 
-5. Install packages
+5. Enter application container
 ```bash
 docker compose exec app sh
-composer install
+```
+You should see:
+```bash
+/var/www/html $
 ```
 
-6. Run migrate to create database
+
+6. Run 'composer install' to install dependencies
 ```bash
-docker compose exec app sh
-composer migrate
+var/www/html $ composer install
+```
+
+7. Run 'composer migrate' to create database
+```bash
+var/www/html $ composer migrate
+```
+
+After setup, open your browser:
+```bash 
+http://localhost
 ```
