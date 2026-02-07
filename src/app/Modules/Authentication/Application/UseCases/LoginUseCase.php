@@ -7,7 +7,7 @@ use App\Modules\Authentication\Domain\Entities\AuthenticableUser;
 use App\Modules\Authentication\Domain\Repositories\AuthenticableUserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 
-class LoginUseCase
+final class LoginUseCase
 {
     /**
      * Using fake hash to prevents timing attacks
