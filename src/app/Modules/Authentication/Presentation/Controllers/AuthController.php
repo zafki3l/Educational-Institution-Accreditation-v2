@@ -8,5 +8,5 @@ abstract class AuthController
 {
     use HttpResponse;
 
-    public const MODULE_NAME = 'Authentication';
+    protected const MODULE_NAME = 'Authentication';
 }

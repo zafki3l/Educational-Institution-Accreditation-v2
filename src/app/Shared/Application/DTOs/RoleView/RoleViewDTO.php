@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\DTOs\RoleView;
+namespace App\Shared\Application\DTOs\RoleView;
 
 class RoleViewDTO
 {
