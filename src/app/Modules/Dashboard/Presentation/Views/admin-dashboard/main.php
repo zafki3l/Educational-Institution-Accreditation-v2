@@ -50,108 +50,6 @@
     <main class="min-h-screen flex flex-col">
         <div class="flex-1 p-8">
             <div class="max-w-[1600px] mx-auto space-y-8">
-                <section>
-                    <div class="flex justify-between items-end mb-6">
-                        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400">Thống kê hệ thống</h2>
-                        <div class="flex space-x-2">
-                            <button class="px-3 py-1.5 text-xs font-medium bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 transition-colors">7 ngày qua</button>
-                            <button class="px-3 py-1.5 text-xs font-medium bg-primary text-white rounded-lg">Tháng này</button>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-                        <div class="xl:col-span-2 bg-white dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="flex justify-between items-center mb-8">
-                                <div>
-                                    <h3 class="font-bold text-lg">Hiệu suất tổ chức</h3>
-                                    <p class="text-sm text-slate-500">Tỉ lệ hoàn thành công việc theo tuần</p>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-2xl font-bold text-primary">+12.5%</span>
-                                    <p class="text-xs text-emerald-500 font-medium">Tăng so với tháng trước</p>
-                                </div>
-                            </div>
-                            <div class="flex items-end justify-between h-48 gap-4 px-2">
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-primary/20 w-full h-full absolute"></div>
-                                        <div class="bg-primary w-full h-[65%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 2</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-primary/20 w-full h-full absolute"></div>
-                                        <div class="bg-primary w-full h-[45%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 3</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-primary/20 w-full h-full absolute"></div>
-                                        <div class="bg-primary w-full h-[85%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 4</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-primary/20 w-full h-full absolute"></div>
-                                        <div class="bg-primary w-full h-[70%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 5</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-primary/20 w-full h-full absolute"></div>
-                                        <div class="bg-primary w-full h-[95%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 6</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-slate-200 dark:bg-slate-700 w-full h-[30%] rounded-t-lg transition-all duration-500"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 7</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-slate-200 dark:bg-slate-700 w-full h-[25%] rounded-t-lg transition-all duration-500"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">CN</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-white dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
-                            <h3 class="font-bold text-lg mb-1">Minh chứng đánh giá</h3>
-                            <p class="text-sm text-slate-500 mb-8">Trạng thái phê duyệt tài liệu</p>
-                            <div class="flex-1 flex flex-col items-center justify-center">
-                                <div class="relative w-40 h-40 mb-6">
-                                    <svg class="w-full h-full transform -rotate-90">
-                                        <circle class="text-slate-100 dark:text-slate-800" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
-                                        <circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="439.8" stroke-dashoffset="110" stroke-linecap="round" stroke-width="12"></circle>
-                                    </svg>
-                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span class="text-3xl font-bold">75%</span>
-                                        <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Hoàn tất</span>
-                                    </div>
-                                </div>
-                                <div class="w-full grid grid-cols-3 gap-2">
-                                    <div class="text-center">
-                                        <p class="text-xs text-slate-500">Duyệt</p>
-                                        <p class="font-bold text-primary">106</p>
-                                    </div>
-                                    <div class="text-center border-x border-slate-100 dark:border-slate-800">
-                                        <p class="text-xs text-slate-500">Chờ</p>
-                                        <p class="font-bold">24</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="text-xs text-slate-500">Từ chối</p>
-                                        <p class="font-bold text-red-500">12</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
                 <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div class="group bg-white dark:bg-card-dark rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
                         <div class="p-8">
@@ -255,56 +153,110 @@
                         </div>
                     </div>
                 </section>
-                <section class="bg-white dark:bg-card-dark rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
-                    <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
-                        <h2 class="font-bold text-lg">Hoạt động gần đây</h2>
-                        <button class="text-primary text-sm font-semibold hover:underline">Xem tất cả</button>
+                
+                <section>
+                    <div class="flex justify-between items-end mb-6">
+                        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400">Thống kê hệ thống</h2>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1.5 text-xs font-medium bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 transition-colors">7 ngày qua</button>
+                            <button class="px-3 py-1.5 text-xs font-medium bg-primary text-white rounded-lg">Tháng này</button>
+                        </div>
                     </div>
-                    <div class="divide-y divide-slate-100 dark:divide-slate-800">
-                        <div class="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
-                                    <span class="material-symbols-outlined">person_add</span>
-                                </div>
+                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                        <div class="xl:col-span-2 bg-white dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                            <div class="flex justify-between items-center mb-8">
                                 <div>
-                                    <p class="text-sm font-bold">Nguyễn Văn A đã tham gia hệ thống</p>
-                                    <p class="text-xs text-slate-500 mt-0.5">Phòng Đào tạo • Gán vai trò: Giảng viên</p>
+                                    <h3 class="font-bold text-lg">Hiệu suất tổ chức</h3>
+                                    <p class="text-sm text-slate-500">Tỉ lệ hoàn thành công việc theo tuần</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-2xl font-bold text-primary">+12.5%</span>
+                                    <p class="text-xs text-emerald-500 font-medium">Tăng so với tháng trước</p>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <span class="text-xs font-medium text-slate-400">2 phút trước</span>
+                            <div class="flex items-end justify-between h-48 gap-4 px-2">
+                                <div class="flex-1 flex flex-col items-center space-y-3 group">
+                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
+                                        <div class="bg-primary/20 w-full h-full absolute"></div>
+                                        <div class="bg-primary w-full h-[65%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 2</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center space-y-3 group">
+                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
+                                        <div class="bg-primary/20 w-full h-full absolute"></div>
+                                        <div class="bg-primary w-full h-[45%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 3</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center space-y-3 group">
+                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
+                                        <div class="bg-primary/20 w-full h-full absolute"></div>
+                                        <div class="bg-primary w-full h-[85%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 4</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center space-y-3 group">
+                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
+                                        <div class="bg-primary/20 w-full h-full absolute"></div>
+                                        <div class="bg-primary w-full h-[70%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 5</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center space-y-3 group">
+                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
+                                        <div class="bg-primary/20 w-full h-full absolute"></div>
+                                        <div class="bg-primary w-full h-[95%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 6</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center space-y-3 group">
+                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
+                                        <div class="bg-slate-200 dark:bg-slate-700 w-full h-[30%] rounded-t-lg transition-all duration-500"></div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 7</span>
+                                </div>
+                                <div class="flex-1 flex flex-col items-center space-y-3 group">
+                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
+                                        <div class="bg-slate-200 dark:bg-slate-700 w-full h-[25%] rounded-t-lg transition-all duration-500"></div>
+                                    </div>
+                                    <span class="text-[10px] text-slate-400 font-medium uppercase">CN</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600">
-                                    <span class="material-symbols-outlined">upload_file</span>
+                        <div class="bg-white dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
+                            <h3 class="font-bold text-lg mb-1">Minh chứng đánh giá</h3>
+                            <p class="text-sm text-slate-500 mb-8">Trạng thái phê duyệt tài liệu</p>
+                            <div class="flex-1 flex flex-col items-center justify-center">
+                                <div class="relative w-40 h-40 mb-6">
+                                    <svg class="w-full h-full transform -rotate-90">
+                                        <circle class="text-slate-100 dark:text-slate-800" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
+                                        <circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="439.8" stroke-dashoffset="110" stroke-linecap="round" stroke-width="12"></circle>
+                                    </svg>
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span class="text-3xl font-bold">75%</span>
+                                        <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Hoàn tất</span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-sm font-bold">Cập nhật minh chứng tiêu chuẩn 4.2</p>
-                                    <p class="text-xs text-slate-500 mt-0.5">Trần Thị B • Tiêu chuẩn đào tạo nghề nghiệp</p>
+                                <div class="w-full grid grid-cols-3 gap-2">
+                                    <div class="text-center">
+                                        <p class="text-xs text-slate-500">Duyệt</p>
+                                        <p class="font-bold text-primary">106</p>
+                                    </div>
+                                    <div class="text-center border-x border-slate-100 dark:border-slate-800">
+                                        <p class="text-xs text-slate-500">Chờ</p>
+                                        <p class="font-bold">24</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <p class="text-xs text-slate-500">Từ chối</p>
+                                        <p class="font-bold text-red-500">12</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-xs font-medium text-slate-400">1 giờ trước</span>
-                            </div>
-                        </div>
-                        <div class="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center text-amber-600">
-                                    <span class="material-symbols-outlined">warning</span>
-                                </div>
-                                <div>
-                                    <p class="text-sm font-bold">Cảnh báo hệ thống: Lưu trữ sắp đầy</p>
-                                    <p class="text-xs text-slate-500 mt-0.5">Dung lượng sử dụng đạt ngưỡng 92%</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-xs font-medium text-slate-400">5 giờ trước</span>
                             </div>
                         </div>
                     </div>
                 </section>
+                
             </div>
         </div>
     </main>
