@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Shared\Mappers\RoleView;
+namespace App\Shared\Application\Mappers\RoleViewDTO;
 
 use App\Modules\Role\Infrastructure\Models\Role as ModelsRole;
-use App\Shared\DTOs\RoleView\RoleViewDTO;
+use App\Shared\Application\DTOs\RoleView\RoleViewDTO;
 
 class RoleViewDTOMapper
 {

@@ -23,11 +23,11 @@ print_r($_SESSION['CSRF-token'])
         <tbody>
             <?php foreach ($roles as $role): ?>
                 <tr>
-                    <td><?= htmlspecialchars($role->getId()) ?></td>
-                    <td><?= htmlspecialchars($role->getName()) ?></td>
+                    <td><?= htmlspecialchars($role->id) ?></td>
+                    <td><?= htmlspecialchars($role->name) ?></td>
                     <td><a href="">Edit</a></td>
                     <td>
-                        <form action="/roles/<?= $role->getId() ?>" method="post">
+                        <form action="/roles/<?= $role->id ?>" method="post">
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit">Delete</button>
                         </form>
