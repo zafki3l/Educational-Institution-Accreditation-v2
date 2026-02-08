@@ -29,7 +29,7 @@ final class CreateUserController extends UserController
         );
     }
 
-    public function store(CreateUserRequest $request)
+    public function store(CreateUserRequest $request): void
     {
         $this->createUserUseCase->execute($request);
 

@@ -5,16 +5,16 @@ namespace App\Modules\Role\Infrastructure\Mappers;
 use App\Modules\Role\Domain\Entities\Role as EntitiesRole;
 use App\Modules\Role\Infrastructure\Models\Role as ModelsRole;
 
-class RoleMapper
+final class RoleMapper
 {
-    public static function toDomain(ModelsRole $role): EntitiesRole
+    public static function toDomain(ModelsRole $modelsRole): EntitiesRole
     {
-        $entitiesRole = new EntitiesRole();
+        $entitiesRole = EntitiesRole::create(
+            $modelsRole->name
+        );
 
-        $entitiesRole
-            ->setId($role->id)
-            ->setName($role->name);
-        
+        $entitiesRole->assignId($modelsRole->id);
+
         return $entitiesRole;
     }
 

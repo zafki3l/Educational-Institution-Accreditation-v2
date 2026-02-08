@@ -4,7 +4,7 @@ namespace App\Modules\Role\Application\UseCases;
 
 use App\Modules\Role\Domain\Repositories\RoleRepositoryInterface;
 
-class DeleteRoleUseCase
+final class DeleteRoleUseCase
 {
     public function __construct(private RoleRepositoryInterface $repository) {}
 

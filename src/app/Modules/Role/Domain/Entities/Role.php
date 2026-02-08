@@ -2,32 +2,38 @@
 
 namespace App\Modules\Role\Domain\Entities;
 
+use App\Modules\Role\Domain\Exception\EmptyRoleNameException;
+
 class Role
 {
-    private int $id;
-    private string $name;
+    private ?int $id;
 
-    public function getId(): int {return $this->id;}
-
-	public function getName(): string {return $this->name;}
-
-    public function setId(int $id): self {$this->id = $id; return $this;}
-
-	public function setName(string $name): self {$this->name = $name; return $this;}
-
-    public function isAdmin(): bool
-    {
-        return strtolower($this->name) === 'admin';
+    private function __construct(
+        ?int $id,
+        private string $name
+    ) {
+        $this->id = $id;
     }
 
-    public function isStaff(): bool
+    public static function create(string $name): self
     {
-        if (self::isAdmin()) {
-            return true;
-        } else if (strtolower($this->name) === 'staff') {
-            return true;
-        } else {
-            return false;
+        if (empty($name)) {
+            throw new EmptyRoleNameException();
         }
+
+        return new self(null, $name);
     }
+
+    public function assignId(int $id): void
+    {
+        if ($this->id !== null) {
+            throw new \LogicException('ID already assigned');
+        }
+
+        $this->id = $id;
+    }
+
+    public function getId(): ?int { return $this->id; }
+
+    public function getName(): string { return $this->name; }
 }

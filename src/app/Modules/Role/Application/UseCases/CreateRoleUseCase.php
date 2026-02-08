@@ -7,7 +7,7 @@ use App\Modules\Role\Domain\Entities\Role;
 use App\Modules\Role\Domain\Repositories\RoleRepositoryInterface;
 use App\Shared\Infrastructure\MongoDBConnection;
 
-class CreateRoleUseCase
+final class CreateRoleUseCase
 {
     public function __construct(private RoleRepositoryInterface $repository)
     {
@@ -16,25 +16,8 @@ class CreateRoleUseCase
 
     public function execute(CreateRoleRequestInterface $request): void
     {
-        $this->repository->create($this->buildEntity($request));
+        $role = Role::create($request->getName());
 
-        $mongo = new MongoDBConnection();
-        
-        $db = $mongo->getDatabase('library');
-        $collection = $db->logs;
-
-        $collection->insertOne([
-            'event' => 'role_created',
-            'time' => date('c')
-        ]);
-    }
-
-    private function buildEntity(CreateRoleRequestInterface $request): Role
-    {
-        $role = new Role();
-
-        $role->setName($request->getName());
-
-        return $role;
+        $this->repository->create($role);
     }
 }
