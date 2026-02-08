@@ -4,7 +4,7 @@ namespace App\Modules\Role\Presentation\Requests;
 
 use App\Modules\Role\Application\Requests\CreateRoleRequestInterface;
 
-class CreateRoleRequest implements CreateRoleRequestInterface
+final class CreateRoleRequest implements CreateRoleRequestInterface
 {
     private string $name;
 

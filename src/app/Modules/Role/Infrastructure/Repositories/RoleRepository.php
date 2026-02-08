@@ -7,7 +7,7 @@ use App\Modules\Role\Domain\Repositories\RoleRepositoryInterface;
 use App\Modules\Role\Infrastructure\Mappers\RoleMapper;
 use App\Modules\Role\Infrastructure\Models\Role as ModelsRole;
 
-class RoleRepository implements RoleRepositoryInterface
+final class RoleRepository implements RoleRepositoryInterface
 {
     public function findOrFail(int $id): EntitiesRole
     {

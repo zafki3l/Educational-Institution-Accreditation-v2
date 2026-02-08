@@ -11,7 +11,7 @@ use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use Core\ServiceProvider;
 use Illuminate\Container\Container;
 
-class RoleServiceProvider extends ServiceProvider
+final class RoleServiceProvider extends ServiceProvider
 {
     public function register(Container $container): void
     {

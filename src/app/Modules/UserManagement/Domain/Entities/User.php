@@ -17,7 +17,7 @@ class User
         private string $last_name,
         private Email $email,
         private Password $password,
-        private Role $role
+        private int $role_id
     ) {}
 
     public static function create(
@@ -27,9 +27,9 @@ class User
         string $last_name,
         Email $email,
         Password $password,
-        Role $role
+        int $role_id
     ): self {
-        return new self($id, $auth_id, $first_name, $last_name, $email, $password, $role);
+        return new self($id, $auth_id, $first_name, $last_name, $email, $password, $role_id);
     }
 
     public function getUserId(): UserId
@@ -67,9 +67,9 @@ class User
         return $this->password;
     }
 
-    public function getRole(): Role
+    public function getRoleId(): int
     {
-        return $this->role;
+        return $this->role_id;
     }
 
     public function changeAuthId(AuthId $auth_id): void
@@ -97,18 +97,8 @@ class User
         $this->password = $password;
     }
 
-    public function changeRole(Role $role): void
+    public function changeRole(int $role_id): void
     {
-        $this->role = $role;
-    }
-
-    public function isAdmin(): bool
-    {
-        return $this->role->isAdmin();
-    }
-
-    public function isStaff(): bool
-    {
-        return $this->role->isStaff();
+        $this->role_id = $role_id;
     }
 }

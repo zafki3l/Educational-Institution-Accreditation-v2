@@ -6,7 +6,7 @@ use App\Modules\Role\Infrastructure\Models\Role;
 use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use App\Shared\Application\Mappers\RoleViewDTO\RoleViewDTOMapper;
 
-class RoleReader implements RoleReaderInterface
+final class RoleReader implements RoleReaderInterface
 {
     public function all(): array
     {
