@@ -1,266 +1,151 @@
 <!DOCTYPE html>
-<html class="light" lang="vi">
-
+<html lang="vi">
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Professional Admin Management Dashboard</title>
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#1e40af",
-                        "background-light": "#f8fafc",
-                        "background-dark": "#0f172a",
-                        "card-light": "#ffffff",
-                        "card-dark": "#1e293b",
-                    },
-                    fontFamily: {
-                        display: ["Inter", "sans-serif"],
-                        sans: ["Inter", "sans-serif"],
-                    },
-                    borderRadius: {
-                        DEFAULT: "0.75rem",
-                    },
-                },
-            },
-        };
-    </script>
-    <style type="text/tailwindcss">
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }#sidebar-drawer:checked ~ aside {
-            transform: translateX(0);
-        }
-        #sidebar-drawer:checked ~ .drawer-overlay {
-            opacity: 1;
-            pointer-events: auto;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Admin Dashboard</title>
+    <link rel="stylesheet" href="<?= HOST ?>/css/dashboard/admin.dashboard.css">
 </head>
+<body>
 
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-300">
-    <main class="min-h-screen flex flex-col">
-        <div class="flex-1 p-8">
-            <div class="max-w-[1600px] mx-auto space-y-8">
-                <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div class="group bg-white dark:bg-card-dark rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
-                        <div class="p-8">
-                            <div class="flex justify-between items-start mb-10">
-                                <div class="space-y-1">
-                                    <h2 class="text-2xl font-bold tracking-tight">Quản lý người dùng</h2>
-                                    <p class="text-slate-500 text-sm">Quản trị nhân sự, phòng ban và phân quyền hệ thống.</p>
-                                </div>
-                                <div class="p-4 bg-blue-50 dark:bg-blue-900/20 text-primary rounded-2xl group-hover:scale-110 transition-transform">
-                                    <span class="material-symbols-outlined text-3xl">group</span>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <a class="flex items-center p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-primary hover:text-white transition-all group/item" href="#">
-                                    <span class="material-symbols-outlined mr-4 p-2 bg-white dark:bg-slate-800 rounded-xl text-blue-600 group-hover/item:text-primary transition-colors">manage_accounts</span>
-                                    <div>
-                                        <p class="font-bold text-sm">Tài khoản</p>
-                                        <p class="text-[10px] opacity-70">1,240 Active</p>
-                                    </div>
-                                </a>
-                                <a class="flex items-center p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-primary hover:text-white transition-all group/item" href="#">
-                                    <span class="material-symbols-outlined mr-4 p-2 bg-white dark:bg-slate-800 rounded-xl text-indigo-600 group-hover/item:text-primary transition-colors">domain</span>
-                                    <div>
-                                        <p class="font-bold text-sm">Phòng ban</p>
-                                        <p class="text-[10px] opacity-70">12 Departments</p>
-                                    </div>
-                                </a>
-                                <a class="flex items-center p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-primary hover:text-white transition-all group/item" href="#">
-                                    <span class="material-symbols-outlined mr-4 p-2 bg-white dark:bg-slate-800 rounded-xl text-emerald-600 group-hover/item:text-primary transition-colors">badge</span>
-                                    <div>
-                                        <p class="font-bold text-sm">Nhân viên</p>
-                                        <p class="text-[10px] opacity-70">HR Records</p>
-                                    </div>
-                                </a>
-                                <a class="flex items-center p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-primary hover:text-white transition-all group/item" href="#">
-                                    <span class="material-symbols-outlined mr-4 p-2 bg-white dark:bg-slate-800 rounded-xl text-amber-600 group-hover/item:text-primary transition-colors">admin_panel_settings</span>
-                                    <div>
-                                        <p class="font-bold text-sm">Phân quyền</p>
-                                        <p class="text-[10px] opacity-70">8 System Roles</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="px-8 py-4 bg-slate-50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
-                            <span class="text-xs text-slate-400">Cập nhật 5 phút trước</span>
-                            <span class="material-symbols-outlined text-slate-400 group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </div>
+<main class="layout">
+    <section class="card-grid">
+
+        <div class="card">
+            <div class="card-body">
+                <h2>Quản lý người dùng</h2>
+                <p class="subtitle">
+                    Quản trị nhân sự, phòng ban và phân quyền hệ thống.
+                </p>
+
+                <div class="grid-2">
+                    <div class="item">
+                        <h4>Tài khoản</h4>
+                        <span>1,240 Active</span>
                     </div>
-                    <div class="group bg-white dark:bg-card-dark rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden">
-                        <div class="p-8">
-                            <div class="flex justify-between items-start mb-10">
-                                <div class="space-y-1">
-                                    <h2 class="text-2xl font-bold tracking-tight">Tiêu chuẩn &amp; Đánh giá</h2>
-                                    <p class="text-slate-500 text-sm">Theo dõi các cột mốc tiêu chuẩn và minh chứng đánh giá.</p>
-                                </div>
-                                <div class="p-4 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 rounded-2xl group-hover:scale-110 transition-transform">
-                                    <span class="material-symbols-outlined text-3xl">verified</span>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <a class="flex items-center p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-emerald-600 hover:text-white transition-all group/item" href="#">
-                                    <span class="material-symbols-outlined mr-4 p-2 bg-white dark:bg-slate-800 rounded-xl text-emerald-600 group-hover/item:text-emerald-600 transition-colors">assignment</span>
-                                    <div>
-                                        <p class="font-bold text-sm">Tiêu chuẩn</p>
-                                        <p class="text-[10px] opacity-70">Framework Setup</p>
-                                    </div>
-                                </a>
-                                <a class="flex items-center p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-emerald-600 hover:text-white transition-all group/item" href="#">
-                                    <span class="material-symbols-outlined mr-4 p-2 bg-white dark:bg-slate-800 rounded-xl text-blue-600 group-hover/item:text-emerald-600 transition-colors">fact_check</span>
-                                    <div>
-                                        <p class="font-bold text-sm">Tiêu chí</p>
-                                        <p class="text-[10px] opacity-70">Evaluation Rules</p>
-                                    </div>
-                                </a>
-                                <a class="flex items-center p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-emerald-600 hover:text-white transition-all group/item" href="#">
-                                    <span class="material-symbols-outlined mr-4 p-2 bg-white dark:bg-slate-800 rounded-xl text-amber-600 group-hover/item:text-emerald-600 transition-colors">flag</span>
-                                    <div>
-                                        <p class="font-bold text-sm">Cột mốc</p>
-                                        <p class="text-[10px] opacity-70">24 Milestones</p>
-                                    </div>
-                                </a>
-                                <a class="flex items-center p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 hover:bg-emerald-600 hover:text-white transition-all group/item" href="#">
-                                    <span class="material-symbols-outlined mr-4 p-2 bg-white dark:bg-slate-800 rounded-xl text-purple-600 group-hover/item:text-emerald-600 transition-colors">inventory_2</span>
-                                    <div>
-                                        <p class="font-bold text-sm">Minh chứng</p>
-                                        <p class="text-[10px] opacity-70">142 Files</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="px-8 py-4 bg-slate-50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
-                            <div class="flex items-center">
-                                <div class="flex -space-x-2">
-                                    <div class="w-6 h-6 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-800"></div>
-                                    <div class="w-6 h-6 rounded-full bg-blue-500 border-2 border-white dark:border-slate-800"></div>
-                                    <div class="w-6 h-6 rounded-full bg-slate-300 border-2 border-white dark:border-slate-800 flex items-center justify-center text-[8px] font-bold">+5</div>
-                                </div>
-                                <span class="text-xs text-slate-400 ml-3">85% Hoàn thành tổng thể</span>
-                            </div>
-                            <span class="material-symbols-outlined text-slate-400 group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </div>
+
+                    <div class="item">
+                        <h4>Phòng ban</h4>
+                        <span>12 Departments</span>
                     </div>
-                </section>
-                
-                <section>
-                    <div class="flex justify-between items-end mb-6">
-                        <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400">Thống kê hệ thống</h2>
-                        <div class="flex space-x-2">
-                            <button class="px-3 py-1.5 text-xs font-medium bg-white dark:bg-card-dark border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-50 transition-colors">7 ngày qua</button>
-                            <button class="px-3 py-1.5 text-xs font-medium bg-primary text-white rounded-lg">Tháng này</button>
-                        </div>
+
+                    <div class="item">
+                        <h4>Nhân viên</h4>
+                        <span>HR Records</span>
                     </div>
-                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-                        <div class="xl:col-span-2 bg-white dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                            <div class="flex justify-between items-center mb-8">
-                                <div>
-                                    <h3 class="font-bold text-lg">Hiệu suất tổ chức</h3>
-                                    <p class="text-sm text-slate-500">Tỉ lệ hoàn thành công việc theo tuần</p>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-2xl font-bold text-primary">+12.5%</span>
-                                    <p class="text-xs text-emerald-500 font-medium">Tăng so với tháng trước</p>
-                                </div>
-                            </div>
-                            <div class="flex items-end justify-between h-48 gap-4 px-2">
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-primary/20 w-full h-full absolute"></div>
-                                        <div class="bg-primary w-full h-[65%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 2</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-primary/20 w-full h-full absolute"></div>
-                                        <div class="bg-primary w-full h-[45%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 3</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-primary/20 w-full h-full absolute"></div>
-                                        <div class="bg-primary w-full h-[85%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 4</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-primary/20 w-full h-full absolute"></div>
-                                        <div class="bg-primary w-full h-[70%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 5</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-primary/20 w-full h-full absolute"></div>
-                                        <div class="bg-primary w-full h-[95%] rounded-t-lg transition-all duration-500 group-hover:brightness-110"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 6</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-slate-200 dark:bg-slate-700 w-full h-[30%] rounded-t-lg transition-all duration-500"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">Thứ 7</span>
-                                </div>
-                                <div class="flex-1 flex flex-col items-center space-y-3 group">
-                                    <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-lg relative flex items-end overflow-hidden h-full">
-                                        <div class="bg-slate-200 dark:bg-slate-700 w-full h-[25%] rounded-t-lg transition-all duration-500"></div>
-                                    </div>
-                                    <span class="text-[10px] text-slate-400 font-medium uppercase">CN</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bg-white dark:bg-card-dark p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
-                            <h3 class="font-bold text-lg mb-1">Minh chứng đánh giá</h3>
-                            <p class="text-sm text-slate-500 mb-8">Trạng thái phê duyệt tài liệu</p>
-                            <div class="flex-1 flex flex-col items-center justify-center">
-                                <div class="relative w-40 h-40 mb-6">
-                                    <svg class="w-full h-full transform -rotate-90">
-                                        <circle class="text-slate-100 dark:text-slate-800" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
-                                        <circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="439.8" stroke-dashoffset="110" stroke-linecap="round" stroke-width="12"></circle>
-                                    </svg>
-                                    <div class="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span class="text-3xl font-bold">75%</span>
-                                        <span class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">Hoàn tất</span>
-                                    </div>
-                                </div>
-                                <div class="w-full grid grid-cols-3 gap-2">
-                                    <div class="text-center">
-                                        <p class="text-xs text-slate-500">Duyệt</p>
-                                        <p class="font-bold text-primary">106</p>
-                                    </div>
-                                    <div class="text-center border-x border-slate-100 dark:border-slate-800">
-                                        <p class="text-xs text-slate-500">Chờ</p>
-                                        <p class="font-bold">24</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="text-xs text-slate-500">Từ chối</p>
-                                        <p class="font-bold text-red-500">12</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                    <div class="item">
+                        <h4>Phân quyền</h4>
+                        <span>8 System Roles</span>
                     </div>
-                </section>
-                
+                </div>
+            </div>
+
+            <div class="card-footer">
+                Cập nhật 5 phút trước
             </div>
         </div>
-    </main>
+
+        <div class="card">
+            <div class="card-body">
+                <h2>Tiêu chuẩn & Đánh giá</h2>
+                <p class="subtitle">
+                    Theo dõi các cột mốc tiêu chuẩn và minh chứng đánh giá.
+                </p>
+
+                <div class="grid-2">
+                    <div class="item">
+                        <h4>Tiêu chuẩn</h4>
+                        <span>Framework Setup</span>
+                    </div>
+                    <div class="item">
+                        <h4>Tiêu chí</h4>
+                        <span>Evaluation Rules</span>
+                    </div>
+                    <div class="item">
+                        <h4>Cột mốc</h4>
+                        <span>24 Milestones</span>
+                    </div>
+                    <div class="item">
+                        <h4>Minh chứng</h4>
+                        <span>142 Files</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                85% Hoàn thành tổng thể
+            </div>
+        </div>
+
+    </section>
+
+<section class="stats-section">
+
+    <div class="stats-header">
+        <h3>Thống kê hệ thống</h3>
+        <div class="filter-buttons">
+            <button>7 ngày qua</button>
+            <button class="active">Tháng này</button>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stats-card large">
+            <div class="stats-card-header">
+                <div>
+                    <h4>Hiệu suất tổ chức</h4>
+                    <p class="subtitle">Tỉ lệ hoàn thành công việc theo tuần</p>
+                </div>
+                <div class="increase">
+                    <span class="percent">+12.5%</span>
+                    <br>
+                    <small>Tăng so với tháng trước</small>
+                </div>
+            </div>
+
+            <div class="bar-chart">
+                <div class="bar" style="height:65%"><span>Thứ 2</span></div>
+                <div class="bar" style="height:45%"><span>Thứ 3</span></div>
+                <div class="bar" style="height:85%"><span>Thứ 4</span></div>
+                <div class="bar" style="height:70%"><span>Thứ 5</span></div>
+                <div class="bar" style="height:95%"><span>Thứ 6</span></div>
+                <div class="bar gray" style="height:30%"><span>Thứ 7</span></div>
+                <div class="bar gray" style="height:25%"><span>CN</span></div>
+            </div>
+        </div>
+
+        <div class="stats-card">
+            <h4>Minh chứng đánh giá</h4>
+            <p class="subtitle">Trạng thái phê duyệt tài liệu</p>
+
+            <div class="donut">
+                <div class="donut-inner">
+                    <strong>75%</strong>
+                    <span>Hoàn tất</span>
+                </div>
+            </div>
+
+            <div class="donut-info">
+                <div>
+                    <small>Duyệt</small>
+                    <strong>106</strong>
+                </div>
+                <div>
+                    <small>Chờ</small>
+                    <strong>24</strong>
+                </div>
+                <div>
+                    <small>Từ chối</small>
+                    <strong class="danger">12</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</main>
 
 </body>
-
 </html>
