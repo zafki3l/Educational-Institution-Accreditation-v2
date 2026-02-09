@@ -10,7 +10,7 @@ final class IndexUserController extends UserController
     {
         return new ViewResponse(
             self::MODULE_NAME, 
-            'user-list/main', 
+            'index/main', 
             'main.layouts',
             [
                 'title' => 'Quản lý người dùng | ' . SYSTEM_NAME

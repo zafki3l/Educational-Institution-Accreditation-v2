@@ -2,7 +2,7 @@
     <div class="card-body">
         <h2>Quản lý bộ tiêu chuẩn đánh giá</h2>
         <p class="subtitle">
-            Theo dõi các cột mốc tiêu chuẩn và minh chứng đánh giá.
+            Quản lý tiêu chuẩn, tiêu chí, mốc đánh giá và minh chứng
         </p>
 
         <div class="grid-2">
@@ -29,7 +29,7 @@
             
             <a href="">
                 <div class="item">
-                    <h4>Quản lý minh chứng</h4>
+                    <h4>Cập nhật minh chứng</h4>
                     <span>142 Files</span>
                 </div>
             </a>
