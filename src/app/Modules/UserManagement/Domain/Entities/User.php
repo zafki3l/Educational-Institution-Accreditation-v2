@@ -15,7 +15,7 @@ class User
         private AuthId $auth_id,
         private string $first_name,
         private string $last_name,
-        private Email $email,
+        private ?Email $email,
         private Password $password,
         private int $role_id
     ) {}
@@ -25,11 +25,10 @@ class User
         AuthId $auth_id,
         string $first_name,
         string $last_name,
-        Email $email,
         Password $password,
         int $role_id
     ): self {
-        return new self($id, $auth_id, $first_name, $last_name, $email, $password, $role_id);
+        return new self($id, $auth_id, $first_name, $last_name, null, $password, $role_id);
     }
 
     public function getUserId(): UserId
@@ -57,7 +56,7 @@ class User
         return "{$this->first_name} {$this->last_name}";
     }
 
-    public function getEmail(): Email
+    public function getEmail(): ?Email
     {
         return $this->email;
     }
@@ -87,7 +86,7 @@ class User
         $this->last_name = $last_name;
     }
 
-    public function changeEmail(Email $email): void
+    public function assignEmail(Email $email): void
     {
         $this->email = $email;
     }

@@ -21,7 +21,6 @@ class CreateUserUseCase
             AuthId::generate(),
             $request->getFirstName(),
             $request->getLastName(),
-            Email::fromString($request->getEmail()),
             Password::fromPlain($request->getPassword()),
             $request->getRoleId()
         );

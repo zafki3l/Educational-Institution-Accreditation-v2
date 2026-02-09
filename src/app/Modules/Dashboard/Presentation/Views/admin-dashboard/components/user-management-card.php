@@ -2,7 +2,7 @@
     <div class="card-body">
         <h2>Quản lý người dùng</h2>
         <p class="subtitle">
-            Quản trị nhân sự, phòng ban và phân quyền hệ thống.
+            Quản lý tài khoản người dùng, phòng ban, nhân viên và cập nhật quyền
         </p>
 
         <div class="grid-2">
@@ -29,7 +29,7 @@
 
             <a href="">
                 <div class="item">
-                    <h4>Quản lý quyền</h4>
+                    <h4>Cập nhật quyền</h4>
                     <span>8 System Roles</span>
                 </div>
             </a>
