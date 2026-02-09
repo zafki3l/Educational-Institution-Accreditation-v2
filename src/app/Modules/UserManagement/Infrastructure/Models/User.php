@@ -2,7 +2,9 @@
 
 namespace App\Modules\UserManagement\Infrastructure\Models;
 
+use App\Modules\Role\Infrastructure\Models\Role;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Model
 {
@@ -18,4 +20,9 @@ class User extends Model
         'role_id' 
     ];
     protected $hidden = ['auth_id', 'password'];
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
 }
