@@ -2,11 +2,12 @@
 
 namespace App\Modules\Authentication\Domain\ValueObjects;
 
-final class AuthId 
+final class AuthId
 {
     private string $value;
 
-    private function __construct(string $value) {
+    private function __construct(string $value)
+    {
         $this->value = $value;
     }
 
@@ -15,11 +16,18 @@ final class AuthId
         return new self(bin2hex(random_bytes(16)));
     }
 
-    public static function fromString(string $id): self {
+    public static function fromString(string $id): self
+    {
         return new self($id);
     }
 
-    public function value(): string {
+    public function value(): string
+    {
         return $this->value;
+    }
+
+    public function equals(AuthId $other): bool
+    {
+        return $this->value === $other->value;
     }
 }

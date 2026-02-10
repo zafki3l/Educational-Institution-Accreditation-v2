@@ -6,7 +6,6 @@ use App\Modules\Authentication\Domain\ValueObjects\AuthId;
 use App\Modules\UserManagement\Application\Requests\CreateUserRequestInterface;
 use App\Modules\UserManagement\Domain\Entities\User;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
-use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
 use App\Shared\Logging\LoggerInterface;
