@@ -31,6 +31,18 @@ class User
         return new self($id, $auth_id, $first_name, $last_name, null, $password, $role_id);
     }
 
+    public function update(
+        string $first_name,
+        string $last_name,
+        Email $email,
+        int $role_id
+    ) {
+        $this->changeFirstName($first_name);
+        $this->changeLastName($last_name);
+        $this->assignEmail($email);
+        $this->changeRole($role_id);
+    }
+
     public function getUserId(): UserId
     {
         return $this->id;
@@ -86,7 +98,7 @@ class User
         $this->last_name = $last_name;
     }
 
-    public function assignEmail(Email $email): void
+    public function assignEmail(?Email $email): void
     {
         $this->email = $email;
     }

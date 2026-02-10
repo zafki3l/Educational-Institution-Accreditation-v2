@@ -11,7 +11,7 @@ class Email
         $this->value = $value;
     }
 
-    public static function fromString(string $email): self
+    public static function fromString(?string $email): self
     {
         $email = trim(strtolower($email));
 

@@ -2,13 +2,19 @@
 
 namespace App\Modules\UserManagement\Presentation\Controllers;
 
-use App\Modules\UserManagement\Infrastructure\Readers\UserReader;
+use App\Modules\UserManagement\Application\UseCases\UpdateUserUseCase;
+use App\Modules\UserManagement\Presentation\Requests\UpdateUserRequest;
+use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
 use App\Shared\Response\JsonResponse;
 
 final class UpdateUserController extends UserController
 {
-    public function __construct(private UserReader $userReader) {}
-    public function edit(string $id)
+    public function __construct(
+        private UserReaderInterface $userReader,
+        private UpdateUserUseCase $updateUserUseCase
+    ) {}
+
+    public function edit(string $id): JsonResponse
     {
         $user = $this->userReader->findById($id);
 
@@ -16,13 +22,15 @@ final class UpdateUserController extends UserController
             'id' => $user->id,
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
-            'email' => $user->email,
+            'email' => $user->email ?? '',
             'role_id' => $user->role_id
         ]);
     }
 
-    public function update()
+    public function update(UpdateUserRequest $request)
     {
-        echo "hi {$_POST['id']}";
+        $this->updateUserUseCase->execute($request);
+
+        $this->redirect('/users');
     }
 }
