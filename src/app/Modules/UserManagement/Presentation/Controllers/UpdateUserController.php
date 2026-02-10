@@ -6,6 +6,7 @@ use App\Modules\UserManagement\Application\UseCases\UpdateUserUseCase;
 use App\Modules\UserManagement\Presentation\Requests\UpdateUserRequest;
 use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
 use App\Shared\Response\JsonResponse;
+use App\Shared\SessionManager\AuthSession;
 
 final class UpdateUserController extends UserController
 {
@@ -29,7 +30,7 @@ final class UpdateUserController extends UserController
 
     public function update(UpdateUserRequest $request)
     {
-        $this->updateUserUseCase->execute($request);
+        $this->updateUserUseCase->execute($request, AuthSession::getUserId());
 
         $this->redirect('/users');
     }

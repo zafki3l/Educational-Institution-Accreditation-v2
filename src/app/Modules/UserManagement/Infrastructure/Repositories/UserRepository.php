@@ -33,9 +33,12 @@ class UserRepository implements UserRepositoryInterface
 
         $modelsUser = ModelsUser::findOrFail($user_id);
         
+        if ($entitiesUser->getEmail() !== null) {
+            $modelsUser->email = $entitiesUser->getEmail()->value();
+        }
+
         $modelsUser->first_name = $entitiesUser->getFirstName();
         $modelsUser->last_name = $entitiesUser->getLastName();
-        $modelsUser->email = $entitiesUser->getEmail()->value();
         $modelsUser->role_id = $entitiesUser->getRoleId();
 
         $modelsUser->save();

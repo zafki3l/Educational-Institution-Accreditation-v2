@@ -2,6 +2,8 @@
 
 namespace App\Modules\UserManagement\Domain\ValueObjects;
 
+use App\Modules\UserManagement\Domain\Exception\InvalidEmailFormatException;
+
 class Email
 {
     private string $value;
@@ -11,12 +13,12 @@ class Email
         $this->value = $value;
     }
 
-    public static function fromString(?string $email): self
+    public static function fromString(string $email): self
     {
         $email = trim(strtolower($email));
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('Invalid email format');
+            throw new InvalidEmailFormatException();
         }
 
         return new self($email);
