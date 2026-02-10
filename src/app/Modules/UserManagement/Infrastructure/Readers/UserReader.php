@@ -26,6 +26,20 @@ class UserReader implements UserReaderInterface
             ->toArray();
     }
 
+    public function findById(string $id)
+    {
+        return User::query()
+                ->select(
+                    'id', 
+                    'first_name', 
+                    'last_name', 
+                    'email', 
+                    'role_id'
+                )
+                ->where('id', $id)
+                ->first();
+    }
+
     public function count(): int
     {
         return User::count();

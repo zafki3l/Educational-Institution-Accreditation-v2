@@ -9,12 +9,13 @@
             </button>
         </div>
 
-        <form id="editUserForm" class="user-form">
+        <form id="editUserForm" class="user-form" action="/users/update" method="post">
+            <input type="hidden" name="_method" value="PUT">
             <input type="hidden" id="edit-id" name="id">
-
+            <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
             <div class="form-row">
                 <div class="form-group">
-                    <label for="edit-first_name">Họ *</label>
+                    <label for="edit-first_name">Họ</label>
                     <input 
                         type="text"
                         id="edit-first_name"
@@ -26,7 +27,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="edit-last_name">Tên *</label>
+                    <label for="edit-last_name">Tên</label>
                     <input 
                         type="text"
                         id="edit-last_name"
@@ -42,7 +43,7 @@
                 <div class="form-group">
                     <label for="edit-email">Email</label>
                     <input 
-                        type="email"
+                        type="text"
                         id="edit-email"
                         name="email"
                         class="form-input"
@@ -51,7 +52,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="edit-role_id">Vai Trò *</label>
+                    <label for="edit-role_id">Vai Trò</label>
                     <select 
                         id="edit-role_id"
                         name="role_id"

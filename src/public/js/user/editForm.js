@@ -8,17 +8,32 @@ document.addEventListener("DOMContentLoaded", function () {
     const editButtons = document.querySelectorAll(".edit-user-btn");
 
     editButtons.forEach(btn => {
-        btn.addEventListener("click", function () {
+        btn.addEventListener("click", async function () {
+            const id = this.dataset.id; // Get user id from button
 
-            editForm.reset();
+            try {
+                console.log("Edit ID:", id);
+                const response = await fetch(`/users/${id}/edit`);
 
-            document.getElementById("edit-id").value = this.dataset.id;
-            document.getElementById("edit-first_name").value = this.dataset.firstname;
-            document.getElementById("edit-last_name").value = this.dataset.lastname;
-            document.getElementById("edit-email").value = this.dataset.email;
-            document.getElementById("edit-role_id").value = this.dataset.role;
+                if (!response.ok) {
+                    throw new Error('Fetch user failed');
+                }
 
-            editModal.classList.add("active");
+                const user = await response.json();
+
+                // Fill form
+                document.getElementById("edit-id").value = user.id;
+                document.getElementById("edit-first_name").value = user.first_name;
+                document.getElementById("edit-last_name").value = user.last_name;
+                document.getElementById("edit-email").value = user.email;
+                document.getElementById("edit-role_id").value = user.role_id;
+
+                // Mở modal
+                editModal.classList.add("active");
+            } catch (err) {
+                alert("Không tải được dữ liệu user");
+                console.error(err);
+            }
         });
     });
 

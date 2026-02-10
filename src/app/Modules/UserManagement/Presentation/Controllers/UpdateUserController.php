@@ -2,19 +2,27 @@
 
 namespace App\Modules\UserManagement\Presentation\Controllers;
 
-use App\Shared\Response\ViewResponse;
+use App\Modules\UserManagement\Infrastructure\Readers\UserReader;
+use App\Shared\Response\JsonResponse;
 
 final class UpdateUserController extends UserController
 {
-    public function edit(): ViewResponse
+    public function __construct(private UserReader $userReader) {}
+    public function edit(string $id)
     {
-        return new ViewResponse(
-            self::MODULE_NAME,
-            'update/main',
-            'main.layouts',
-            [
-                'title' => 'Cập nhật người dùng | ' . SYSTEM_NAME
-            ]
-        );
+        $user = $this->userReader->findById($id);
+
+        return new JsonResponse([
+            'id' => $user->id,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
+            'role_id' => $user->role_id
+        ]);
+    }
+
+    public function update()
+    {
+        echo "hi {$_POST['id']}";
     }
 }

@@ -16,7 +16,7 @@ class LogoutUseCaseTest extends TestCase
         ]);
 
         $useCase = new LogoutUseCase();
-        $useCase->execute();
 
+        $useCase->execute();
     }
 }
