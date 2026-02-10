@@ -15,7 +15,8 @@ final class AuthenticableUserMapper
         return AuthenticableUser::create(
             UserId::fromString($user->id),
             AuthId::fromString($user->auth_id),
-            Password::fromHash($user->password)
+            Password::fromHash($user->password),
+            $user->role_id
         );
     }
 }

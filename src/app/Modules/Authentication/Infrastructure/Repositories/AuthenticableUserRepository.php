@@ -11,7 +11,7 @@ final class AuthenticableUserRepository implements AuthenticableUserRepositoryIn
 {
     public function findByAuthId(string $auth_id): ?AuthenticableUser
     {
-        $modelsUser = ModelsUser::select(['id', 'auth_id', 'password'])
+        $modelsUser = ModelsUser::select(['id', 'auth_id', 'password', 'role_id'])
                     ->where('auth_id', $auth_id)
                     ->first();
         
@@ -22,7 +22,7 @@ final class AuthenticableUserRepository implements AuthenticableUserRepositoryIn
 
     public function findByUserId(string $user_id): ?AuthenticableUser
     {
-        $modelsUser = ModelsUser::select(['id', 'auth_id', 'password'])
+        $modelsUser = ModelsUser::select(['id', 'auth_id', 'password', 'role_id'])
                     ->where('auth_id', $user_id)
                     ->first();
 

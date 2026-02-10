@@ -10,6 +10,7 @@ class IndexUserViewDTOMapper
     public static function fromModel(User $user)
     {
         return new IndexUserViewDTO(
+            $user->id,
             $user->first_name,
             $user->last_name,
             $user->email ?? '[Trống]',
