@@ -44,10 +44,11 @@
 
 <?php include 'components/createForm.php' ?>
 <?php include 'components/editForm.php' ?>
-
+<?php include 'components/deleteForm.php' ?>
 
 <script src="/js/user/createForm.js"></script>
 <script src="/js/user/editForm.js"></script>
+<script src="/js/user/deleteForm.js"></script>
 
 </body>
 </html>

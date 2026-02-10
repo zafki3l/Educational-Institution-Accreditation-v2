@@ -22,7 +22,10 @@
                             data-role="<?= htmlspecialchars($user->role_name) ?>">
                         <span class="material-symbols-outlined">edit</span>
                     </button>
-                    <button class="icon-btn danger" title="Xóa">
+                    <button class="icon-btn danger delete-user-btn"
+                        data-id="<?= $user->id ?>"
+                        data-name="<?= htmlspecialchars($user->first_name . ' ' . $user->last_name) ?>"
+                        title="Xóa">
                         <span class="material-symbols-outlined">delete</span>
                     </button>
                 </td>
