@@ -14,6 +14,11 @@ class AuthSession
         $_SESSION['auth_user'] = $data; 
     }
 
+    public static function getUserId(): string
+    {
+        return $_SESSION['auth_user']['user_id'];
+    }
+
     public static function clear(): void
     {
         $_SESSION = [];

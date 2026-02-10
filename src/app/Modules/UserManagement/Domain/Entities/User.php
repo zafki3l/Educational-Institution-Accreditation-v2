@@ -34,12 +34,15 @@ class User
     public function update(
         string $first_name,
         string $last_name,
-        Email $email,
+        ?string $email,
         int $role_id
     ) {
+        if ($email !== null) {
+            $this->assignEmail(Email::fromString($email));
+        }
+
         $this->changeFirstName($first_name);
         $this->changeLastName($last_name);
-        $this->assignEmail($email);
         $this->changeRole($role_id);
     }
 
@@ -98,7 +101,7 @@ class User
         $this->last_name = $last_name;
     }
 
-    public function assignEmail(?Email $email): void
+    public function assignEmail(Email $email): void
     {
         $this->email = $email;
     }

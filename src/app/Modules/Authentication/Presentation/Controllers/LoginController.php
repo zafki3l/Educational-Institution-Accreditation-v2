@@ -36,8 +36,8 @@ final class LoginController extends AuthController
         session_regenerate_id(true);
 
         AuthSession::set([
-            'user_id' => $auth_user->getUserId(),
-            'auth_id' => $auth_user->getAuthId(),
+            'user_id' => $auth_user->getUserId()->value(),
+            'auth_id' => $auth_user->getAuthId()->value(),
             'role_id' => $auth_user->getRoleId()
         ]);
 

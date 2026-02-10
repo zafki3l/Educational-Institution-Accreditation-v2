@@ -3,6 +3,7 @@
 namespace App\Shared\Infrastructure;
 
 use MongoDB\Client;
+use MongoDB\Collection;
 
 class MongoDBConnection
 {
@@ -10,15 +11,11 @@ class MongoDBConnection
 
     public function __construct()
     {
-        $this->client = new Client(
-            "mongodb://mongo:{$_ENV['MONGO_PORT']}",
-            [],
-            ['typeMap' => ['root' => 'array', 'document' => 'array']]
-        );
+        $this->client = new Client("mongodb://mongo:{$_ENV['MONGO_PORT']}");
     }
 
-    public function getDatabase(string $dbName)
+    public function getCollection(string $db, string $collection): Collection
     {
-        return $this->client->selectDatabase($dbName);
+        return $this->client->selectDatabase($db)->selectCollection($collection);
     }
 }

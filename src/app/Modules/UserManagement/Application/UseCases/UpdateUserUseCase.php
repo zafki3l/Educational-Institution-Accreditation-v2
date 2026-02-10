@@ -5,22 +5,44 @@ namespace App\Modules\UserManagement\Application\UseCases;
 use App\Modules\UserManagement\Application\Requests\UpdateUserRequestInterface;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Email;
+use App\Shared\Logging\LoggerInterface;
 
 class UpdateUserUseCase
 {
-    public function __construct(private UserRepositoryInterface $repository) {}
+    public function __construct(
+        private UserRepositoryInterface $repository,
+        private LoggerInterface $logger
+    ) {}
 
-    public function execute(UpdateUserRequestInterface $request)
+    public function execute(UpdateUserRequestInterface $request, string $actor_id)
     {
         $user = $this->repository->findOrFail($request->getId());
 
         $user->update(
             $request->getFirstName(), 
             $request->getLastName(), 
-            Email::fromString($request->getEmail()), 
+            $request->getEmail() == '' ? null : $request->getEmail(), 
             $request->getRoleId()
         );
 
         $this->repository->save($user);
+
+        $this->writeLog($request, $actor_id);
+    }
+
+    public function writeLog(UpdateUserRequestInterface $request, string $actor_id): void
+    {
+        $this->logger->write(
+            'info',
+            'update', 
+            "Người dùng {$actor_id} đã cập nhật thông tin của người dùng {$request->getId()}",
+            $actor_id,
+            [
+                'first_name' => $request->getFirstName(),
+                'last_name' => $request->getLastName(),
+                'email' => $request->getEmail() ?? '',
+                'role_id' => $request->getRoleId()
+            ]
+        );
     }
 }
