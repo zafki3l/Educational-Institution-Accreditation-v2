@@ -7,7 +7,7 @@ use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Shared\Logging\LoggerInterface;
 
-class UpdateUserUseCase
+final class UpdateUserUseCase
 {
     public function __construct(
         private UserRepositoryInterface $repository,

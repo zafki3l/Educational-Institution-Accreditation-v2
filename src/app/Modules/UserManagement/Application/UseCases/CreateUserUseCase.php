@@ -9,12 +9,16 @@ use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
+use App\Shared\Logging\LoggerInterface;
 
-class CreateUserUseCase
+final class CreateUserUseCase
 {
-    public function __construct(private UserRepositoryInterface $userRepository) {}
+    public function __construct(
+        private UserRepositoryInterface $userRepository,
+        private LoggerInterface $logger
+    ) {}
 
-    public function execute(CreateUserRequestInterface $request): void
+    public function execute(CreateUserRequestInterface $request, string $actor_id): void
     {
         $user = User::create(
             UserId::generate(),
@@ -25,6 +29,25 @@ class CreateUserUseCase
             $request->getRoleId()
         );
 
-        $this->userRepository->create($user);
+        $created = $this->userRepository->create($user);
+
+        $this->writeLog($created, $actor_id);
+    }
+
+    public function writeLog(User $user, string $actor_id): void
+    {
+        $this->logger->write(
+            'info',
+            'update', 
+            "Người dùng {$actor_id} đã thêm một người dùng mới",
+            $actor_id,
+            [
+                'id' => $user->getUserId()->value(),
+                'first_name' => $user->getFirstName(),
+                'last_name' => $user->getLastName(),
+                'email' => $user->getLastName() ?? '',
+                'role_id' => $user->getRoleId()
+            ]
+        );
     }
 }

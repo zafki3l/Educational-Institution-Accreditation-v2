@@ -10,9 +10,9 @@ use App\Modules\UserManagement\Infrastructure\Models\User as ModelsUser;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function create(EntitiesUser $entitiesUser): void
+    public function create(EntitiesUser $entitiesUser): EntitiesUser
     {
-        ModelsUser::create([
+        $modelsUser = ModelsUser::create([
             'id' => $entitiesUser->getUserId()->value(),
             'auth_id' => $entitiesUser->getAuthId()->value(),
             'first_name' => $entitiesUser->getFirstName(),
@@ -20,6 +20,8 @@ class UserRepository implements UserRepositoryInterface
             'password' => $entitiesUser->getPassword()->value(),
             'role_id' => $entitiesUser->getRoleId()
         ]);
+
+        return UserMapper::toDomain($modelsUser);
     }
 
     public function findOrFail(string $id): EntitiesUser

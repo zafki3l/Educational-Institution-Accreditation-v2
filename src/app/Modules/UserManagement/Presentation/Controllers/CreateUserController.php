@@ -6,6 +6,7 @@ use App\Modules\UserManagement\Application\UseCases\CreateUserUseCase;
 use App\Modules\UserManagement\Presentation\Requests\CreateUserRequest;
 use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use App\Shared\Response\ViewResponse;
+use App\Shared\SessionManager\AuthSession;
 
 final class CreateUserController extends UserController
 {
@@ -31,7 +32,7 @@ final class CreateUserController extends UserController
 
     public function store(CreateUserRequest $request): void
     {
-        $this->createUserUseCase->execute($request);
+        $this->createUserUseCase->execute($request, AuthSession::getUserId());
 
         $this->redirect(ROOT_URL . '/users');
     }
