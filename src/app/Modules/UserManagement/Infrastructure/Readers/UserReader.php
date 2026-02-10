@@ -2,6 +2,8 @@
 
 namespace App\Modules\UserManagement\Infrastructure\Readers;
 
+use App\Modules\UserManagement\Application\DTOs\EditUserViewDTO;
+use App\Modules\UserManagement\Infrastructure\Mappers\EditUserViewDTOMapper;
 use App\Modules\UserManagement\Infrastructure\Mappers\IndexUserViewDTOMapper;
 use App\Modules\UserManagement\Infrastructure\Models\User;
 use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
@@ -26,9 +28,9 @@ class UserReader implements UserReaderInterface
             ->toArray();
     }
 
-    public function findById(string $id)
+    public function findById(string $id): EditUserViewDTO
     {
-        return User::query()
+        $user = User::query()
                 ->select(
                     'id', 
                     'first_name', 
@@ -38,6 +40,8 @@ class UserReader implements UserReaderInterface
                 )
                 ->where('id', $id)
                 ->first();
+
+        return EditUserViewDTOMapper::fromModel($user);
     }
 
     public function count(): int

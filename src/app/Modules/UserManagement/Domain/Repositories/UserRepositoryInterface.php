@@ -7,4 +7,8 @@ use App\Modules\UserManagement\Domain\Entities\User as EntitiesUser;
 interface UserRepositoryInterface
 {
     public function create(EntitiesUser $entitiesUser): void;
+
+    public function findOrFail(string $id): EntitiesUser;
+
+    public function save(EntitiesUser $entitiesUser): void;
 }
