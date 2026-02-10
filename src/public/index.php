@@ -1,5 +1,6 @@
 <?php
 
+use App\Shared\Response\JsonResponse;
 use App\Shared\Response\ViewResponse;
 use Core\Router;
 use Core\ViewRender;
@@ -27,4 +28,8 @@ if ($response instanceof ViewResponse) {
     $viewRender = new ViewRender();
 
     $viewRender->view($response);
+} else if ($response instanceof JsonResponse) {
+    $response->send();
+} else {
+    throw new Exception('Response not valid');
 }
