@@ -6,28 +6,28 @@
         </p>
 
         <div class="grid-2">
-            <a href="">
+            <a href="/users">
                 <div class="item">
                     <h4>Quản lý tài khoản người dùng</h4>
-                    <span>1,240 Active</span>
+                    <span><?= $total_users ?> người dùng</span>
                 </div>
             </a>
 
-            <a href="">
+            <a href="/users">
                 <div class="item">
                     <h4>Quản lý phòng ban</h4>
                     <span>12 Departments</span>
                 </div>
             </a>
 
-            <a href="">
+            <a href="/users">
                 <div class="item">
                     <h4>Quản lý nhân viên</h4>
                     <span>HR Records</span>
                 </div>
             </a>
 
-            <a href="">
+            <a href="/users">
                 <div class="item">
                     <h4>Cập nhật quyền</h4>
                     <span>8 System Roles</span>

@@ -37,9 +37,14 @@ final class LoginController extends AuthController
 
         AuthSession::set([
             'user_id' => $auth_user->getUserId(),
-            'auth_id' => $auth_user->getAuthId()
+            'auth_id' => $auth_user->getAuthId(),
+            'role_id' => $auth_user->getRoleId()
         ]);
 
-        $this->redirect(HOST . '/users');
+        if ($_SESSION['auth_user']['role_id'] === 3) {
+            $this->redirect('/admin/dashboard');
+        } else {
+            $this->redirect('/');
+        }
     }
 }

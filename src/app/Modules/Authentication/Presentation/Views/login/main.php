@@ -13,7 +13,7 @@
 
     <div class="container">
         <div class="left">
-            <h1><a href="<?= HOST ?>" class="home-btn">QUAY VỀ TRANG CHỦ</a></h1>
+            <h1><a href="/" class="home-btn">QUAY VỀ TRANG CHỦ</a></h1>
             <br>
             <br>
             <hr>
@@ -47,7 +47,7 @@
         </div>
 
         <div class="right">
-            <img src="<?= HOST ?>/assets/banner/thhazspn.png">
+            <img src="/assets/banner/thhazspn.png">
         </div>
     </div>
 
