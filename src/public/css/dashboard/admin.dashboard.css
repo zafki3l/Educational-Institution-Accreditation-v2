@@ -237,3 +237,20 @@ a {
 .danger {
     color: #dc2626;
 }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:visited {
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    color: inherit;
+}
