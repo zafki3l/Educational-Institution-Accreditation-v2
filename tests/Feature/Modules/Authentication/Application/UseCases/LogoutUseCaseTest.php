@@ -6,11 +6,22 @@ use App\Modules\Authentication\Application\UseCases\LogoutUseCase;
 use App\Shared\SessionManager\AuthSession;
 use PHPUnit\Framework\TestCase;
 
+use function PHPUnit\Framework\assertNull;
+
 class LogoutUseCaseTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $_SESSION = [];
+    }
+
     public function testLogout()
     {
-        $_SESSION['auth_user'] = AuthSession::set([
+        AuthSession::set([
             'id' => '7364437b-8158-4131-abd5-45675bc14fe2',
             'auth_id' => 'ecb6efab3c5281462e5532cf270cfa7f'
         ]);
@@ -18,5 +29,7 @@ class LogoutUseCaseTest extends TestCase
         $useCase = new LogoutUseCase();
 
         $useCase->execute();
+
+        $this->assertArrayNotHasKey('auth_user', $_SESSION);
     }
 }
