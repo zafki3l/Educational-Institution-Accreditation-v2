@@ -4,13 +4,13 @@ namespace App\Modules\UserManagement\Domain\Exception;
 
 use App\Shared\Exception\DomainException;
 
-class InvalidEmailFormatException extends DomainException
+final class EmailExistException extends DomainException
 {
     public function __construct()
     {
         parent::__construct(
-            "Định dạng email không phù hợp",
-            "INVALID_EMAIL_FORMAT",
+            'Email này đã được sử dụng!', 
+            "EMAIL_ALREADY_EXIST"
         );
     }
 }

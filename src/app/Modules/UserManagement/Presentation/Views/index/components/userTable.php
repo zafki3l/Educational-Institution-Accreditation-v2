@@ -20,9 +20,15 @@
                             >
                         <span class="material-symbols-outlined">edit</span>
                     </button>
-                    <button class="icon-btn danger" title="Xóa">
-                        <span class="material-symbols-outlined">delete</span>
-                    </button>
+                    
+                    <form action="/users/<?= htmlspecialchars($user->id) ?>" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
+
+                        <button class="icon-btn danger" title="Xóa" type="submit">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </form>
                 </td>
             </tr>
         <?php endforeach; ?>

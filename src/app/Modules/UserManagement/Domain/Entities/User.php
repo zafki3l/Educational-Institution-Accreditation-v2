@@ -25,10 +25,11 @@ class User
         AuthId $auth_id,
         string $first_name,
         string $last_name,
+        ?Email $email,
         Password $password,
         int $role_id
     ): self {
-        return new self($id, $auth_id, $first_name, $last_name, null, $password, $role_id);
+        return new self($id, $auth_id, $first_name, $last_name, $email, $password, $role_id);
     }
 
     public function update(

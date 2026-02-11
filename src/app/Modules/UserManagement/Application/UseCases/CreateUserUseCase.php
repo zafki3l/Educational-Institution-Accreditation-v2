@@ -6,6 +6,7 @@ use App\Modules\Authentication\Domain\ValueObjects\AuthId;
 use App\Modules\UserManagement\Application\Requests\CreateUserRequestInterface;
 use App\Modules\UserManagement\Domain\Entities\User;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
+use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
 use App\Shared\Logging\LoggerInterface;
@@ -24,6 +25,7 @@ final class CreateUserUseCase
             AuthId::generate(),
             $request->getFirstName(),
             $request->getLastName(),
+            Email::fromString($request->getEmail()),
             Password::fromPlain($request->getPassword()),
             $request->getRoleId()
         );
@@ -37,14 +39,14 @@ final class CreateUserUseCase
     {
         $this->logger->write(
             'info',
-            'update', 
+            'create', 
             "Người dùng {$actor_id} đã thêm một người dùng mới",
             $actor_id,
             [
                 'id' => $user->getUserId()->value(),
                 'first_name' => $user->getFirstName(),
                 'last_name' => $user->getLastName(),
-                'email' => $user->getLastName() ?? '',
+                'email' => $user->getEmail() ? $user->getEmail()->value() : '',
                 'role_id' => $user->getRoleId()
             ]
         );

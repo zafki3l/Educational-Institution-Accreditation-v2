@@ -17,6 +17,7 @@ class UserRepository implements UserRepositoryInterface
             'auth_id' => $entitiesUser->getAuthId()->value(),
             'first_name' => $entitiesUser->getFirstName(),
             'last_name' => $entitiesUser->getLastName(),
+            'email' => $entitiesUser->getEmail()->value(),
             'password' => $entitiesUser->getPassword()->value(),
             'role_id' => $entitiesUser->getRoleId()
         ]);
@@ -44,5 +45,12 @@ class UserRepository implements UserRepositoryInterface
         $modelsUser->role_id = $entitiesUser->getRoleId();
 
         $modelsUser->save();
+    }
+
+    public function delete(string $id): void
+    {
+        $modelsUser = ModelsUser::findOrFail($id);
+
+        $modelsUser->delete();
     }
 }

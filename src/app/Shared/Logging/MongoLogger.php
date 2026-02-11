@@ -25,7 +25,6 @@ class MongoLogger implements LoggerInterface
             'message' => $message,
             'actor_id' => $actor_id,
             'context' => $context,
-            'module' => 'user-management',
             'ip' => $_SERVER['REMOTE_ADDR'] ?? null,
             'time' => new \MongoDB\BSON\UTCDateTime(),
         ]);
