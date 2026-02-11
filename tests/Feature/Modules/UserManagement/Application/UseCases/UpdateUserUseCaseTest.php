@@ -7,6 +7,7 @@ use App\Modules\UserManagement\Application\Requests\UpdateUserRequestInterface;
 use App\Modules\UserManagement\Application\UseCases\UpdateUserUseCase;
 use App\Modules\UserManagement\Domain\Entities\User;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
+use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
 use App\Shared\Logging\LoggerInterface;
@@ -25,6 +26,7 @@ class UpdateUserUseCaseTest extends TestCase
             AuthId::generate(),
             'John',
             'Doe',
+            Email::fromString('abc@123.com'),
             Password::fromPlain('oldpass'),
             1
         );
