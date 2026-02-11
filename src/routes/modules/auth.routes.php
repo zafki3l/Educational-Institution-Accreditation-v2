@@ -2,7 +2,11 @@
 
 use App\Modules\Authentication\Presentation\Controllers\LoginController;
 use App\Modules\Authentication\Presentation\Controllers\LogoutController;
+use App\Shared\Middlewares\EnsureAuth;
 
 $route->get('/login', [LoginController::class, 'showLogin']);
+
 $route->post('/login', [LoginController::class, 'login']);
-$route->post('/logout', [LogoutController::class, 'logout']);
+
+$route->middleware([EnsureAuth::class])
+    ->post('/logout', [LogoutController::class, 'logout']);
