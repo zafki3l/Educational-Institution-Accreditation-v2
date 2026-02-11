@@ -6,8 +6,6 @@ use App\Modules\Authentication\Application\UseCases\LogoutUseCase;
 use App\Shared\SessionManager\AuthSession;
 use PHPUnit\Framework\TestCase;
 
-use function PHPUnit\Framework\assertNull;
-
 class LogoutUseCaseTest extends TestCase
 {
     protected function setUp(): void

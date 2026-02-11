@@ -33,7 +33,7 @@ class CreateUserUseCaseTest extends TestCase
             ->method('write')
             ->with(
                 'info',
-                'update',
+                'create',
                 $this->stringContains('thêm một người dùng mới'),
                 'actor-123'
             );
@@ -148,7 +148,7 @@ class CreateUserUseCaseTest extends TestCase
             ->method('write')
             ->with(
                 'info',
-                'update',
+                'create',
                 $this->stringContains('thêm một người dùng mới'),
                 $this->anything(),
                 $this->callback(function ($logData) use ($firstName, $lastName) {

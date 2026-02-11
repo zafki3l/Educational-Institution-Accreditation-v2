@@ -11,4 +11,6 @@ interface UserRepositoryInterface
     public function findOrFail(string $id): EntitiesUser;
 
     public function save(EntitiesUser $entitiesUser): void;
+
+    public function delete(string $id): void;
 }

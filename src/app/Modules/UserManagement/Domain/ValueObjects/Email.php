@@ -6,9 +6,9 @@ use App\Modules\UserManagement\Domain\Exception\InvalidEmailFormatException;
 
 class Email
 {
-    private string $value;
+    private ?string $value;
 
-    private function __construct(string $value)
+    private function __construct(?string $value)
     {
         $this->value = $value;
     }
@@ -24,7 +24,7 @@ class Email
         return new self($email);
     }
 
-    public function value(): string
+    public function value(): ?string
     {
         return $this->value;
     }
