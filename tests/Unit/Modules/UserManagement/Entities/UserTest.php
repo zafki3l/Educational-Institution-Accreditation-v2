@@ -15,12 +15,14 @@ class UserTest extends TestCase
 {
     private UserId $userId;
     private AuthId $authId;
+    private Email $email;
     private Password $password;
 
     protected function setUp(): void
     {
         $this->userId = UserId::generate();
         $this->authId = AuthId::generate();
+        $this->email = Email::fromString('abc@123.com');
         $this->password = Password::fromPlain('password123');
     }
 
@@ -31,6 +33,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -45,6 +48,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -59,6 +63,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -73,6 +78,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -87,6 +93,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -101,6 +108,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -115,6 +123,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            null,
             $this->password,
             1
         );
@@ -129,6 +138,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -143,6 +153,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             2
         );
@@ -157,6 +168,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -173,6 +185,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -189,6 +202,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -206,6 +220,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -223,6 +238,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -239,6 +255,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -256,6 +273,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -274,6 +292,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -291,6 +310,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
@@ -311,6 +331,7 @@ class UserTest extends TestCase
             $this->authId,
             'John',
             'Doe',
+            $this->email,
             $this->password,
             1
         );
