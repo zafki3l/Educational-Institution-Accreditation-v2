@@ -3,6 +3,7 @@
 namespace App\Modules\UserManagement\Presentation\Controllers;
 
 use App\Modules\UserManagement\Application\UseCases\CreateUserUseCase;
+use App\Modules\UserManagement\Domain\Exception\EmailExistException;
 use App\Modules\UserManagement\Presentation\Requests\CreateUserRequest;
 use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use App\Shared\Response\ViewResponse;
@@ -32,8 +33,16 @@ final class CreateUserController extends UserController
 
     public function store(CreateUserRequest $request): void
     {
-        $this->createUserUseCase->execute($request, AuthSession::getUserId());
+        try {
+            $this->createUserUseCase->execute($request, AuthSession::getUserId());
 
-        $this->redirect(ROOT_URL . '/users');
+            $this->redirect(ROOT_URL . '/users');
+        } catch (EmailExistException $e) {
+            $_SESSION['errors']['email-exists'] = $e->getMessage();
+            $_SESSION['old'] = $_POST;
+            $_SESSION['open_modal'] = 'create-user';
+            
+            $this->back();
+        }
     }
 }

@@ -5,8 +5,10 @@ namespace App\Modules\UserManagement\Infrastructure\ServiceProvider;
 use App\Modules\UserManagement\Application\Requests\CreateUserRequestInterface;
 use App\Modules\UserManagement\Application\Requests\UpdateUserRequestInterface;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
+use App\Modules\UserManagement\Domain\Services\EmailExistsCheckerInterface;
 use App\Modules\UserManagement\Infrastructure\Readers\UserReader;
 use App\Modules\UserManagement\Infrastructure\Repositories\UserRepository;
+use App\Modules\UserManagement\Infrastructure\Services\EmailExistsChecker;
 use App\Modules\UserManagement\Presentation\Requests\CreateUserRequest;
 use App\Modules\UserManagement\Presentation\Requests\UpdateUserRequest;
 use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
@@ -35,6 +37,11 @@ final class UserServiceProvider extends ServiceProvider
         $container->bind(
             UpdateUserRequestInterface::class,
             UpdateUserRequest::class
+        );
+
+        $container->bind(
+            EmailExistsCheckerInterface::class,
+            EmailExistsChecker::class
         );
     }
 }
