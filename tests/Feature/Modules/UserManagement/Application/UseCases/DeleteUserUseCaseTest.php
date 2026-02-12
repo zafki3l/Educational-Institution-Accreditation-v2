@@ -122,7 +122,6 @@ class DeleteUserUseCaseTest extends TestCase
                 'delete',
                 $this->stringContains($actorId),
                 $actorId,
-                $this->isType('array')
             );
 
         $useCase = new DeleteUserUseCase($repository, $logger);

@@ -133,6 +133,9 @@
     transition: 0.2s;
 }
 
+.modal { display: none; }
+.modal.open { display: flex; }
+
 .btn-primary:hover {
     background: #1f3fc0;
 }

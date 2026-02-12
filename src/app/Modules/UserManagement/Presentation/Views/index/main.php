@@ -49,5 +49,6 @@
 <script src="/js/user/createForm.js"></script>
 <script src="/js/user/editForm.js"></script>
 
+<?php unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['open_modal']); ?>
 </body>
 </html>

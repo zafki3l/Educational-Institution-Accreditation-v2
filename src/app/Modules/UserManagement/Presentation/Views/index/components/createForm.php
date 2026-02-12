@@ -21,6 +21,7 @@
                         placeholder="Nhập họ" 
                         required
                         class="form-input"
+                        value="<?= htmlspecialchars($_SESSION['old']['first_name'] ?? '') ?>"
                     >
                     <span class="error-message" id="error_first_name"></span>
                 </div>
@@ -34,6 +35,7 @@
                         placeholder="Nhập tên" 
                         required
                         class="form-input"
+                        value="<?= htmlspecialchars($_SESSION['old']['last_name'] ?? '') ?>"
                     >
                     <span class="error-message" id="error_last_name"></span>
                 </div>
@@ -48,8 +50,11 @@
                         name="email" 
                         placeholder="Nhập email" 
                         class="form-input"
+                        value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '')?>"
                     >
-                    <span class="error-message" id="error_email"></span>
+                    <span class="error-message" id="error_email">
+                        <?= $_SESSION['errors']['email-exists'] ?? '' ?>
+                    </span>
                 </div>
 
                 <div class="form-group">
@@ -62,8 +67,9 @@
                     >
                         <option value="">-- Chọn vai trò --</option>
                         <?php foreach ($roles as $role): ?>
-                            <option value="<?= htmlspecialchars($role->id) ?>">
-                                <?= htmlspecialchars($role->name) ?>
+                            <option value="<?= $role->id ?>"
+                                <?= (($_SESSION['old']['role_id'] ?? '') == $role->id) ? 'selected' : '' ?>>
+                                <?= $role->name ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -92,3 +98,11 @@
         </form>
     </div>
 </div>
+
+<?php if (!empty($_SESSION['open_modal']) && $_SESSION['open_modal'] === 'create-user'): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('userModal').classList.add('open');
+});
+</script>
+<?php endif; ?>

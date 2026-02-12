@@ -4,7 +4,7 @@ namespace App\Modules\UserManagement\Domain\ValueObjects;
 
 use App\Modules\UserManagement\Domain\Exception\InvalidEmailFormatException;
 
-class Email
+final class Email
 {
     private ?string $value;
 
@@ -17,11 +17,16 @@ class Email
     {
         $email = trim(strtolower($email));
 
+        self::validate($email);
+
+        return new self($email);
+    }
+
+    private static function validate(?string $email): void
+    {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidEmailFormatException();
         }
-
-        return new self($email);
     }
 
     public function value(): ?string
@@ -29,7 +34,7 @@ class Email
         return $this->value;
     }
 
-    public function equals(Email $other): bool
+    public function equals(self $other): bool
     {
         return $this->value === $other->value;
     }

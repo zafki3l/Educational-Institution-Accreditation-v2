@@ -17,7 +17,7 @@ class UserRepository implements UserRepositoryInterface
             'auth_id' => $entitiesUser->getAuthId()->value(),
             'first_name' => $entitiesUser->getFirstName(),
             'last_name' => $entitiesUser->getLastName(),
-            'email' => $entitiesUser->getEmail()->value(),
+            'email' => $entitiesUser->getEmail() ? $entitiesUser->getEmail()->value() : null,
             'password' => $entitiesUser->getPassword()->value(),
             'role_id' => $entitiesUser->getRoleId()
         ]);
