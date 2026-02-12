@@ -4,7 +4,6 @@ namespace App\Modules\UserManagement\Application\UseCases;
 
 use App\Modules\UserManagement\Application\Requests\UpdateUserRequestInterface;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
-use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Shared\Logging\LoggerInterface;
 
 final class UpdateUserUseCase

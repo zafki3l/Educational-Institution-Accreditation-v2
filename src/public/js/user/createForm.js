@@ -15,6 +15,9 @@ openUserModalBtn.addEventListener('click', () => {
 // Đóng modal
 const closeModal = () => {
     userModal.classList.remove('active');
+    // Clear session data when closing modal
+    fetch('/users/clear-session', { method: 'POST' })
+        .catch(err => console.error('Failed to clear session:', err));
 };
 
 closeUserModalBtn.addEventListener('click', closeModal);

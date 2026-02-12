@@ -1,4 +1,10 @@
 <!-- Modal Thêm Người Dùng -->
+<?php 
+// Clear old session data if not reopening from validation error
+if (empty($_SESSION['open_modal']) || $_SESSION['open_modal'] !== 'create-user') {
+    unset($_SESSION['old']);
+}
+?>
 <div id="userModal" class="modal">
     <div class="modal-overlay"></div>
     <div class="modal-content">
@@ -19,11 +25,9 @@
                         id="first_name"
                         name="first_name" 
                         placeholder="Nhập họ" 
-                        required
                         class="form-input"
                         value="<?= htmlspecialchars($_SESSION['old']['first_name'] ?? '') ?>"
                     >
-                    <span class="error-message" id="error_first_name"></span>
                 </div>
 
                 <div class="form-group">
@@ -33,11 +37,9 @@
                         id="last_name"
                         name="last_name" 
                         placeholder="Nhập tên" 
-                        required
                         class="form-input"
                         value="<?= htmlspecialchars($_SESSION['old']['last_name'] ?? '') ?>"
                     >
-                    <span class="error-message" id="error_last_name"></span>
                 </div>
             </div>
 
@@ -52,9 +54,6 @@
                         class="form-input"
                         value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '')?>"
                     >
-                    <span class="error-message" id="error_email">
-                        <?= $_SESSION['errors']['email-exists'] ?? '' ?>
-                    </span>
                 </div>
 
                 <div class="form-group">
@@ -62,10 +61,9 @@
                     <select 
                         id="role_id"
                         name="role_id" 
-                        required
                         class="form-input"
                     >
-                        <option value="">-- Chọn vai trò --</option>
+                        <option value="<?= null ?>">-- Chọn vai trò --</option>
                         <?php foreach ($roles as $role): ?>
                             <option value="<?= $role->id ?>"
                                 <?= (($_SESSION['old']['role_id'] ?? '') == $role->id) ? 'selected' : '' ?>>
@@ -73,7 +71,6 @@
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <span class="error-message" id="error_role_id"></span>
                 </div>
             </div>
 
@@ -84,13 +81,18 @@
                     id="password"
                     name="password" 
                     placeholder="Nhập mật khẩu (tối thiểu 8 ký tự)" 
-                    required
-                    minlength="8"
                     class="form-input"
                 >
-                <span class="error-message" id="error_password"></span>
             </div>
 
+            <div class="error">
+                <?php if (isset($_SESSION['errors'])): ?>
+                    <?php foreach ($_SESSION['errors'] as $error): ?>
+                        <span class="error-message">- <?= htmlspecialchars($error) ?></span>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+            
             <div class="form-actions">
                 <button type="button" class="btn-outline" id="cancelUserModal">Hủy</button>
                 <button type="submit" class="btn-primary">Thêm Người Dùng</button>
@@ -102,7 +104,8 @@
 <?php if (!empty($_SESSION['open_modal']) && $_SESSION['open_modal'] === 'create-user'): ?>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('userModal').classList.add('open');
+    document.getElementById('userModal').classList.add('active');
 });
 </script>
+<?php unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['open_modal']); ?>
 <?php endif; ?>

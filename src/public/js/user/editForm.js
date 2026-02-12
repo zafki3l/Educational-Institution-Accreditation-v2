@@ -39,10 +39,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const closeModal = () => {
         editModal.classList.remove("active");
+        // Clear session data when closing modal
+        fetch('/users/clear-session', { method: 'POST' })
+            .catch(err => console.error('Failed to clear session:', err));
     };
 
     closeBtn.addEventListener("click", closeModal);
-    cancelBtn.addEventListener("click", closeModal);
+    cancelBtn.addEventListener("click", () => {
+        // If we have original data (from validation error recovery), restore it
+        if (window.originalUserData) {
+            document.getElementById("edit-id").value = window.originalUserData.id;
+            document.getElementById("edit-first_name").value = window.originalUserData.first_name;
+            document.getElementById("edit-last_name").value = window.originalUserData.last_name;
+            document.getElementById("edit-email").value = window.originalUserData.email;
+            document.getElementById("edit-role_id").value = window.originalUserData.role_id;
+        }
+        closeModal();
+    });
 
     editModal.addEventListener("click", (e) => {
         if (e.target === editModal || e.target.classList.contains("modal-overlay")) {

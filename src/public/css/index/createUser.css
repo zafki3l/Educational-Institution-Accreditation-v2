@@ -90,8 +90,12 @@
     box-shadow: 0 0 0 3px rgba(37, 78, 219, 0.15);
 }
 
+.error {
+    padding-top: 10px;
+}
+
 .error-message {
-    font-size: 12px;
+    font-size: 14px;
     color: #dc2626;
     margin-top: 4px;
 }
@@ -133,8 +137,19 @@
     transition: 0.2s;
 }
 
-.modal { display: none; }
-.modal.open { display: flex; }
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.open {
+    display: flex;
+}
 
 .btn-primary:hover {
     background: #1f3fc0;

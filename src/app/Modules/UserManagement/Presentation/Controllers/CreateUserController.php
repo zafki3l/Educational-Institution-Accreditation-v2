@@ -4,8 +4,10 @@ namespace App\Modules\UserManagement\Presentation\Controllers;
 
 use App\Modules\UserManagement\Application\UseCases\CreateUserUseCase;
 use App\Modules\UserManagement\Domain\Exception\EmailExistException;
+use App\Modules\UserManagement\Domain\Exception\InvalidEmailFormatException;
 use App\Modules\UserManagement\Presentation\Requests\CreateUserRequest;
 use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
+use App\Shared\Exception\DomainException;
 use App\Shared\Response\ViewResponse;
 use App\Shared\SessionManager\AuthSession;
 
@@ -37,11 +39,12 @@ final class CreateUserController extends UserController
             $this->createUserUseCase->execute($request, AuthSession::getUserId());
 
             $this->redirect(ROOT_URL . '/users');
-        } catch (EmailExistException $e) {
-            $_SESSION['errors']['email-exists'] = $e->getMessage();
+        } catch (DomainException $e) {
+            $_SESSION['errors'][] = $e->getMessage();
+            
             $_SESSION['old'] = $_POST;
             $_SESSION['open_modal'] = 'create-user';
-            
+
             $this->back();
         }
     }

@@ -10,7 +10,7 @@ class CreateUserRequest implements CreateUserRequestInterface
     private string $last_name;
     private string $email;
     private string $password;
-    private string $role_id;
+    private int $role_id;
 
     public function __construct() 
     {
@@ -18,7 +18,7 @@ class CreateUserRequest implements CreateUserRequestInterface
         $this->last_name = trim($_POST['last_name']);
         $this->email = trim($_POST['email']);
         $this->password = $_POST['password'];
-        $this->role_id = $_POST['role_id'];
+        $this->role_id = (int) $_POST['role_id'];
     }
 
     public function getFirstName(): string
@@ -41,7 +41,7 @@ class CreateUserRequest implements CreateUserRequestInterface
         return $this->password;
     }
 
-    public function getRoleId(): string
+    public function getRoleId(): int
     {
         return $this->role_id;
     }

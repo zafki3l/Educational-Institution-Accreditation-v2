@@ -5,6 +5,7 @@ namespace App\Modules\UserManagement\Presentation\Controllers;
 use App\Modules\UserManagement\Application\UseCases\UpdateUserUseCase;
 use App\Modules\UserManagement\Presentation\Requests\UpdateUserRequest;
 use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
+use App\Shared\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
 
@@ -28,10 +29,18 @@ final class UpdateUserController extends UserController
         ]);
     }
 
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateUserRequest $request): void
     {
-        $this->updateUserUseCase->execute($request, AuthSession::getUserId());
+        try {
+            $this->updateUserUseCase->execute($request, AuthSession::getUserId());
 
-        $this->redirect('/users');
+            $this->redirect('/users');
+        } catch (DomainException $e) {
+            $_SESSION['errors'][] = $e->getMessage();
+            $_SESSION['old'] = $_POST;
+            $_SESSION['open_modal'] = 'update-user';
+
+            $this->redirect('/users');
+        }
     }
 }
