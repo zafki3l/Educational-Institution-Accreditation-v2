@@ -11,7 +11,7 @@
 
         <form id="editUserForm" class="user-form" action="/users/update" method="post">
             <input type="hidden" name="_method" value="PUT">
-            <input type="hidden" id="edit-id" name="id">
+            <input type="hidden" id="edit-id" name="id" value="<?= htmlspecialchars($_SESSION['old']['id'] ?? '') ?>">
             <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
             <div class="form-row">
                 <div class="form-group">
@@ -21,9 +21,8 @@
                         id="edit-first_name"
                         name="first_name"
                         class="form-input"
-                        required
+                        value="<?= htmlspecialchars($_SESSION['old']['first_name'] ?? '') ?>"
                     >
-                    <span class="error-message" id="edit_error_first_name"></span>
                 </div>
 
                 <div class="form-group">
@@ -33,9 +32,8 @@
                         id="edit-last_name"
                         name="last_name"
                         class="form-input"
-                        required
+                        value="<?= htmlspecialchars($_SESSION['old']['last_name'] ?? '') ?>"
                     >
-                    <span class="error-message" id="edit_error_last_name"></span>
                 </div>
             </div>
 
@@ -47,8 +45,8 @@
                         id="edit-email"
                         name="email"
                         class="form-input"
+                        value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '') ?>"
                     >
-                    <span class="error-message" id="edit_error_email"></span>
                 </div>
 
                 <div class="form-group">
@@ -57,17 +55,24 @@
                         id="edit-role_id"
                         name="role_id"
                         class="form-input"
-                        required
                     >
-                        <option value="">-- Chọn vai trò --</option>
+                        <option value="<?= null ?>">-- Chọn vai trò --</option>
                         <?php foreach ($roles as $role): ?>
-                            <option value="<?= htmlspecialchars($role->id) ?>">
-                                <?= htmlspecialchars($role->name) ?>
+                            <option value="<?= $role->id ?>"
+                                <?= (($_SESSION['old']['role_id'] ?? '') == $role->id) ? 'selected' : '' ?>>
+                                <?= $role->name ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <span class="error-message" id="edit_error_role_id"></span>
                 </div>
+            </div>
+
+            <div class="error">
+                <?php if (isset($_SESSION['errors'])): ?>
+                    <?php foreach ($_SESSION['errors'] as $error): ?>
+                        <span class="error-message">- <?= htmlspecialchars($error) ?></span>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
 
             <div class="form-actions">
@@ -81,3 +86,17 @@
         </form>
     </div>
 </div>
+
+<?php if (!empty($_SESSION['open_modal']) && $_SESSION['open_modal'] === 'update-user'): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // This is a validation error - form already has data from $_SESSION['old']
+    // Just open the modal without fetching
+    const hasErrors = document.querySelector('.error-message') !== null;
+    if (hasErrors) {
+        document.getElementById('editUserModal').classList.add('active');
+    }
+});
+</script>
+<?php unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['open_modal']); ?>
+<?php endif; ?>
