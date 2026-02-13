@@ -29,18 +29,18 @@ final class UpdateUserController extends UserController
         ]);
     }
 
-    public function update(UpdateUserRequest $request): void
+    public function update(UpdateUserRequest $request)
     {
         try {
             $this->updateUserUseCase->execute($request, AuthSession::getUserId());
 
             $this->redirect('/users');
         } catch (DomainException $e) {
-            $_SESSION['errors'][] = $e->getMessage();
-            $_SESSION['old'] = $_POST;
-            $_SESSION['open_modal'] = 'update-user';
-
-            $this->redirect('/users');
+            return new JsonResponse([
+                'errors' => $e->getMessage(),
+                'old' => $_POST,
+                'open_modal' => 'update-user'
+            ]);
         }
     }
 }
