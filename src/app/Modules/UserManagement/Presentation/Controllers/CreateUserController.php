@@ -3,8 +3,6 @@
 namespace App\Modules\UserManagement\Presentation\Controllers;
 
 use App\Modules\UserManagement\Application\UseCases\CreateUserUseCase;
-use App\Modules\UserManagement\Domain\Exception\EmailExistException;
-use App\Modules\UserManagement\Domain\Exception\InvalidEmailFormatException;
 use App\Modules\UserManagement\Presentation\Requests\CreateUserRequest;
 use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use App\Shared\Exception\DomainException;
