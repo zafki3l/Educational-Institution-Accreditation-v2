@@ -11,7 +11,7 @@ class PasswordTest extends TestCase
 {
     public function testCreateFromPlainPassword(): void
     {
-        $plainPassword = 'my-secure-password';
+        $plainPassword = 'securePass123';
 
         $password = Password::fromPlain($plainPassword);
 
@@ -20,7 +20,7 @@ class PasswordTest extends TestCase
 
     public function testCreateFromHashedPassword(): void
     {
-        $hashedPassword = password_hash('my-secure-password', PASSWORD_DEFAULT);
+        $hashedPassword = password_hash('securePass123', PASSWORD_DEFAULT);
 
         $password = Password::fromHash($hashedPassword);
 
@@ -29,14 +29,14 @@ class PasswordTest extends TestCase
 
     public function testPasswordValueReturnsString(): void
     {
-        $password = Password::fromPlain('test-password');
+        $password = Password::fromPlain('testPass123');
 
         $this->assertIsString($password->value());
     }
 
     public function testVerifyReturnsTrueWithCorrectPassword(): void
     {
-        $plainPassword = 'my-secure-password';
+        $plainPassword = 'securePass123';
 
         $password = Password::fromPlain($plainPassword);
 
@@ -45,8 +45,8 @@ class PasswordTest extends TestCase
 
     public function testVerifyReturnsFalseWithIncorrectPassword(): void
     {
-        $plainPassword = 'my-secure-password';
-        $wrongPassword = 'wrong-password';
+        $plainPassword = 'securePass123';
+        $wrongPassword = 'wrongPass456';
 
         $password = Password::fromPlain($plainPassword);
 
@@ -55,7 +55,7 @@ class PasswordTest extends TestCase
 
     public function testPlainPasswordIsHashed(): void
     {
-        $plainPassword = 'my-secure-password';
+        $plainPassword = 'securePass123';
 
         $password = Password::fromPlain($plainPassword);
 
@@ -65,8 +65,8 @@ class PasswordTest extends TestCase
 
     public function testDifferentPlainPasswordsGenerateDifferentHashes(): void
     {
-        $password1 = Password::fromPlain('password1');
-        $password2 = Password::fromPlain('password1');
+        $password1 = Password::fromPlain('password123');
+        $password2 = Password::fromPlain('password123');
 
         // Different calls to fromPlain will generate different hashes
         // (due to random salt in PASSWORD_DEFAULT)
@@ -75,7 +75,7 @@ class PasswordTest extends TestCase
 
     public function testVerifyWithHashedPasswordFromPlain(): void
     {
-        $plainPassword = 'test123';
+        $plainPassword = 'testPass123';
         $password = Password::fromPlain($plainPassword);
 
         $this->assertTrue($password->verify($plainPassword));
@@ -83,17 +83,17 @@ class PasswordTest extends TestCase
 
     public function testVerifyWithDifferentHashedPassword(): void
     {
-        $hash = password_hash('original-password', PASSWORD_DEFAULT);
+        $hash = password_hash('originalPass123', PASSWORD_DEFAULT);
         $password = Password::fromHash($hash);
 
-        $this->assertFalse($password->verify('different-password'));
+        $this->assertFalse($password->verify('diffPass456'));
     }
 
-    public function testEmptyPasswordCanBeHashed(): void
+    public function testEmptyPasswordThrowsException(): void
     {
-        $password = Password::fromPlain('');
+        $this->expectException(\App\Modules\UserManagement\Domain\Exception\PasswordEmptyException::class);
 
-        $this->assertTrue($password->verify(''));
+        Password::fromPlain('');
     }
 
     public function testComplexPasswordCanBeHashed(): void

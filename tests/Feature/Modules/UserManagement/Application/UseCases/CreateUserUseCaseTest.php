@@ -6,6 +6,7 @@ use App\Modules\UserManagement\Application\Requests\CreateUserRequestInterface;
 use App\Modules\UserManagement\Application\UseCases\CreateUserUseCase;
 use App\Modules\UserManagement\Domain\Entities\User;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
+use App\Modules\UserManagement\Domain\Services\EmailExistsCheckerInterface;
 use App\Shared\Logging\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +18,7 @@ class CreateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('John');
         $request->method('getLastName')->willReturn('Doe');
         $request->method('getPassword')->willReturn('password123');
-        $request->method('getRoleId')->willReturn('1');
+        $request->method('getRoleId')->willReturn(1);
         $request->method('getEmail')->willReturn('john@example.com');
 
         $repository = $this->createMock(UserRepositoryInterface::class);
@@ -27,6 +28,8 @@ class CreateUserUseCaseTest extends TestCase
             ->willReturnCallback(function (User $user) {
                 return $user;
             });
+
+        $emailExistChecker = $this->createMock(EmailExistsCheckerInterface::class);
 
         $logger = $this->createMock(LoggerInterface::class);
         $logger->expects($this->once())
@@ -38,7 +41,7 @@ class CreateUserUseCaseTest extends TestCase
                 'actor-123'
             );
 
-        $useCase = new CreateUserUseCase($repository, $logger);
+        $useCase = new CreateUserUseCase($repository, $emailExistChecker, $logger);
         $useCase->execute($request, 'actor-123');
     }
 
@@ -47,8 +50,8 @@ class CreateUserUseCaseTest extends TestCase
         $request = $this->createMock(CreateUserRequestInterface::class);
         $request->method('getFirstName')->willReturn('Jane');
         $request->method('getLastName')->willReturn('Smith');
-        $request->method('getPassword')->willReturn('securepass');
-        $request->method('getRoleId')->willReturn('2');
+        $request->method('getPassword')->willReturn('securepass123');
+        $request->method('getRoleId')->willReturn(2);
         $request->method('getEmail')->willReturn('jane@example.com');
 
         $repository = $this->createMock(UserRepositoryInterface::class);
@@ -65,7 +68,8 @@ class CreateUserUseCaseTest extends TestCase
         $logger = $this->createMock(LoggerInterface::class);
         $logger->method('write');
 
-        $useCase = new CreateUserUseCase($repository, $logger);
+        $emailExistChecker = $this->createMock(EmailExistsCheckerInterface::class);
+        $useCase = new CreateUserUseCase($repository, $emailExistChecker, $logger);
         $useCase->execute($request, 'admin-user');
     }
 
@@ -74,8 +78,8 @@ class CreateUserUseCaseTest extends TestCase
         $request = $this->createMock(CreateUserRequestInterface::class);
         $request->method('getFirstName')->willReturn('Test');
         $request->method('getLastName')->willReturn('User');
-        $request->method('getPassword')->willReturn('test123');
-        $request->method('getRoleId')->willReturn('1');
+        $request->method('getPassword')->willReturn('testPass123');
+        $request->method('getRoleId')->willReturn(1);
         $request->method('getEmail')->willReturn('test@example.com');
 
         $repository = $this->createMock(UserRepositoryInterface::class);
@@ -89,7 +93,8 @@ class CreateUserUseCaseTest extends TestCase
         $logger = $this->createMock(LoggerInterface::class);
         $logger->method('write');
 
-        $useCase = new CreateUserUseCase($repository, $logger);
+        $emailExistChecker = $this->createMock(EmailExistsCheckerInterface::class);
+        $useCase = new CreateUserUseCase($repository, $emailExistChecker, $logger);
         $useCase->execute($request, 'actor-id');
     }
 
@@ -98,8 +103,8 @@ class CreateUserUseCaseTest extends TestCase
         $request = $this->createMock(CreateUserRequestInterface::class);
         $request->method('getFirstName')->willReturn('Log');
         $request->method('getLastName')->willReturn('Test');
-        $request->method('getPassword')->willReturn('pass123');
-        $request->method('getRoleId')->willReturn('1');
+        $request->method('getPassword')->willReturn('passTest123');
+        $request->method('getRoleId')->willReturn(1);
         $request->method('getEmail')->willReturn('log@example.com');
 
         $repository = $this->createMock(UserRepositoryInterface::class);
@@ -119,7 +124,8 @@ class CreateUserUseCaseTest extends TestCase
                 'specific-actor-123'
             );
 
-        $useCase = new CreateUserUseCase($repository, $logger);
+        $emailExistChecker = $this->createMock(EmailExistsCheckerInterface::class);
+        $useCase = new CreateUserUseCase($repository, $emailExistChecker, $logger);
         $useCase->execute($request, 'specific-actor-123');
     }
 
@@ -127,12 +133,12 @@ class CreateUserUseCaseTest extends TestCase
     {
         $firstName = 'John';
         $lastName = 'Developer';
-        $roleId = '2';
+        $roleId = 2;
 
         $request = $this->createMock(CreateUserRequestInterface::class);
         $request->method('getFirstName')->willReturn($firstName);
         $request->method('getLastName')->willReturn($lastName);
-        $request->method('getPassword')->willReturn('pass123');
+        $request->method('getPassword')->willReturn('passwordUser123');
         $request->method('getRoleId')->willReturn($roleId);
         $request->method('getEmail')->willReturn('john@example.com');
 
@@ -157,7 +163,8 @@ class CreateUserUseCaseTest extends TestCase
                 })
             );
 
-        $useCase = new CreateUserUseCase($repository, $logger);
+        $emailExistChecker = $this->createMock(EmailExistsCheckerInterface::class);
+        $useCase = new CreateUserUseCase($repository, $emailExistChecker, $logger);
         $useCase->execute($request, 'actor-123');
     }
 
@@ -166,8 +173,8 @@ class CreateUserUseCaseTest extends TestCase
         $request = $this->createMock(CreateUserRequestInterface::class);
         $request->method('getFirstName')->willReturn('José');
         $request->method('getLastName')->willReturn("O'Brien");
-        $request->method('getPassword')->willReturn('pass123');
-        $request->method('getRoleId')->willReturn('1');
+        $request->method('getPassword')->willReturn('passJose123');
+        $request->method('getRoleId')->willReturn(1);
         $request->method('getEmail')->willReturn('jose@example.com');
 
         $repository = $this->createMock(UserRepositoryInterface::class);
@@ -182,7 +189,8 @@ class CreateUserUseCaseTest extends TestCase
         $logger = $this->createMock(LoggerInterface::class);
         $logger->method('write');
 
-        $useCase = new CreateUserUseCase($repository, $logger);
+        $emailExistChecker = $this->createMock(EmailExistsCheckerInterface::class);
+        $useCase = new CreateUserUseCase($repository, $emailExistChecker, $logger);
         $useCase->execute($request, 'actor-123');
     }
 }

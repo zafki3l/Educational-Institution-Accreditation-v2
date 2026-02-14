@@ -144,7 +144,7 @@ class DeleteUserUseCaseTest extends TestCase
             $firstName,
             $lastName,
             Email::fromString($email),
-            Password::fromPlain('password'),
+            Password::fromPlain('password123'),
             $roleId
         );
 
@@ -271,7 +271,7 @@ class DeleteUserUseCaseTest extends TestCase
             'Test',
             'User',
             null,
-            Password::fromPlain('password'),
+            Password::fromPlain('password123'),
             1
         );
 
@@ -313,7 +313,7 @@ class DeleteUserUseCaseTest extends TestCase
                 'User',
                 'Test',
                 Email::fromString('user@example.com'),
-                Password::fromPlain('password'),
+                Password::fromPlain('password123'),
                 $roleId
             );
 
@@ -410,7 +410,7 @@ class DeleteUserUseCaseTest extends TestCase
             $firstName,
             $lastName,
             Email::fromString($email),
-            Password::fromPlain('password'),
+            Password::fromPlain('password123'),
             3
         );
 

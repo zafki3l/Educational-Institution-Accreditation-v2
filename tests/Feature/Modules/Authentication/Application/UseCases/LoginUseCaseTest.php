@@ -6,7 +6,6 @@ use App\Modules\Authentication\Application\Requests\LoginRequestInterface;
 use App\Modules\Authentication\Application\UseCases\LoginUseCase;
 use App\Modules\Authentication\Domain\Entities\AuthenticableUser;
 use App\Modules\Authentication\Domain\Repositories\AuthenticableUserRepositoryInterface;
-use App\Modules\Authentication\Presentation\Requests\LoginRequest;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use PHPUnit\Framework\TestCase;
 
