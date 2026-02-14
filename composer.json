@@ -9,7 +9,8 @@
         "illuminate/support": "^12.49",
         "robmorgan/phinx": "^0.16.10",
         "symfony/console": "^7.4",
-        "mongodb/mongodb": "^2.1"
+        "mongodb/mongodb": "^2.1",
+        "illuminate/pagination": "^12.51"
     },
 
     "autoload": {

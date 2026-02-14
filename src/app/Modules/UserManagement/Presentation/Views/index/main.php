@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="/css/index/user.index.css">
     <link rel="stylesheet" href="/css/index/createUser.css">
+    <link rel="stylesheet" href="/css/pagination.css">
 </head>
 <body>
 
@@ -21,7 +22,7 @@
             <div class="page-header">
                 <h1>Quản lý tài khoản người dùng</h1>
                 <button class="primary-btn" id="openUserModal">
-                    <span class="material-symbols-outlined">person_add</span>THÊM NGƯỜI DÙNG MỚI
+                    </span>THÊM NGƯỜI DÙNG MỚI
                 </button>
             </div>
 
@@ -30,13 +31,7 @@
             <div class="table-box">
                 <?php include 'components/userTable.php' ?>
 
-                <div class="pagination">
-                    <span>Hiển thị 1 - 4 / 12 người dùng</span>
-                    <div>
-                        <button class="page-btn">‹</button>
-                        <button class="page-btn">›</button>
-                    </div>
-                </div>
+                <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/parts/pagination.php'?>
             </div>
         </div>
     </main>

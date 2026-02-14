@@ -3,8 +3,17 @@
 use App\Shared\Security\CsrfTokenGenerator;
 use App\Shared\SessionManager\SessionGenerator;
 use Dotenv\Dotenv;
+use Illuminate\Pagination\Paginator;
 
 require dirname(__DIR__, 2) . '/vendor/autoload.php';
+
+Paginator::currentPageResolver(function () {
+    return $_GET['page'] ?? 1;
+});
+
+Paginator::currentPathResolver(function () {
+    return strtok($_SERVER['REQUEST_URI'], '?');
+});
 
 SessionGenerator::generate();
 CsrfTokenGenerator::generate();

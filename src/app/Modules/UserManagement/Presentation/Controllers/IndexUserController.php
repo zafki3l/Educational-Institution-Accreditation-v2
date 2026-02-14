@@ -3,6 +3,7 @@
 namespace App\Modules\UserManagement\Presentation\Controllers;
 
 use App\Modules\UserManagement\Infrastructure\Readers\UserReader;
+use App\Modules\UserManagement\Presentation\Requests\IndexUserRequest;
 use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use App\Shared\Response\ViewResponse;
 
@@ -13,9 +14,9 @@ final class IndexUserController extends UserController
         private RoleReaderInterface $roleReader
     ) {}
 
-    public function index(): ViewResponse
+    public function index(IndexUserRequest $request): ViewResponse
     {
-        $users = $this->userReader->all();
+        $results = $this->userReader->all($request->getKeyword(), $request->getRoleId());
         $roles = $this->roleReader->all();
 
         return new ViewResponse(
@@ -24,7 +25,8 @@ final class IndexUserController extends UserController
             'main.layouts',
             [
                 'title' => 'Quản lý người dùng | ' . SYSTEM_NAME,
-                'users' => $users,
+                'users' => $results->items,
+                'pagination' => $results,
                 'roles' => $roles
             ]
         );
