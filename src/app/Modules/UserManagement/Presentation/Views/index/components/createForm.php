@@ -1,11 +1,4 @@
-<!-- Modal Thêm Người Dùng -->
-<?php 
-// Clear old session data if not reopening from validation error
-if (empty($_SESSION['open_modal']) || $_SESSION['open_modal'] !== 'create-user') {
-    unset($_SESSION['old']);
-}
-?>
-<div id="userModal" class="modal">
+<div id="createUserModal" class="modal">
     <div class="modal-overlay"></div>
     <div class="modal-content">
         <div class="modal-header">
@@ -14,7 +7,7 @@ if (empty($_SESSION['open_modal']) || $_SESSION['open_modal'] !== 'create-user')
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
-        <form id="userForm" action="/users" method="post" class="user-form">
+        <form id="createUserForm" action="/users" method="post" class="user-form">
             <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
             
             <div class="form-row">
@@ -85,13 +78,7 @@ if (empty($_SESSION['open_modal']) || $_SESSION['open_modal'] !== 'create-user')
                 >
             </div>
 
-            <div class="error">
-                <?php if (isset($_SESSION['errors'])): ?>
-                    <?php foreach ($_SESSION['errors'] as $error): ?>
-                        <span class="error-message">- <?= htmlspecialchars($error) ?></span>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
+            <div class="error" id="formErrors"></div>
             
             <div class="form-actions">
                 <button type="button" class="btn-outline" id="cancelUserModal">Hủy</button>
@@ -100,12 +87,3 @@ if (empty($_SESSION['open_modal']) || $_SESSION['open_modal'] !== 'create-user')
         </form>
     </div>
 </div>
-
-<?php if (!empty($_SESSION['open_modal']) && $_SESSION['open_modal'] === 'create-user'): ?>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('userModal').classList.add('active');
-});
-</script>
-<?php unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['open_modal']); ?>
-<?php endif; ?>

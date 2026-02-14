@@ -34,13 +34,11 @@ final class UpdateUserController extends UserController
         try {
             $this->updateUserUseCase->execute($request, AuthSession::getUserId());
 
-            $this->redirect('/users');
+            return new JsonResponse([]);
         } catch (DomainException $e) {
             return new JsonResponse([
-                'errors' => $e->getMessage(),
-                'old' => $_POST,
-                'open_modal' => 'update-user'
-            ]);
+                'errors' => [$e->getMessage()],
+            ], 422);
         }
     }
 }

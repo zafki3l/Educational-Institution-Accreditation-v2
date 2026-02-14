@@ -31,5 +31,5 @@ if ($response instanceof ViewResponse) {
 } else if ($response instanceof JsonResponse) {
     $response->send();
 } else {
-    throw new Exception('Response not valid');
+    throw new \Exception('Response not valid');
 }

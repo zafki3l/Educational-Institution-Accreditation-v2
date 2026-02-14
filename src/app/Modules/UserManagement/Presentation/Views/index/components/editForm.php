@@ -67,13 +67,7 @@
                 </div>
             </div>
 
-            <div class="error">
-                <?php if (isset($_SESSION['errors'])): ?>
-                    <?php foreach ($_SESSION['errors'] as $error): ?>
-                        <span class="error-message">- <?= htmlspecialchars($error) ?></span>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
+            <div class="error" id="editFormErrors"></div>
 
             <div class="form-actions">
                 <button type="button" class="btn-outline" id="cancelEditModal">
@@ -86,17 +80,3 @@
         </form>
     </div>
 </div>
-
-<?php if (!empty($_SESSION['open_modal']) && $_SESSION['open_modal'] === 'update-user'): ?>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    // This is a validation error - form already has data from $_SESSION['old']
-    // Just open the modal without fetching
-    const hasErrors = document.querySelector('.error-message') !== null;
-    if (hasErrors) {
-        document.getElementById('editUserModal').classList.add('active');
-    }
-});
-</script>
-<?php unset($_SESSION['errors'], $_SESSION['old'], $_SESSION['open_modal']); ?>
-<?php endif; ?>
