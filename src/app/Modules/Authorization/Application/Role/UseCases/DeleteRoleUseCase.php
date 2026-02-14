@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Authorization\Application\UseCases;
+namespace App\Modules\Authorization\Application\Role\UseCases;
 
 use App\Modules\Authorization\Domain\Repositories\RoleRepositoryInterface;
 use App\Shared\Logging\LoggerInterface;

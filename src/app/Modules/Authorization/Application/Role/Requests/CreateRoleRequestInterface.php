@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Authorization\Application\Requests;  
+namespace App\Modules\Authorization\Application\Role\Requests;
 
 interface CreateRoleRequestInterface
 {

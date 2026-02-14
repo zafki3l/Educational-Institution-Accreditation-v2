@@ -8,7 +8,7 @@ use Illuminate\Container\Container;
 
 $container = new Container();
 
-$container->singleton(PDO::class, function () {
+$container->singleton(\PDO::class, function () {
     return (new MySQLDatabase())->connect();
 });
 

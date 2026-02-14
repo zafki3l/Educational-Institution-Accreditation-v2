@@ -14,7 +14,7 @@
             <div class="sidebar-sub">
                 <a class="sidebar-item" href="/roles">Cập nhật vai trò</a>
                 <a class="sidebar-item" href="/permissions">Cập nhật quyền</a>
-                <a class="sidebar-item" href="/assign">Gắn quyền</a>
+                <a class="sidebar-item" href="/assign-permission">Gắn quyền</a>
             </div>
         </div>
     </nav>

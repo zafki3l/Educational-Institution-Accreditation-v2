@@ -2,10 +2,11 @@
 
 namespace App\Modules\Authorization\Presentation\Controllers\Role;
 
-use App\Modules\Authorization\Application\UseCases\DeleteRoleUseCase;
+use App\Modules\Authorization\Application\Role\UseCases\DeleteRoleUseCase;
+use App\Modules\Authorization\Presentation\Controllers\AuthorizationController;
 use App\Shared\SessionManager\AuthSession;
 
-final class DeleteRoleController extends RoleController
+final class DeleteRoleController extends AuthorizationController
 {
     public function __construct(private DeleteRoleUseCase $deleteRoleUseCase) {}
 
