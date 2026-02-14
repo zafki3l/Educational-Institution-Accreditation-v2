@@ -18,5 +18,5 @@
         <?php endforeach; ?>
     </select>
 
-    <button type="submit">Lọc</button>
+    <button type="submit">Tìm kiếm</button>
 </form>
