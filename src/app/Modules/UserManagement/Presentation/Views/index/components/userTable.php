@@ -14,21 +14,23 @@
                 <td><?= htmlspecialchars($user->email) ?></td>
                 <td><span class="badge"><?= htmlspecialchars($user->role_name) ?></span></td>
                 <td class="right">
-                    <button class="icon-btn edit-user-btn"
-                            type="button"
-                            title="Chỉnh sửa" data-id="<?= $user->id ?>"
-                            >
-                        <span class="material-symbols-outlined">edit</span>
-                    </button>
-                    
-                    <form action="/users/<?= htmlspecialchars($user->id) ?>" method="post">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
-
-                        <button class="icon-btn danger" title="Xóa" type="submit">
-                            <span class="material-symbols-outlined">delete</span>
+                    <div class="action-group">
+                        <button class="icon-btn edit-user-btn"
+                                type="button"
+                                title="Chỉnh sửa"
+                                data-id="<?= $user->id ?>">
+                            <span class="material-symbols-outlined">edit</span>
                         </button>
-                    </form>
+
+                        <form action="/users/<?= htmlspecialchars($user->id) ?>" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
+
+                            <button class="icon-btn danger" title="Xóa" type="submit">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </form>
+                    </div>
                 </td>
             </tr>
         <?php endforeach; ?>

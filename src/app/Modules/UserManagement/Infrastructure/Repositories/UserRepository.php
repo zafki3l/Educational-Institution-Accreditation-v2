@@ -4,7 +4,6 @@ namespace App\Modules\UserManagement\Infrastructure\Repositories;
 
 use App\Modules\UserManagement\Domain\Entities\User as EntitiesUser;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
-use App\Modules\UserManagement\Domain\ValueObjects\UserId;
 use App\Modules\UserManagement\Infrastructure\Mappers\UserMapper;
 use App\Modules\UserManagement\Infrastructure\Models\User as ModelsUser;
 
@@ -21,7 +20,6 @@ class UserRepository implements UserRepositoryInterface
             'password' => $entitiesUser->getPassword()->value(),
             'role_id' => $entitiesUser->getRoleId()
         ]);
-
         return UserMapper::toDomain($modelsUser);
     }
 

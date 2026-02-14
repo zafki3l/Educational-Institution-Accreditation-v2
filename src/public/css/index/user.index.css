@@ -15,6 +15,7 @@ body {
 }
 
 .sidebar {
+    position: fixed;
     width: 250px;
     height: 100vh;
     background: white;
@@ -53,6 +54,7 @@ body {
 .main {
     flex: 1;
     padding: 40px;
+    margin-left: 250px;
 }
 
 .container {
@@ -101,6 +103,27 @@ body {
     background: #f8fafc;
 }
 
+.filter-box button {
+    padding: 8px 16px;
+    background: #1e40af;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.filter-box button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.filter-box button:active {
+    transform: translateY(0);
+}
+
 .table-box {
     background: white;
     border: 1px solid #e2e8f0;
@@ -121,6 +144,17 @@ th, td {
     padding: 14px 18px;
     font-size: 14px;
     text-align: start;
+}
+
+.action-group {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-group form {
+    margin: 0;
 }
 
 th {
