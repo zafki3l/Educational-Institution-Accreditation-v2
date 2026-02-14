@@ -1,8 +1,8 @@
 <?php
 
-use App\Modules\Role\Presentation\Controllers\CreateRoleController;
-use App\Modules\Role\Presentation\Controllers\DeleteRoleController;
-use App\Modules\Role\Presentation\Controllers\IndexRoleController;
+use App\Modules\Authorization\Presentation\Controllers\CreateRoleController;
+use App\Modules\Authorization\Presentation\Controllers\DeleteRoleController;
+use App\Modules\Authorization\Presentation\Controllers\IndexRoleController;
 use App\Shared\Middlewares\EnsureAuth;
 
 $route->middleware([EnsureAuth::class])

@@ -2,7 +2,7 @@
 
 namespace App\Shared\Application\Mappers\RoleViewDTO;
 
-use App\Modules\Role\Infrastructure\Models\Role as ModelsRole;
+use App\Modules\Authorization\Infrastructure\Models\Role as ModelsRole;
 use App\Shared\Application\DTOs\RoleView\RoleViewDTO;
 
 class RoleViewDTOMapper

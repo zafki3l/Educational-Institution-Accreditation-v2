@@ -2,7 +2,7 @@
 
 namespace App\Modules\UserManagement\Infrastructure\Models;
 
-use App\Modules\Role\Infrastructure\Models\Role;
+use App\Modules\Authorization\Infrastructure\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
