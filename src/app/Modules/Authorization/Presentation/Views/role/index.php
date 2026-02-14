@@ -7,23 +7,26 @@
     <link rel="stylesheet" href="user-management.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="/css/index/user.index.css">
-    <link rel="stylesheet" href="/css/index/createUser.css">
-    <link rel="stylesheet" href="/css/pagination.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/role/role.index.css">
 </head>
 <body>
 
 <div class="layout">
-    <?php include dirname(__DIR__, 4) . '/Shared/Views/layouts/user-management/sidebar.php' ?>
+    <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/user-management/sidebar.php' ?>
 
     <main class="main">
         <div class="container">
-
             <div class="page-header">
                 <h1>Cập nhật vai trò</h1>
-                <button class="primary-btn" id="openUserModal">
-                    </span>THÊM VAI TRÒ
-                </button>
+                <form action="/roles" method="post">
+                    <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
+                    <input type="text" name="name" placeholder="Nhập tên vai trò" class="text-input">
+
+                    <button class="primary-btn" type="submit">
+                        </span>THÊM VAI TRÒ
+                    </button>
+                </form>
             </div>
 
             <div class="table-box">

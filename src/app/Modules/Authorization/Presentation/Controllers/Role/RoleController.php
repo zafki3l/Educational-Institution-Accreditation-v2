@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Authorization\Presentation\Controllers;
+namespace App\Modules\Authorization\Presentation\Controllers\Role;
 
 use App\Shared\Http\Traits\HttpResponse;
 
