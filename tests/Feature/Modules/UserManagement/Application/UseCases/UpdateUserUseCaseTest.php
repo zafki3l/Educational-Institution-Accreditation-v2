@@ -27,7 +27,7 @@ class UpdateUserUseCaseTest extends TestCase
             'John',
             'Doe',
             Email::fromString('abc@123.com'),
-            Password::fromPlain('oldpass'),
+            Password::fromPlain('oldPass123'),
             1
         );
     }
@@ -39,7 +39,7 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('Jane');
         $request->method('getLastName')->willReturn('Smith');
         $request->method('getEmail')->willReturn('jane@example.com');
-        $request->method('getRoleId')->willReturn('2');
+        $request->method('getRoleId')->willReturn(2);
 
         $repository = $this->createMock(UserRepositoryInterface::class);
         $repository->expects($this->once())
@@ -68,7 +68,7 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('John');
         $request->method('getLastName')->willReturn('Doe');
         $request->method('getEmail')->willReturn('');
-        $request->method('getRoleId')->willReturn('1');
+        $request->method('getRoleId')->willReturn(1);
 
         $repository = $this->createMock(UserRepositoryInterface::class);
         $repository->expects($this->once())
@@ -93,7 +93,7 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('Jane');
         $request->method('getLastName')->willReturn('Smith');
         $request->method('getEmail')->willReturn('jane@example.com');
-        $request->method('getRoleId')->willReturn('3');
+        $request->method('getRoleId')->willReturn(3);
 
         $repository = $this->createMock(UserRepositoryInterface::class);
         $repository->method('findOrFail')
@@ -121,7 +121,7 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('Alice');
         $request->method('getLastName')->willReturn('Johnson');
         $request->method('getEmail')->willReturn('');
-        $request->method('getRoleId')->willReturn('1');
+        $request->method('getRoleId')->willReturn(1);
 
         $repository = $this->createMock(UserRepositoryInterface::class);
         $repository->method('findOrFail')
@@ -148,7 +148,7 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('John');
         $request->method('getLastName')->willReturn('Doe');
         $request->method('getEmail')->willReturn('');
-        $request->method('getRoleId')->willReturn('5');
+        $request->method('getRoleId')->willReturn(5);
 
         $repository = $this->createMock(UserRepositoryInterface::class);
         $repository->method('findOrFail')
@@ -174,7 +174,7 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('John');
         $request->method('getLastName')->willReturn('Doe');
         $request->method('getEmail')->willReturn('newemail@example.com');
-        $request->method('getRoleId')->willReturn('1');
+        $request->method('getRoleId')->willReturn(1);
 
         $repository = $this->createMock(UserRepositoryInterface::class);
         $repository->method('findOrFail')
@@ -201,7 +201,7 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('John');
         $request->method('getLastName')->willReturn('Doe');
         $request->method('getEmail')->willReturn('');
-        $request->method('getRoleId')->willReturn('1');
+        $request->method('getRoleId')->willReturn(1);
 
         $repository = $this->createMock(UserRepositoryInterface::class);
         $repository->method('findOrFail')
@@ -224,7 +224,7 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('John');
         $request->method('getLastName')->willReturn('Doe');
         $request->method('getEmail')->willReturn('john@example.com');
-        $request->method('getRoleId')->willReturn('2');
+        $request->method('getRoleId')->willReturn(2);
 
         $repository = $this->createMock(UserRepositoryInterface::class);
         $repository->method('findOrFail')
@@ -253,7 +253,7 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('Bob');
         $request->method('getLastName')->willReturn('Builder');
         $request->method('getEmail')->willReturn('bob@example.com');
-        $request->method('getRoleId')->willReturn('2');
+        $request->method('getRoleId')->willReturn(2);
 
         $repository = $this->createMock(UserRepositoryInterface::class);
         $repository->method('findOrFail')
@@ -286,7 +286,7 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getFirstName')->willReturn('Sarah');
         $request->method('getLastName')->willReturn('Connor');
         $request->method('getEmail')->willReturn('sarah@example.com');
-        $request->method('getRoleId')->willReturn('3');
+        $request->method('getRoleId')->willReturn(3);
 
         $repository = $this->createMock(UserRepositoryInterface::class);
         $repository->method('findOrFail')
