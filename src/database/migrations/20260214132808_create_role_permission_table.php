@@ -27,21 +27,20 @@ final class CreateRolePermissionTable extends AbstractMigration
                 'signed' => false,
                 'null' => false,
             ])
-            ->addColumn('permission_id', 'integer', [
-                'signed' => false,
+            ->addColumn('permission_id', 'string', [
                 'null' => false,
             ])
             ->addForeignKey(
                 'role_id',
                 'roles',
                 'id',
-                ['delete' => 'CASCADE', 'update' => 'NO_ACTION']
+                ['delete' => 'CASCADE', 'update' => 'CASCADE']
             )
             ->addForeignKey(
                 'permission_id',
                 'permissions',
                 'id',
-                ['delete' => 'CASCADE', 'update' => 'NO_ACTION']
+                ['delete' => 'CASCADE', 'update' => 'CASCADE']
             )
             ->create();
     }

@@ -18,7 +18,9 @@ final class RoleRepository implements RoleRepositoryInterface
 
     public function create(EntitiesRole $entitiesRole): void
     {
-        ModelsRole::create(['name' => $entitiesRole->getName()]);   
+        ModelsRole::create([
+            'name' => $entitiesRole->getName()
+        ]);   
     }
 
     public function delete(EntitiesRole $role): void

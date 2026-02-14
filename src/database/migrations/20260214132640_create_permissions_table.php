@@ -19,7 +19,8 @@ final class CreatePermissionsTable extends AbstractMigration
      */
     public function change(): void
     {
-        $this->table('permissions')
+        $this->table('permissions', ['id' => false, 'primary_key' => 'id'])
+            ->addColumn('id', 'string', ['null' => false])
             ->addColumn('name', 'string')
             ->create();
     }

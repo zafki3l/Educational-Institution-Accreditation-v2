@@ -2,11 +2,11 @@
 
 namespace App\Modules\Authorization\Infrastructure\ServiceProvider;
 
-use App\Modules\Authorization\Application\Requests\CreateRoleRequestInterface;
+use App\Modules\Authorization\Application\Role\Requests\CreateRoleRequestInterface;
 use App\Modules\Authorization\Domain\Repositories\RoleRepositoryInterface;
 use App\Modules\Authorization\Infrastructure\Readers\RoleReader;
 use App\Modules\Authorization\Infrastructure\Repositories\RoleRepository;
-use App\Modules\Authorization\Presentation\Requests\CreateRoleRequest;
+use App\Modules\Authorization\Presentation\Requests\Role\CreateRoleRequest;
 use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use Core\ServiceProvider;
 use Illuminate\Container\Container;

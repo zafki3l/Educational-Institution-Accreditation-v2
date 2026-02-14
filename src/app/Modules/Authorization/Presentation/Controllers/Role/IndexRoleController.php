@@ -2,10 +2,11 @@
 
 namespace App\Modules\Authorization\Presentation\Controllers\Role;
 
+use App\Modules\Authorization\Presentation\Controllers\AuthorizationController;
 use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use App\Shared\Response\ViewResponse;
 
-final class IndexRoleController extends RoleController
+final class IndexRoleController extends AuthorizationController
 {
     public function __construct(private RoleReaderInterface $roleReader) {}
 
@@ -18,9 +19,18 @@ final class IndexRoleController extends RoleController
             'role/index', 
             'main.layouts', 
             [
-                'title' => 'roles',
+                'title' => 'Cập nhật vai trò | ' . SYSTEM_NAME,
                 'roles' => $roles
             ]
+        );
+    }
+
+    public function assign()
+    {
+        return new ViewResponse(
+            self::MODULE_NAME,
+            'assign-permission/index',
+            'main.layouts'
         );
     }
 }

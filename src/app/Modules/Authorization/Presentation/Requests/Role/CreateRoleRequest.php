@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Authorization\Presentation\Requests;
+namespace App\Modules\Authorization\Presentation\Requests\Role;
 
-use App\Modules\Authorization\Application\Requests\CreateRoleRequestInterface;
+use App\Modules\Authorization\Application\Role\Requests\CreateRoleRequestInterface;
 
 final class CreateRoleRequest implements CreateRoleRequestInterface
 {
