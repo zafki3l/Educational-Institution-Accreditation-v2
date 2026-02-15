@@ -13,21 +13,21 @@
                 </div>
             </a>
 
-            <a href="/users">
+            <a href="/departments">
                 <div class="item">
                     <h4>Quản lý phòng ban</h4>
                     <span>12 Departments</span>
                 </div>
             </a>
 
-            <a href="/users">
+            <a href="/staffs">
                 <div class="item">
                     <h4>Quản lý nhân viên</h4>
                     <span>HR Records</span>
                 </div>
             </a>
 
-            <a href="/users">
+            <a href="/roles">
                 <div class="item">
                     <h4>Cập nhật quyền</h4>
                     <span>8 System Roles</span>

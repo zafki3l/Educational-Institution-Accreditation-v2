@@ -3,8 +3,8 @@
         <p class="sidebar-title">QUẢN LÝ NGƯỜI DÙNG</p>
 
         <a class="sidebar-item" href="/users">Quản lý tài khoản người dùng</a>
-        <a class="sidebar-item" href="">Quản lý phòng ban</a>
-        <a class="sidebar-item" href="">Quản lý nhân viên</a>
+        <a class="sidebar-item" href="/departments">Quản lý phòng ban</a>
+        <a class="sidebar-item" href="/staffs">Quản lý nhân viên</a>
 
         <div class="sidebar-group">
             <div class="sidebar-item sidebar-toggle">

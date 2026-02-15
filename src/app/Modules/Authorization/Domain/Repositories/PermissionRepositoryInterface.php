@@ -6,7 +6,7 @@ use App\Modules\Authorization\Domain\Entities\Permission as EntitiesPermission;
 
 interface PermissionRepositoryInterface
 {
-    public function create(EntitiesPermission $entitiesPermission);
+    public function create(EntitiesPermission $entitiesPermission): void;
 
     public function findOrFail(string $id): EntitiesPermission;
 

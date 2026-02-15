@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Authorization\Domain\Entities;
+namespace App\Modules\DepartmentManagement\Domain\Entities;
 
-use App\Modules\Authorization\Domain\Exception\EmptyRoleNameException;
+use App\Modules\DepartmentManagement\Domain\Exception\EmptyDepartmentNameException;
 
-class Permission
+class Department
 {
     private function __construct(
         private string $id,
@@ -14,7 +14,7 @@ class Permission
     public static function create(string $id, string $name): self
     {
         if (empty($name)) {
-            throw new EmptyRoleNameException();
+            throw new EmptyDepartmentNameException();
         }
 
         return new self($id, $name);
