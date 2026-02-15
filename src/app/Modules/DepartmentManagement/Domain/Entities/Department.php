@@ -2,6 +2,7 @@
 
 namespace App\Modules\DepartmentManagement\Domain\Entities;
 
+use App\Modules\DepartmentManagement\Domain\Exception\EmptyDepartmentIdException;
 use App\Modules\DepartmentManagement\Domain\Exception\EmptyDepartmentNameException;
 
 class Department
@@ -13,6 +14,10 @@ class Department
 
     public static function create(string $id, string $name): self
     {
+        if (empty($id)) {
+            throw new EmptyDepartmentIdException();
+        }
+        
         if (empty($name)) {
             throw new EmptyDepartmentNameException();
         }
