@@ -2,7 +2,9 @@
 
 namespace App\Modules\DepartmentManagement\Presentation\Requests;
 
-final class CreateDepartmentRequest
+use App\Modules\DepartmentManagement\Application\Requests\CreateDepartmentRequestInterface;
+
+final class CreateDepartmentRequest implements CreateDepartmentRequestInterface
 {
     private string $id;
     private string $name;

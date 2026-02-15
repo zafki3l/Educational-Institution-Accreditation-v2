@@ -9,7 +9,7 @@ use App\Modules\Authorization\Infrastructure\Models\Permission as ModelsPermissi
 
 class PermissionRepository implements PermissionRepositoryInterface
 {
-    public function create(EntitiesPermission $entitiesPermission)
+    public function create(EntitiesPermission $entitiesPermission): void
     {
         ModelsPermission::create([
             'id' => $entitiesPermission->getId(),
