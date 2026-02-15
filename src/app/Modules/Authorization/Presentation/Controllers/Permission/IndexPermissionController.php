@@ -2,15 +2,17 @@
 
 namespace App\Modules\Authorization\Presentation\Controllers\Permission;
 
-use App\Modules\Authorization\Infrastructure\Models\Permission;
 use App\Modules\Authorization\Presentation\Controllers\AuthorizationController;
+use App\Shared\Application\Contracts\PermissionReader\PermissionReaderInterface;
 use App\Shared\Response\ViewResponse;
 
 final class IndexPermissionController extends AuthorizationController
 {
+    public function __construct(private PermissionReaderInterface $permissionReader) {}
+
     public function index(): ViewResponse
     {
-        $permissions = Permission::all();
+        $permissions = $this->permissionReader->all();
 
         return new ViewResponse(
             self::MODULE_NAME,
