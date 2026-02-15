@@ -10,5 +10,5 @@ interface DepartmentRepositoryInterface
 
     public function findOrFail(string $id): EntitiesDepartment;
 
-    public function delete(EntitiesDepartment $entitiesPermission): void;
+    public function delete(EntitiesDepartment $entitiesDepartment): void;
 }
