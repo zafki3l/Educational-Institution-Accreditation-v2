@@ -1,13 +1,13 @@
-<div id="createUserModal" class="modal">
+<div id="createStaffModal" class="modal">
     <div class="modal-overlay"></div>
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Thêm Người Dùng Mới</h2>
-            <button class="modal-close" id="closeUserModal">
+            <h2>Thêm Nhân Viên Mới</h2>
+            <button class="modal-close" id="closeStaffModal">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
-        <form id="createUserForm" action="/users" method="post" class="user-form">
+        <form id="createStaffForm" action="/staffs" method="post" class="user-form">
             <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
             
             <div class="form-row">
@@ -50,43 +50,25 @@
 
             <br>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="role_id">Vai Trò *</label>
-                    <select 
-                        id="role_id"
-                        name="role_id" 
-                        class="form-input"
-                    >
-                        <option value="<?= null ?>">-- Chọn vai trò --</option>
-                        <?php foreach ($roles as $role): ?>
-                            <option value="<?= $role->id ?>"
-                                <?= (($_SESSION['old']['role_id'] ?? '') == $role->id) ? 'selected' : '' ?>>
-                                <?= $role->name ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="department_id">Phòng ban</label>
-                    <select 
-                        id="department_id"
-                        name="department_id" 
-                        class="form-input"
-                        disabled
-                    >
-                        <option value="<?= null ?>">-- Chọn phòng ban --</option>
-                        <?php foreach ($departments as $department): ?>
-                            <option value="<?= $department->id ?>"
-                                <?= (($_SESSION['old']['department_id'] ?? '') == $department->id) ? 'selected' : '' ?>>
-                                <?= $department->name ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="department_id">Phòng ban</label>
+                <select 
+                    id="department_id"
+                    name="department_id" 
+                    class="form-input"
+                >
+                    <option value="">-- Chọn phòng ban --</option>
+                    <?php foreach ($departments as $department): ?>
+                        <option value="<?= $department->id ?>"
+                            <?= (($_SESSION['old']['department_id'] ?? '') == $department->id) ? 'selected' : '' ?>>
+                            <?= $department->name ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
             </div>
-
+            
+            <br>
+            
             <div class="form-group">
                 <label for="password">Mật Khẩu *</label>
                 <input 
@@ -101,8 +83,8 @@
             <div class="error" id="formErrors"></div>
             
             <div class="form-actions">
-                <button type="button" class="btn-outline" id="cancelUserModal">Hủy</button>
-                <button type="submit" class="btn-primary">Thêm Người Dùng</button>
+                <button type="button" class="btn-outline" id="cancelStaffModal">Hủy</button>
+                <button type="submit" class="btn-primary">Thêm Nhân Viên</button>
             </div>
         </form>
     </div>

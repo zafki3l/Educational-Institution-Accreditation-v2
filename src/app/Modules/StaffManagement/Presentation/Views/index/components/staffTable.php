@@ -3,29 +3,26 @@
         <tr>
             <th>Họ và tên</th>
             <th>Email</th>
-            <th>Vai trò</th>
             <th>Phòng ban</th>
             <th class="right">Thao tác</th>
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($users as $user): ?>
-            <?php if ($user->role_name == 'Staff'): ?>
+        <?php foreach ($staffs as $staff): ?>
             <tr>
-                <td><?= htmlspecialchars("{$user->first_name} {$user->last_name}") ?></td>
-                <td><?= htmlspecialchars($user->email) ?></td>
-                <td><span class="badge"><?= htmlspecialchars($user->role_name) ?></span></td>
-                <td><?= htmlspecialchars($user->department_name ?? '') ?></td>
+                <td><?= htmlspecialchars("{$staff->first_name} {$staff->last_name}") ?></td>
+                <td><?= htmlspecialchars($staff->email) ?></td>
+                <td><?= htmlspecialchars($staff->department_name ?? '') ?></td>
                 <td class="right">
                     <div class="action-group">
-                        <button class="icon-btn edit-user-btn"
+                        <button class="icon-btn edit-staff-btn"
                                 type="button"
                                 title="Chỉnh sửa"
-                                data-id="<?= $user->id ?>">
+                                data-id="<?= $staff->id ?>">
                             <span class="material-symbols-outlined">edit</span>
                         </button>
 
-                        <form action="/users/<?= htmlspecialchars($user->id) ?>" method="post">
+                        <form action="/staffs/<?= htmlspecialchars($staff->id) ?>" method="post">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
 
@@ -36,7 +33,6 @@
                     </div>
                 </td>
             </tr>
-            <?php endif; ?>
         <?php endforeach; ?>
     </tbody>
 </table>

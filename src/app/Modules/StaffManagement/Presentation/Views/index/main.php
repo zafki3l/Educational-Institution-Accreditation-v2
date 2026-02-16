@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Account Management Dashboard</title>
-    <link rel="stylesheet" href="user-management.css">
+    <title>Staff Management Dashboard</title>
+    <link rel="stylesheet" href="staff-management.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="/css/sidebar.css">
@@ -21,16 +21,16 @@
         <div class="container">
 
             <div class="page-header">
-                <h1>Quản lý tài khoản người dùng</h1>
-                <button class="primary-btn" id="openUserModal">
-                    </span>THÊM NGƯỜI DÙNG MỚI
+                <h1>Quản lý nhân viên</h1>
+                <button class="primary-btn" id="openStaffModal">
+                    THÊM NHÂN VIÊN MỚI
                 </button>
             </div>
 
-           <?php include 'components/searchUser.php' ?>
+           <?php include 'components/searchStaff.php' ?>
 
             <div class="table-box">
-                <?php include 'components/userTable.php' ?>
+                <?php include 'components/staffTable.php' ?>
 
                 <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/parts/pagination.php'?>
             </div>
@@ -42,8 +42,8 @@
 <?php include 'components/editForm.php' ?>
 
 
-<script src="/js/user/createForm.js"></script>
-<script src="/js/user/editForm.js"></script>
+<script src="/js/staff/createForm.js"></script>
+<script src="/js/staff/editForm.js"></script>
 
 </body>
 </html>

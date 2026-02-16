@@ -9,25 +9,25 @@ use App\Shared\Response\ViewResponse;
 final class IndexStaffController extends StaffController
 {
     public function __construct(
-        private DepartmentReaderInterface $departmentReader,
-        private UserReaderInterface $userReader
+        private UserReaderInterface $userReader,
+        private DepartmentReaderInterface $departmentReader
     ) {}
 
     public function index(): ViewResponse
     {
-        $results = $this->userReader->all(null, null);
-                
+        $keyword = $_GET['keyword'] ?? null;
+        $results = $this->userReader->allStaffs($keyword);
         $departments = $this->departmentReader->all();
 
         return new ViewResponse(
-            self::MODULE_NAME,
-            'index/main',
+            self::MODULE_NAME, 
+            'index/main', 
             'main.layouts',
             [
                 'title' => 'Quản lý nhân viên | ' . SYSTEM_NAME,
-                'departments' => $departments,
-                'users' => $results->items,
-                'pagination' => $results
+                'staffs' => $results->items,
+                'pagination' => $results,
+                'departments' => $departments
             ]
         );
     }
