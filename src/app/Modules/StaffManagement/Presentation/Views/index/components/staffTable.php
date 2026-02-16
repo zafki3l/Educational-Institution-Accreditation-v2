@@ -3,6 +3,7 @@
         <tr>
             <th>Họ và tên</th>
             <th>Email</th>
+            <th>Vai trò</th>
             <th>Phòng ban</th>
             <th class="right">Thao tác</th>
         </tr>
@@ -12,6 +13,7 @@
             <tr>
                 <td><?= htmlspecialchars("{$staff->first_name} {$staff->last_name}") ?></td>
                 <td><?= htmlspecialchars($staff->email) ?></td>
+                <td><span class="badge"><?= htmlspecialchars($staff->role_name) ?></span></td>
                 <td><?= htmlspecialchars($staff->department_name ?? '') ?></td>
                 <td class="right">
                     <div class="action-group">
