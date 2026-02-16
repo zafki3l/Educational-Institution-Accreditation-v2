@@ -34,7 +34,8 @@ final class DeleteUserUseCase
                 'first_name' => $user->getFirstName(),
                 'last_name' => $user->getLastName(),
                 'email' => $user->getEmail() ? $user->getEmail()->value() : null,
-                'role_id' => $user->getRoleId()
+                'role_id' => $user->getRoleId(),
+                'department_id' => $user->getDepartmentId() ? $user->getDepartmentId() : null
             ]
         );
     }

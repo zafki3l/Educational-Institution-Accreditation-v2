@@ -11,14 +11,21 @@ class CreateUserRequest implements CreateUserRequestInterface
     private string $email;
     private string $password;
     private int $role_id;
+    private ?string $department_id;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->first_name = trim($_POST['first_name']);
         $this->last_name = trim($_POST['last_name']);
         $this->email = trim($_POST['email']);
         $this->password = $_POST['password'];
         $this->role_id = (int) $_POST['role_id'];
+
+        if ($this->role_id === 2) {
+            $this->department_id = trim($_POST['department_id']);
+        } else {
+            $this->department_id = null;
+        }
     }
 
     public function getFirstName(): string
@@ -44,5 +51,10 @@ class CreateUserRequest implements CreateUserRequestInterface
     public function getRoleId(): int
     {
         return $this->role_id;
+    }
+
+    public function getDepartmentId(): ?string
+    {
+        return $this->department_id;
     }
 }

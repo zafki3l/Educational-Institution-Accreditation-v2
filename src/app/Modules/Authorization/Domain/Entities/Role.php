@@ -27,7 +27,7 @@ class Role
     public function assignId(int $id): void
     {
         if ($this->id !== null) {
-            throw new \LogicException('ID already assigned');
+            throw new EmptyRoleNameException();
         }
 
         $this->id = $id;

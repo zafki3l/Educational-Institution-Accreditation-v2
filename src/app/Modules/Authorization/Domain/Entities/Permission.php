@@ -2,7 +2,8 @@
 
 namespace App\Modules\Authorization\Domain\Entities;
 
-use App\Modules\Authorization\Domain\Exception\EmptyRoleNameException;
+use App\Modules\Authorization\Domain\Exception\EmptyPermissionIdException;
+use App\Modules\Authorization\Domain\Exception\EmptyPermissionNameException;
 
 class Permission
 {
@@ -13,8 +14,12 @@ class Permission
 
     public static function create(string $id, string $name): self
     {
+        if (empty($id)) {
+            throw new EmptyPermissionIdException();
+        }
+
         if (empty($name)) {
-            throw new EmptyRoleNameException();
+            throw new EmptyPermissionNameException();
         }
 
         return new self($id, $name);

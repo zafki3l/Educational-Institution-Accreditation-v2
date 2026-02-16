@@ -37,7 +37,8 @@ final class CreateUserUseCase
             $request->getLastName(),
             $email,
             Password::fromPlain($request->getPassword()),
-            $request->getRoleId()
+            $request->getRoleId(),
+            $request->getDepartmentId()
         );
 
         $created = $this->userRepository->create($user);
@@ -57,7 +58,8 @@ final class CreateUserUseCase
                 'first_name' => $user->getFirstName(),
                 'last_name' => $user->getLastName(),
                 'email' => $user->getEmail() ? $user->getEmail()->value() : '',
-                'role_id' => $user->getRoleId()
+                'role_id' => $user->getRoleId(),
+                'department_id' => $user->getDepartmentId() ? $user->getDepartmentId() : null
             ]
         );
     }

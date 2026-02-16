@@ -13,4 +13,6 @@ interface CreateUserRequestInterface
     public function getPassword(): string;
 
     public function getRoleId(): int;
+
+    public function getDepartmentId(): ?string;
 }

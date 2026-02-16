@@ -10,6 +10,7 @@
     </thead>
     <tbody>
         <?php foreach ($users as $user): ?>
+            <?php if ($user->role_name == 'Staff'): ?>
             <tr>
                 <td><?= htmlspecialchars("{$user->first_name} {$user->last_name}") ?></td>
                 <td><?= htmlspecialchars($user->email) ?></td>
@@ -35,6 +36,7 @@
                     </div>
                 </td>
             </tr>
+            <?php endif; ?>
         <?php endforeach; ?>
     </tbody>
 </table>
