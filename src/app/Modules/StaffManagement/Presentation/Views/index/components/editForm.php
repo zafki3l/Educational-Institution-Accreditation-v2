@@ -1,15 +1,15 @@
-<div id="editUserModal" class="modal">
+<div id="editStaffModal" class="modal">
     <div class="modal-overlay"></div>
 
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Sửa Thông Tin Người Dùng</h2>
+            <h2>Sửa Thông Tin Nhân Viên</h2>
             <button class="modal-close" id="closeEditModal">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
 
-        <form id="editUserForm" class="user-form" action="/users/update" method="post">
+        <form id="editStaffForm" class="user-form" action="/staffs/update" method="post">
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" id="edit-id" name="id" value="<?= htmlspecialchars($_SESSION['old']['id'] ?? '') ?>">
             <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
@@ -50,41 +50,21 @@
 
             <br>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="edit-role_id">Vai Trò</label>
-                    <select 
-                        id="edit-role_id"
-                        name="role_id"
-                        class="form-input"
-                    >
-                        <option value="<?= null ?>">-- Chọn vai trò --</option>
-                        <?php foreach ($roles as $role): ?>
-                            <option value="<?= $role->id ?>"
-                                <?= (($_SESSION['old']['role_id'] ?? '') == $role->id) ? 'selected' : '' ?>>
-                                <?= $role->name ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="edit-department_id">Phòng ban</label>
-                    <select 
-                        id="edit-department_id"
-                        name="department_id" 
-                        class="form-input"
-                        disabled
-                    >
-                        <option value="<?= null ?>">-- Chọn phòng ban --</option>
-                        <?php foreach ($departments as $department): ?>
-                            <option value="<?= $department->id ?>"
-                                <?= (($_SESSION['old']['department_id'] ?? '') == $department->id) ? 'selected' : '' ?>>
-                                <?= $department->name ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="edit-department_id">Phòng ban</label>
+                <select 
+                    id="edit-department_id"
+                    name="department_id" 
+                    class="form-input"
+                >
+                    <option value="">-- Chọn phòng ban --</option>
+                    <?php foreach ($departments as $department): ?>
+                        <option value="<?= $department->id ?>"
+                            <?= (($_SESSION['old']['department_id'] ?? '') == $department->id) ? 'selected' : '' ?>>
+                            <?= $department->name ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
             </div>
 
             <div class="error" id="editFormErrors"></div>
@@ -98,5 +78,7 @@
                 </button>
             </div>
         </form>
+    </div>
+</div>
     </div>
 </div>

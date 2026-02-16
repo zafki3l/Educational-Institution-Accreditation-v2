@@ -8,6 +8,7 @@ use App\Modules\UserManagement\Infrastructure\Mappers\IndexUserViewDTOMapper;
 use App\Modules\UserManagement\Infrastructure\Models\User;
 use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
 use App\Shared\Application\DTOs\Paginator\PaginatedResultDTO;
+use App\Shared\Domain\UserRole;
 
 class UserReader implements UserReaderInterface
 {
@@ -48,6 +49,11 @@ class UserReader implements UserReaderInterface
             $paginator->total(),
             $paginator->lastPage()
         );
+    }
+
+    public function allStaffs(?string $keyword, int $role_id = UserRole::ROLE_STAFF): PaginatedResultDTO
+    {
+        return $this->all($keyword, $role_id);
     }
 
     public function findById(string $id): EditUserViewDTO
