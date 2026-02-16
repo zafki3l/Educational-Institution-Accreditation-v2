@@ -36,19 +36,21 @@
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input 
-                        type="email" 
-                        id="email"
-                        name="email" 
-                        placeholder="Nhập email" 
-                        class="form-input"
-                        value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '')?>"
-                    >
-                </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input 
+                    type="email" 
+                    id="email"
+                    name="email" 
+                    placeholder="Nhập email" 
+                    class="form-input"
+                    value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '')?>"
+                >
+            </div>
 
+            <br>
+
+            <div class="form-row">
                 <div class="form-group">
                     <label for="role_id">Vai Trò *</label>
                     <select 
@@ -61,6 +63,24 @@
                             <option value="<?= $role->id ?>"
                                 <?= (($_SESSION['old']['role_id'] ?? '') == $role->id) ? 'selected' : '' ?>>
                                 <?= $role->name ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="department_id">Phòng ban</label>
+                    <select 
+                        id="department_id"
+                        name="department_id" 
+                        class="form-input"
+                        disabled
+                    >
+                        <option value="<?= null ?>">-- Chọn phòng ban --</option>
+                        <?php foreach ($departments as $department): ?>
+                            <option value="<?= $department->id ?>"
+                                <?= (($_SESSION['old']['department_id'] ?? '') == $department->id) ? 'selected' : '' ?>>
+                                <?= $department->name ?>
                             </option>
                         <?php endforeach; ?>
                     </select>

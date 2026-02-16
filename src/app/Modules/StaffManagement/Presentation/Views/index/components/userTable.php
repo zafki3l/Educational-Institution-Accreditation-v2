@@ -1,0 +1,38 @@
+<table>
+    <thead>
+        <tr>
+            <th>Họ và tên</th>
+            <th>Email</th>
+            <th>Vai trò</th>
+            <th class="right">Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($staffs as $user): ?>
+            <tr>
+                <td><?= htmlspecialchars("{$user->first_name} {$user->last_name}") ?></td>
+                <td><?= htmlspecialchars($user->email ?? '[Trống]') ?></td>
+                <td><span class="badge"><?= htmlspecialchars($user->role->name) ?></span></td>
+                <td class="right">
+                    <div class="action-group">
+                        <button class="icon-btn edit-user-btn"
+                                type="button"
+                                title="Chỉnh sửa"
+                                data-id="<?= $user->id ?>">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+
+                        <form action="/users/<?= htmlspecialchars($user->id) ?>" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
+
+                            <button class="icon-btn danger" title="Xóa" type="submit">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

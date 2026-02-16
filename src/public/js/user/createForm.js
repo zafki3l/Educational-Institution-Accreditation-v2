@@ -5,7 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('closeUserModal');
     const cancelBtn = document.getElementById('cancelUserModal');
 
+    const roleSelect = document.getElementById('role_id');
+    const departmentSelect = document.getElementById('department_id');
+    const ROLE_STAFF = '2';
+
     if (!createUserForm || !createUserModal || !openBtn) return;
+    if (!roleSelect || !departmentSelect) return;
 
     openBtn.addEventListener('click', () => {
         createUserModal.classList.add('active');
@@ -47,6 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderErrors(data.errors);
         createUserModal.classList.add('active');
+    });
+
+    roleSelect.addEventListener('change', function () {
+        if (this.value === ROLE_STAFF) {
+            departmentSelect.disabled = false;
+            departmentSelect.required = true;
+        } else {
+            departmentSelect.disabled = true;
+            departmentSelect.required = false;
+            departmentSelect.value = '';
+        }
     });
 });
 
