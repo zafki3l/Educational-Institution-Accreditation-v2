@@ -13,4 +13,6 @@ interface UpdateUserRequestInterface
     public function getEmail(): string;
 
     public function getRoleId(): int;
+
+    public function getDepartmentId(): ?string;
 }

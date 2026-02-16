@@ -14,7 +14,7 @@ class UserReader implements UserReaderInterface
     public function all(?string $keyword, ?int $role_id): PaginatedResultDTO
     {
         $query = User::query()
-            ->with('role:id,name')
+            ->with('role:id,name', 'department:id,name')
             ->orderByDesc('created_at');
 
         if (!empty($keyword)) {
@@ -33,7 +33,8 @@ class UserReader implements UserReaderInterface
             'first_name',
             'last_name',
             'email',
-            'role_id'
+            'role_id',
+            'department_id'
         ]);
 
         $items = $paginator->getCollection()
@@ -57,7 +58,8 @@ class UserReader implements UserReaderInterface
                 'first_name',
                 'last_name',
                 'email',
-                'role_id'
+                'role_id',
+                'department_id'
             )
             ->where('id', $id)
             ->first();

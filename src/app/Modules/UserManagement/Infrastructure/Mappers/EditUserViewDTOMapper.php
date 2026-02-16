@@ -14,7 +14,8 @@ class EditUserViewDTOMapper
             $user->first_name,
             $user->last_name,
             $user->email ?? '',
-            $user->role_id
+            $user->role_id,
+            $user->department_id ?? ''
         );
     }
 }

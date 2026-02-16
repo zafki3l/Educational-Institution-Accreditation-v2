@@ -20,7 +20,8 @@ class UserMapper
             $modelsUser->last_name,
             $modelsUser->email ? Email::fromString($modelsUser->email) : null,
             Password::fromHash($modelsUser->password),
-            $modelsUser->role_id
+            $modelsUser->role_id,
+            $modelsUser->department_id
         );
     }
 }

@@ -2,19 +2,20 @@
 
 namespace App\Modules\StaffManagement\Presentation\Controllers;
 
-use App\Modules\UserManagement\Infrastructure\Models\User;
 use App\Shared\Application\Contracts\DepartmentReader\DepartmentReaderInterface;
+use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
 use App\Shared\Response\ViewResponse;
 
 final class IndexStaffController extends StaffController
 {
-    public function __construct(private DepartmentReaderInterface $departmentReader) {}
+    public function __construct(
+        private DepartmentReaderInterface $departmentReader,
+        private UserReaderInterface $userReader
+    ) {}
 
     public function index(): ViewResponse
     {
-        $staffs = User::with('role')
-                    ->where('role_id', 2)
-                    ->get();
+        $results = $this->userReader->all(null, null);
                 
         $departments = $this->departmentReader->all();
 
@@ -25,7 +26,8 @@ final class IndexStaffController extends StaffController
             [
                 'title' => 'Quản lý nhân viên | ' . SYSTEM_NAME,
                 'departments' => $departments,
-                'staffs' => $staffs
+                'users' => $results->items,
+                'pagination' => $results
             ]
         );
     }

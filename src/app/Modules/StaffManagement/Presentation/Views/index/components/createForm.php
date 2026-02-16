@@ -1,36 +1,35 @@
-<div id="editUserModal" class="modal">
+<div id="createUserModal" class="modal">
     <div class="modal-overlay"></div>
-
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Sửa Thông Tin Người Dùng</h2>
-            <button class="modal-close" id="closeEditModal">
+            <h2>Thêm Người Dùng Mới</h2>
+            <button class="modal-close" id="closeUserModal">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
-
-        <form id="editUserForm" class="user-form" action="/users/update" method="post">
-            <input type="hidden" name="_method" value="PUT">
-            <input type="hidden" id="edit-id" name="id" value="<?= htmlspecialchars($_SESSION['old']['id'] ?? '') ?>">
-            <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
+        <form id="createUserForm" action="/users" method="post" class="user-form">
+            <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
+            
             <div class="form-row">
                 <div class="form-group">
-                    <label for="edit-first_name">Họ</label>
+                    <label for="first_name">Họ *</label>
                     <input 
-                        type="text"
-                        id="edit-first_name"
-                        name="first_name"
+                        type="text" 
+                        id="first_name"
+                        name="first_name" 
+                        placeholder="Nhập họ" 
                         class="form-input"
                         value="<?= htmlspecialchars($_SESSION['old']['first_name'] ?? '') ?>"
                     >
                 </div>
 
                 <div class="form-group">
-                    <label for="edit-last_name">Tên</label>
+                    <label for="last_name">Tên *</label>
                     <input 
-                        type="text"
-                        id="edit-last_name"
-                        name="last_name"
+                        type="text" 
+                        id="last_name"
+                        name="last_name" 
+                        placeholder="Nhập tên" 
                         class="form-input"
                         value="<?= htmlspecialchars($_SESSION['old']['last_name'] ?? '') ?>"
                     >
@@ -38,13 +37,14 @@
             </div>
 
             <div class="form-group">
-                <label for="edit-email">Email</label>
+                <label for="email">Email</label>
                 <input 
-                    type="text"
-                    id="edit-email"
-                    name="email"
+                    type="email" 
+                    id="email"
+                    name="email" 
+                    placeholder="Nhập email" 
                     class="form-input"
-                    value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '') ?>"
+                    value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '')?>"
                 >
             </div>
 
@@ -52,10 +52,10 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="edit-role_id">Vai Trò</label>
+                    <label for="role_id">Vai Trò *</label>
                     <select 
-                        id="edit-role_id"
-                        name="role_id"
+                        id="role_id"
+                        name="role_id" 
                         class="form-input"
                     >
                         <option value="<?= null ?>">-- Chọn vai trò --</option>
@@ -69,9 +69,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="edit-department_id">Phòng ban</label>
+                    <label for="department_id">Phòng ban</label>
                     <select 
-                        id="edit-department_id"
+                        id="department_id"
                         name="department_id" 
                         class="form-input"
                         disabled
@@ -87,15 +87,22 @@
                 </div>
             </div>
 
-            <div class="error" id="editFormErrors"></div>
+            <div class="form-group">
+                <label for="password">Mật Khẩu *</label>
+                <input 
+                    type="password" 
+                    id="password"
+                    name="password" 
+                    placeholder="Nhập mật khẩu (tối thiểu 8 ký tự)" 
+                    class="form-input"
+                >
+            </div>
 
+            <div class="error" id="formErrors"></div>
+            
             <div class="form-actions">
-                <button type="button" class="btn-outline" id="cancelEditModal">
-                    Hủy
-                </button>
-                <button type="submit" class="btn-primary">
-                    Cập Nhật
-                </button>
+                <button type="button" class="btn-outline" id="cancelUserModal">Hủy</button>
+                <button type="submit" class="btn-primary">Thêm Người Dùng</button>
             </div>
         </form>
     </div>

@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     const editUserModal = document.getElementById("editUserModal");
     const closeEditModal = document.getElementById("closeEditModal");
     const cancelEditModal = document.getElementById("cancelEditModal");
@@ -7,7 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const editButtons = document.querySelectorAll(".edit-user-btn");
 
+    const roleSelect = document.getElementById('edit-role_id');
+    const departmentSelect = document.getElementById('edit-department_id');
+    const ROLE_STAFF = '2';
+
     if (!editUserModal || !editUserForm) return;
+    if (!roleSelect || !departmentSelect) return;
 
     editButtons.forEach(btn => {
         btn.addEventListener("click", async () => {
@@ -60,15 +64,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     closeEditModal?.addEventListener("click", closeEditForm);
     cancelEditModal?.addEventListener("click", closeEditForm);
+
+    roleSelect.addEventListener('change', function () {
+        if (this.value === ROLE_STAFF) {
+            departmentSelect.disabled = false;
+            departmentSelect.required = true;
+        } else {
+            departmentSelect.disabled = true;
+            departmentSelect.required = false;
+            departmentSelect.value = '';
+        }
+    });
 });
 
+const ROLE_STAFF = 2;
+
 const fillUserForm = (user) => {
+    const roleSelect = document.getElementById("edit-role_id");
+    const departmentSelect = document.getElementById("edit-department_id");
+
     document.getElementById("edit-id").value = user.id;
     document.getElementById("edit-first_name").value = user.first_name;
     document.getElementById("edit-last_name").value = user.last_name;
     document.getElementById("edit-email").value = user.email;
-    document.getElementById("edit-role_id").value = user.role_id;
-}
+
+    roleSelect.value = String(user.role_id);
+    roleSelect.dispatchEvent(new Event('change'));
+    departmentSelect.value = user.department_id ?? '';
+};
 
 const renderEditErrors = (errors = []) => {
     const box = document.getElementById("editFormErrors");

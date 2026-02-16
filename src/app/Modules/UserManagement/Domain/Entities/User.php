@@ -3,14 +3,11 @@
 namespace App\Modules\UserManagement\Domain\Entities;
 
 use App\Modules\Authentication\Domain\ValueObjects\AuthId;
-use App\Modules\Role\Domain\Entities\Role;
 use App\Modules\UserManagement\Domain\Exception\RoleMissingException;
-use App\Modules\UserManagement\Domain\Exception\UserNameEmptyException as ExceptionUserNameEmptyException;
+use App\Modules\UserManagement\Domain\Exception\UserNameEmptyException;
 use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
-use PHPUnit\Framework\Constraint\IsEmpty;
-use UserNameEmptyException;
 
 class User
 {
@@ -21,7 +18,8 @@ class User
         private string $last_name,
         private ?Email $email,
         private Password $password,
-        private int $role_id
+        private int $role_id,
+        private ?string $department_id
     ) {}
 
     public static function create(
@@ -31,21 +29,27 @@ class User
         string $last_name,
         ?Email $email,
         Password $password,
-        int $role_id
+        int $role_id,
+        ?string $department_id
     ): self {
         self::IsEmptyName($first_name, $last_name);
 
-        return new self($id, $auth_id, $first_name, $last_name, $email, $password, $role_id);
+        return new self($id, $auth_id, $first_name, $last_name, $email, $password, $role_id, $department_id);
     }
 
     public function update(
         string $first_name,
         string $last_name,
         ?string $email,
-        int $role_id
+        int $role_id,
+        ?string $department_id
     ) {
         if ($email !== null) {
             $this->assignEmail(Email::fromString($email));
+        }
+
+        if ($department_id !== null) {
+            $this->changeDepartmentId($department_id);
         }
 
         self::IsEmptyName($first_name, $last_name);
@@ -95,6 +99,12 @@ class User
         return $this->role_id;
     }
 
+    public function getDepartmentId(): ?string
+    {
+        return $this->department_id;
+    }
+
+
     public function changeAuthId(AuthId $auth_id): void
     {
         $this->auth_id = $auth_id;
@@ -127,6 +137,11 @@ class User
         $this->role_id = $role_id;
     }
 
+    public function changeDepartmentId(string $department_id): void
+    {
+        $this->department_id = $department_id;
+    }
+
     private static function IsEmptyRoleId(int $role_id): void
     {
         if (empty($role_id)) {
@@ -137,7 +152,7 @@ class User
     private static function IsEmptyName(string $first_name, string $last_name): void
     {
         if (empty($first_name) || empty($last_name)) {
-            throw new ExceptionUserNameEmptyException();
+            throw new UserNameEmptyException();
         }
     }
 }

@@ -21,7 +21,8 @@ final class UpdateUserUseCase
             $request->getFirstName(), 
             $request->getLastName(), 
             $request->getEmail() == '' ? null : $request->getEmail(), 
-            $request->getRoleId()
+            $request->getRoleId(),
+            $request->getDepartmentId() == '' ? null : $request->getDepartmentId()
         );
 
         $this->repository->save($user);

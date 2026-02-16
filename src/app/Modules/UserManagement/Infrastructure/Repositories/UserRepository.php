@@ -18,7 +18,8 @@ class UserRepository implements UserRepositoryInterface
             'last_name' => $entitiesUser->getLastName(),
             'email' => $entitiesUser->getEmail() ? $entitiesUser->getEmail()->value() : null,
             'password' => $entitiesUser->getPassword()->value(),
-            'role_id' => $entitiesUser->getRoleId()
+            'role_id' => $entitiesUser->getRoleId(),
+            'department_id' => $entitiesUser->getDepartmentId() ? $entitiesUser->getDepartmentId() : null
         ]);
         return UserMapper::toDomain($modelsUser);
     }
@@ -41,6 +42,7 @@ class UserRepository implements UserRepositoryInterface
         $modelsUser->first_name = $entitiesUser->getFirstName();
         $modelsUser->last_name = $entitiesUser->getLastName();
         $modelsUser->role_id = $entitiesUser->getRoleId();
+        $modelsUser->department_id = $entitiesUser->getDepartmentId() ? $entitiesUser->getDepartmentId() : null;
 
         $modelsUser->save();
     }

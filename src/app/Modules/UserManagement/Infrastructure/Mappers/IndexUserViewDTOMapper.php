@@ -14,7 +14,8 @@ class IndexUserViewDTOMapper
             $user->first_name,
             $user->last_name,
             $user->email ?? '[Trống]',
-            $user->role->name
+            $user->role->name,
+            $user->department->name ?? ''
         );
     }
 }
