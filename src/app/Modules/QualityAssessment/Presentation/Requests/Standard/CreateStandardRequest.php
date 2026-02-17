@@ -2,7 +2,9 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Requests\Standard;
 
-final class CreateStandardRequest
+use App\Modules\QualityAssessment\Application\Requests\Standard\CreateStandardRequestInterface;
+
+final class CreateStandardRequest implements CreateStandardRequestInterface
 {
     private string $id;
     private string $name;
