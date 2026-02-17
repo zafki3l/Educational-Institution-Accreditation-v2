@@ -77,4 +77,9 @@ class UserReader implements UserReaderInterface
     {
         return User::count();
     }
+
+    public function countByRoleId(int $role_id): int
+    {
+        return User::where('role_id', $role_id)->count();
+    }
 }

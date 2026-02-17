@@ -14,4 +14,9 @@ class DepartmentReader implements DepartmentReaderInterface
             ->map(fn ($department) => DepartmentViewDTOMapper::fromModel($department))
             ->toArray();
     }
+
+    public function count(): int
+    {
+        return Department::count();
+    }
 } 

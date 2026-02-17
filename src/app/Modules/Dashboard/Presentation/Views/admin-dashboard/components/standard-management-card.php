@@ -6,7 +6,7 @@
         </p>
 
         <div class="grid-2">
-            <a href="">
+            <a href="/standards">
                 <div class="item">
                     <h4>Quản lý tiêu chuẩn đánh giá</h4>
                     <span>Framework Setup</span>

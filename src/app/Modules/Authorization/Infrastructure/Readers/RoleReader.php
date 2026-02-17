@@ -14,4 +14,9 @@ final class RoleReader implements RoleReaderInterface
             ->map(fn ($role) => RoleViewDTOMapper::fromModel($role))
             ->toArray();
     }
+
+    public function count(): int
+    {
+        return Role::count();
+    }
 }

@@ -15,4 +15,6 @@ interface UserReaderInterface
     public function findById(string $id): EditUserViewDTO;
 
     public function count(): int;
+
+    public function countByRoleId(int $role_id): int;
 }
