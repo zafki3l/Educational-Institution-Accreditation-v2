@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\QualityAssessment\Presentation\Controllers\Standard\CreateStandardController;
+use App\Modules\QualityAssessment\Presentation\Controllers\Standard\DeleteStandardController;
 use App\Modules\QualityAssessment\Presentation\Controllers\Standard\IndexStandardController;
 use App\Shared\Middlewares\EnsureAuth;
 use App\Shared\Middlewares\EnsureStaff;
@@ -13,3 +14,6 @@ $route->middleware([EnsureAuth::class, EnsureStaff::class])
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->post('/standards', [CreateStandardController::class, 'store']);
+
+$route->middleware([EnsureAuth::class, EnsureStaff::class])
+    ->delete('/standards/{id}', [DeleteStandardController::class, 'destroy']);
