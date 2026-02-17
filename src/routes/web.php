@@ -8,3 +8,4 @@ require_once 'modules/permission.routes.php';
 require_once 'modules/user.routes.php';
 require_once 'modules/department.routes.php';
 require_once 'modules/staff.routes.php';
+require_once 'modules/standard.routes.php';

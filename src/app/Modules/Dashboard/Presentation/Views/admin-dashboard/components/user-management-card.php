@@ -9,28 +9,28 @@
             <a href="/users">
                 <div class="item">
                     <h4>Quản lý tài khoản người dùng</h4>
-                    <span><?= $total_users ?> người dùng</span>
+                    <span><?= htmlspecialchars($total_users) ?> người dùng</span>
                 </div>
             </a>
 
             <a href="/departments">
                 <div class="item">
                     <h4>Quản lý phòng ban</h4>
-                    <span>12 Departments</span>
+                    <span><?= htmlspecialchars($total_departments) ?> phòng ban</span>
                 </div>
             </a>
 
             <a href="/staffs">
                 <div class="item">
                     <h4>Quản lý nhân viên</h4>
-                    <span>HR Records</span>
+                    <span><?= htmlspecialchars($total_staffs) ?> nhân viên</span>
                 </div>
             </a>
 
             <a href="/roles">
                 <div class="item">
-                    <h4>Cập nhật quyền</h4>
-                    <span>8 System Roles</span>
+                    <h4>Phân quyền người dùng</h4>
+                    <span><?= htmlspecialchars($total_roles) ?> vai trò</span>
                 </div>
             </a>
         </div>
