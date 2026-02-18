@@ -31,7 +31,7 @@ final class CreateCriteriaController extends QualityAssessmentController
         );
     }
 
-    public function store(CreateCriteriaRequest $request)
+    public function store(CreateCriteriaRequest $request): void
     {
         $this->createCriteriaUseCase->execute($request, AuthSession::getUserId());
 
