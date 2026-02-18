@@ -1,54 +1,5 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: "Inter", sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-}
-
 .layout {
     display: flex;
-}
-
-.sidebar {
-    position: fixed;
-    width: 250px;
-    height: 100vh;
-    background: white;
-    border-right: 1px solid #e2e8f0;
-    padding: 20px 0;
-}
-
-.sidebar-title {
-    font-size: 11px;
-    font-weight: bold;
-    color: #94a3b8;
-    padding: 0 20px 10px;
-}
-
-.sidebar-item {
-    display: block;
-    padding: 12px 20px;
-    text-decoration: none;
-    color: #475569;
-    font-size: 14px;
-    transition: 0.2s;
-}
-
-.sidebar-item:hover {
-    background: #f1f5f9;
-    color: #1e40af;
-}
-
-.sidebar-item.active {
-    background: #e0e7ff;
-    color: #1e40af;
-    font-weight: 600;
-    border-right: 4px solid #1e40af;
 }
 
 .main {
@@ -60,21 +11,6 @@ body {
 .container {
     max-width: 1200px;
     margin: auto;
-}
-
-.text-input {
-    width: 320px;              /* gọn, không loãng */
-    padding: 10px 14px;
-    font-size: 14px;
-    font-family: "Inter", sans-serif;
-
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    background: #ffffff;
-    color: #1e293b;
-
-    outline: none;
-    transition: 0.2s ease;
 }
 
 .page-header {
@@ -89,19 +25,39 @@ body {
     font-weight: 700;
 }
 
-.primary-btn {
+.filter-box {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.filter-box input,
+.filter-box select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.filter-box button {
+    padding: 8px 16px;
     background: #1e40af;
     color: white;
-    padding: 10px 16px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: 0.2s;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
-.primary-btn:hover {
+.filter-box button:hover {
     background: #1d4ed8;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
+}
+
+.filter-box button:active {
+    transform: translateY(0);
 }
 
 .table-box {
@@ -194,3 +150,17 @@ tbody tr:hover {
     vertical-align: middle;
 }
 
+.text-input {
+    width: 320px;              /* gọn, không loãng */
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1e293b;
+
+    outline: none;
+    transition: 0.2s ease;
+}

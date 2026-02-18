@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="<?= HOST ?>/css/parts/header.css">
     <link rel="stylesheet" href="<?= HOST ?>/css/main.css">
     <link rel="shortcut icon" href="<?= HOST ?>/assets/icon/fbu.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/components/buttons.css">
+    <link rel="stylesheet" href="/css/components/modal.css">
+    <link rel="stylesheet" href="/css/components/errorMessage.css">
+    <link rel="stylesheet" href="/css/components/form.css">
+    <link rel="stylesheet" href="/css/components/pagination.css">
+    <link rel="stylesheet" href="/css/layouts/layouts.css">
     <title><?= $data['title'] ?></title>
 </head>
 <body>

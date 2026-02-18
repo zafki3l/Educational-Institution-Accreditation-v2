@@ -11,4 +11,6 @@ interface CriteriaRepositoryInterface
     public function findOrFail(string $id): EntitiesCriteria;
 
     public function delete(EntitiesCriteria $entitiesCriteria): void;
+
+    public function save(EntitiesCriteria $entitiesCriteria): void;
 }

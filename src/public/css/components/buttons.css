@@ -1,0 +1,68 @@
+.btn-outline {
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-outline:hover {
+    background: #f9fafb;
+}
+
+.btn-primary {
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: none;
+    background: #254EDB;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(37, 78, 219, 0.25);
+    transition: 0.2s;
+}
+
+.primary-btn {
+    background: #1e40af;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.primary-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.btn-primary:hover {
+    background: #1f3fc0;
+}
+
+.btn-primary:active {
+    transform: scale(0.97);
+}
+
+.btn-danger {
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: none;
+    background: #d32f2f;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(208, 10, 10, 0.25);
+    transition: 0.2s;
+}
+
+.btn-danger:hover {
+    background-color: #b71c1c;
+}
+
+.btn-danger:active {
+    background-color: #9c0e0e;
+}

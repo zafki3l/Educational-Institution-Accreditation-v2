@@ -1,31 +1,34 @@
-<div id="createCriteriaModal" class="modal">
+<div id="editCriteriaModal" class="modal">
     <div class="modal-overlay"></div>
+
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Thêm tiêu chí mới</h2>
-            <button class="modal-close" id="closeCriteriaModal">
+            <h2>Sửa thông tin tiêu chí</h2>
+            <button class="modal-close" id="closeEditModal">
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
-        <form id="createCriteriaForm" action="/criterias" method="post" class="context-form">
-            <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
-            
+
+        <form id="editCriteriaForm" class="context-form" action="/criterias/update" method="post">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" id="edit-id" name="id" value="<?= htmlspecialchars($_SESSION['old']['id'] ?? '') ?>">
+            <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
+
             <div class="form-row">
                 <div class="form-group">
                     <label for="id">Mã tiêu chí *</label>
                     <input 
-                        type="text" 
-                        id="id"
-                        name="id" 
-                        placeholder="Nhập mã tiêu chí (VD: 1.1)" 
+                        type="text"
+                        id="edit-code"
                         class="form-input"
+                        readonly
                     >
                 </div>
 
                 <div class="form-group">
                     <label for="standard_id">Tiêu chuẩn *</label>
                     <select 
-                        id="standard_id"
+                        id="edit-standard_id"
                         name="standard_id" 
                         class="form-input"
                     >
@@ -44,17 +47,21 @@
 
             <div class="form-group">
                 <label for="name">Tên tiêu chí</label>
-                <textarea name="name" class="form-textarea" id=""></textarea>
+                <textarea name="name" class="form-textarea" id="edit-name"></textarea>
             </div>
 
-            <div class="error" id="formErrors"></div>
-            
+            <div class="error" id="editFormErrors"></div>
+
             <div class="form-actions">
-                <button type="button" class="btn-outline" id="cancelCriteriaModal">Hủy</button>
-                <button type="submit" class="btn-primary">Thêm tiêu chí</button>
+                <button type="button" class="btn-outline" id="cancelEditModal">
+                    Hủy
+                </button>
+                <button type="submit" class="btn-primary">
+                    Cập Nhật
+                </button>
             </div>
         </form>
     </div>
 </div>
 
-<script src="/js/criteria/createForm.js"></script>
+<script src="/js/criteria/editForm.js"></script>
