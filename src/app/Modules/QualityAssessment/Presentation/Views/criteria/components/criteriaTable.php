@@ -33,7 +33,23 @@
                     <td><?= htmlspecialchars($criteria->id) ?></td>
                     <td><?= htmlspecialchars($criteria->name) ?></td>
                     <td class="right">
-                        <!-- actions -->
+                        <div class="action-group">
+                            <button class="icon-btn edit-standard-btn"
+                                    type="button"
+                                    title="Chỉnh sửa"
+                                    data-id="<?= $criteria->id ?>">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+
+                            <form action="/standards/<?= htmlspecialchars($criteria->id) ?>" method="post">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
+
+                                <button class="icon-btn danger" title="Xóa" type="submit">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
