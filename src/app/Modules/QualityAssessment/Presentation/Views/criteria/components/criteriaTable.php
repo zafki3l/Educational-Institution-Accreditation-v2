@@ -49,14 +49,13 @@
                                 <span class="material-symbols-outlined">edit</span>
                             </button>
 
-                            <form action="/criterias/<?= htmlspecialchars($criteria->id) ?>" method="post">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
-
-                                <button class="icon-btn danger" title="Xóa" type="submit">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </button>
-                            </form>
+                            <button class="icon-btn danger delete-criteria-btn"
+                                    type="button"
+                                    title="Xóa"
+                                    data-id="<?= $criteria->id ?>"
+                                    data-name="<?= htmlspecialchars($criteria->name) ?>">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -64,5 +63,7 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+
+<?php include 'deleteModal.php' ?>
 
 <script src="/js/criteria/criteriaTable.js"></script>

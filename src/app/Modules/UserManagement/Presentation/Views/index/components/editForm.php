@@ -9,7 +9,7 @@
             </button>
         </div>
 
-        <form id="editUserForm" class="user-form" action="/users/update" method="post">
+        <form id="editUserForm" class="context-form" action="/users/update" method="post">
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" id="edit-id" name="id" value="<?= htmlspecialchars($_SESSION['old']['id'] ?? '') ?>">
             <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">

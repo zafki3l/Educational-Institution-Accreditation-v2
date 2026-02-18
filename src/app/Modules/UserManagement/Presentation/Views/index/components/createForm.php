@@ -7,7 +7,7 @@
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
-        <form id="createUserForm" action="/users" method="post" class="user-form">
+        <form id="createUserForm" action="/users" method="post" class="context-form">
             <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
             
             <div class="form-row">

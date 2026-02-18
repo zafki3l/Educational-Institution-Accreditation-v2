@@ -1,22 +1,10 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #f8fafc;
-    color: #1e293b;
-}
-
 a {
     text-decoration: none;
     color: #1e293b;
 }
 
 .layout {
-    padding: 30px 170px;
+    padding: 30px 170px !important;
 }
 
 .card-grid {

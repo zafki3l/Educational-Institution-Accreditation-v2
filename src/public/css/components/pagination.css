@@ -1,3 +1,20 @@
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 18px;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.page-btn {
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+}
+
 .pagination-wrapper {
     display: flex;
     flex-direction: column;
