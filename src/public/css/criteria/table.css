@@ -26,3 +26,15 @@
 .toggle-btn[aria-expanded="false"] .toggle-icon {
     transform: rotate(-90deg);
 }
+
+.criteria-name {
+    max-width: 500px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.criteria-name.expanded {
+    white-space: normal;
+}

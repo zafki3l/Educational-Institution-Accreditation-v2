@@ -35,3 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 });
+
+document.querySelectorAll('.criteria-name').forEach(el => {
+    el.addEventListener('click', () => {
+        el.classList.toggle('expanded');
+    });
+});
