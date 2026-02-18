@@ -4,6 +4,7 @@ use App\Modules\Authentication\Infrastructure\ServiceProvider\AuthServiceProvide
 use App\Modules\Authorization\Infrastructure\ServiceProvider\PermissionServiceProvider;
 use App\Modules\Authorization\Infrastructure\ServiceProvider\RoleServiceProvider;
 use App\Modules\DepartmentManagement\Infrastructure\ServiceProvider\DepartmentServiceProvider;
+use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\CriteriaServiceProvider;
 use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\StandardServiceProvider;
 use App\Modules\UserManagement\Infrastructure\ServiceProvider\UserServiceProvider;
 
@@ -13,5 +14,6 @@ return [
     new UserServiceProvider(),
     new PermissionServiceProvider(),
     new DepartmentServiceProvider(),
-    new StandardServiceProvider()
+    new StandardServiceProvider(),
+    new CriteriaServiceProvider()
 ];
