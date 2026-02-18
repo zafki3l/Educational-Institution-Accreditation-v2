@@ -3,7 +3,7 @@
 
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Sửa Thông Tin Người Dùng</h2>
+            <h2>Sửa thông tin tiêu chí</h2>
             <button class="modal-close" id="closeEditModal">
                 <span class="material-symbols-outlined">close</span>
             </button>

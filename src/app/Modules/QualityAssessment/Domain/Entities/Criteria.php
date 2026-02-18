@@ -24,17 +24,23 @@ class Criteria
             throw new CriteriaEmptyIdException();
         }
 
-        if ($standard_id === '') {
-            throw new StandardEmptyIdException();
-        }
+        self::checkStandardIdEmpty($standard_id);
 
-        if ($name === '') {
-            throw new CriteriaEmptyNameException();
-        }
+        self::checkNameEmpty($name);
 
         static::validateFormat($id, $standard_id);
 
         return new self($id, $standard_id, $name);
+    }
+
+    public function update(string $standard_id, string $name): void
+    {
+        self::checkStandardIdEmpty($standard_id);
+
+        self::checkNameEmpty($name);
+
+        $this->changeStandardId($standard_id);
+        $this->changeName($name);
     }
 
     public function getId(): string
@@ -52,12 +58,36 @@ class Criteria
         return $this->name;
     }
 
+    public function changeStandardId(string $standard_id): void
+    {
+        $this->standard_id = $standard_id;
+    }
+
+    public function changeName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     private static function validateFormat(string $id, string $standard_id): void
     {
         $pattern = '/^' . preg_quote($standard_id, '/') . '\.(?:[1-9]\d*)$/';
 
         if (!preg_match($pattern, $id)) {
             throw new CriteriaIdInvalidFormatException();
+        }
+    }
+
+    private static function checkStandardIdEmpty(string $standard_id): void
+    {
+        if ($standard_id === '') {
+            throw new StandardEmptyIdException();
+        }
+    }
+
+    private static function checkNameEmpty(string $name): void
+    {
+        if ($name === '') {
+            throw new CriteriaEmptyNameException();
         }
     }
 }
