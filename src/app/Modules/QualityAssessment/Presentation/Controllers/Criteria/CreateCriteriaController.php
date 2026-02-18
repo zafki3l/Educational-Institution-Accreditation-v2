@@ -6,6 +6,8 @@ use App\Modules\QualityAssessment\Application\UseCases\Criteria\CreateCriteriaUs
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Criteria\CreateCriteriaRequest;
 use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
+use App\Shared\Exception\DomainException;
+use App\Shared\Response\JsonResponse;
 use App\Shared\Response\ViewResponse;
 use App\Shared\SessionManager\AuthSession;
 
@@ -31,10 +33,16 @@ final class CreateCriteriaController extends QualityAssessmentController
         );
     }
 
-    public function store(CreateCriteriaRequest $request): void
+    public function store(CreateCriteriaRequest $request): JsonResponse
     {
-        $this->createCriteriaUseCase->execute($request, AuthSession::getUserId());
+        try {
+            $this->createCriteriaUseCase->execute($request, AuthSession::getUserId());
 
-        $this->redirect('/criterias');
+            return new JsonResponse([]);
+        } catch (DomainException $e) {
+            return new JsonResponse([
+                'errors' => [$e->getMessage()]
+            ], 422);
+        }
     }
 }

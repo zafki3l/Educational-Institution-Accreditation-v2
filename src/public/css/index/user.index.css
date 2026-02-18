@@ -230,3 +230,39 @@ tbody tr:hover {
     background: white;
     cursor: pointer;
 }
+
+.form-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px 14px;
+
+    font-size: 14px;
+    line-height: 1.6;
+    font-family: inherit;
+
+    border-radius: 10px;
+    border: 1px solid #dbe3ff;
+    background: #f7f9ff;
+
+    resize: vertical;
+    transition: all 0.2s ease;
+}
+
+.form-textarea::placeholder {
+    color: #9aa4c7;
+    font-style: italic;
+}
+
+.form-textarea:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: #6c7cff;
+    box-shadow: 0 0 0 3px rgba(108, 124, 255, 0.15);
+}
+
+select.form-input {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}   
