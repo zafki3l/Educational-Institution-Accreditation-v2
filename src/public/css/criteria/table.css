@@ -1,0 +1,28 @@
+.standard-row td {
+    padding: 14px 16px;
+    background: #f3f6ff;
+    border-top: 1px solid #dbe3ff;
+}
+
+.standard-row strong {
+    font-size: 15px;
+}
+
+.criteria-row {
+    transition: opacity .2s ease;
+}
+
+.criteria-row.hidden {
+    display: none;
+}
+
+.toggle-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.toggle-btn[aria-expanded="false"] .toggle-icon {
+    transform: rotate(-90deg);
+}
