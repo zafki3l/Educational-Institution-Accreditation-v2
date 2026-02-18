@@ -38,3 +38,28 @@
 .criteria-name.expanded {
     white-space: normal;
 }
+
+.milestone-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    background: rgba(59, 130, 246, 0.08); /* xanh rất nhạt */
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.milestone-btn:hover {
+    background: rgba(59, 130, 246, 0.18);
+}
+
+.milestone-btn .material-symbols-outlined {
+    font-size: 20px;
+    color: #2563eb; /* xanh action */
+}

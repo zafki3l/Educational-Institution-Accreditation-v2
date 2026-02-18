@@ -3,6 +3,7 @@
         <tr>
             <th>Mã tiêu chí</th>
             <th>Tên tiêu chí</th>
+            <th class="right">Các mốc đánh giá</th>
             <th class="right">Thao tác</th>
         </tr>
     </thead>
@@ -11,7 +12,7 @@
             <!-- STANDARD HEADER ROW -->
             <tr class="standard-row"
                 data-standard-id="<?= $standard->id ?>">
-                <td colspan="3">
+                <td colspan="4">
                     <button class="toggle-btn"
                             data-standard-id="<?= $standard->id ?>"
                             aria-expanded="true">
@@ -34,6 +35,9 @@
                     <td class="criteria-name"
                         title="<?= htmlspecialchars($criteria->name) ?>">
                         <?= htmlspecialchars($criteria->name) ?>
+                    </td>
+                    <td class="right">
+                        <button class="milestone-btn" type="button"><span class="material-symbols-outlined">fact_check</span></button>
                     </td>
                     <td class="right">
                         <div class="action-group">

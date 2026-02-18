@@ -2,15 +2,19 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Controllers\Criteria;
 
-use App\Modules\QualityAssessment\Infrastructure\Models\Criteria;
+use App\Modules\QualityAssessment\Application\UseCases\Criteria\CreateCriteriaUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Criteria\CreateCriteriaRequest;
 use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use App\Shared\Response\ViewResponse;
+use App\Shared\SessionManager\AuthSession;
 
 final class CreateCriteriaController extends QualityAssessmentController
 {
-    public function __construct(private StandardReaderInterface $standardReader) {}
+    public function __construct(
+        private StandardReaderInterface $standardReader,
+        private CreateCriteriaUseCase $createCriteriaUseCase
+    ) {}
 
     public function create(): ViewResponse
     {
@@ -29,11 +33,7 @@ final class CreateCriteriaController extends QualityAssessmentController
 
     public function store(CreateCriteriaRequest $request)
     {
-        Criteria::create([
-            'id' => $request->getId(),
-            'standard_id' => $request->getStandardId(),
-            'name' => $request->getName()
-        ]);
+        $this->createCriteriaUseCase->execute($request, AuthSession::getUserId());
 
         $this->redirect('/criterias');
     }

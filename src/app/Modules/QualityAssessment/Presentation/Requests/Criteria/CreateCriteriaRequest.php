@@ -2,7 +2,9 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Requests\Criteria;
 
-final class CreateCriteriaRequest
+use App\Modules\QualityAssessment\Application\Requests\Criteria\CreateCriteriaRequestInterface;
+
+final class CreateCriteriaRequest implements CreateCriteriaRequestInterface
 {
     private string $id;
     private string $standard_id;
