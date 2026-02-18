@@ -4,8 +4,10 @@ namespace App\Modules\QualityAssessment\Infrastructure\ServiceProvider;
 
 use App\Modules\QualityAssessment\Application\Requests\Standard\CreateStandardRequestInterface;
 use App\Modules\QualityAssessment\Domain\Repositories\StandardRepositoryInterface;
+use App\Modules\QualityAssessment\Infrastructure\Readers\StandardReader;
 use App\Modules\QualityAssessment\Infrastructure\Repositories\StandardRepository;
 use App\Modules\QualityAssessment\Presentation\Requests\Standard\CreateStandardRequest;
+use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use Core\ServiceProvider;
 use Illuminate\Container\Container;
 
@@ -21,6 +23,11 @@ final class StandardServiceProvider extends ServiceProvider
         $container->bind(
             StandardRepositoryInterface::class,
             StandardRepository::class
+        );
+
+        $container->bind(
+            StandardReaderInterface::class, 
+            StandardReader::class
         );
     }
 }
