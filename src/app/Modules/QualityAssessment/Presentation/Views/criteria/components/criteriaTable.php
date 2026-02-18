@@ -13,6 +13,11 @@
             <tr class="standard-row"
                 data-standard-id="<?= $standard->id ?>">
                 <td colspan="4">
+                    <strong>
+                        Tiêu chuẩn <?= $standard->id ?>:
+                        <?= htmlspecialchars($standard->name) ?>
+                    </strong>
+
                     <button class="toggle-btn"
                             data-standard-id="<?= $standard->id ?>"
                             aria-expanded="true">
@@ -20,10 +25,6 @@
                             expand_more
                         </span>
                     </button>
-                    <strong>
-                        Tiêu chuẩn <?= $standard->id ?>:
-                        <?= htmlspecialchars($standard->name) ?>
-                    </strong>
                 </td>
             </tr>
 
@@ -31,7 +32,7 @@
             <?php foreach ($standard->criteria as $criteria): ?>
                 <tr class="criteria-row"
                     data-parent-standard="<?= $standard->id ?>">
-                    <td><?= htmlspecialchars($criteria->id) ?></td>
+                    <td>Tiêu chí <?= htmlspecialchars($criteria->id) ?></td>
                     <td class="criteria-name"
                         title="<?= htmlspecialchars($criteria->name) ?>">
                         <?= htmlspecialchars($criteria->name) ?>
@@ -48,7 +49,7 @@
                                 <span class="material-symbols-outlined">edit</span>
                             </button>
 
-                            <form action="/standards/<?= htmlspecialchars($criteria->id) ?>" method="post">
+                            <form action="/criterias/<?= htmlspecialchars($criteria->id) ?>" method="post">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
 
