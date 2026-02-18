@@ -36,6 +36,7 @@
 </div>
 
 <?php include 'components/createForm.php' ?>
+<?php include 'components/editForm.php' ?>
 
 </body>
 </html>

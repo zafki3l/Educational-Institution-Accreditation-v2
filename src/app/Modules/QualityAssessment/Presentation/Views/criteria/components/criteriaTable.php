@@ -42,7 +42,7 @@
                     </td>
                     <td class="right">
                         <div class="action-group">
-                            <button class="icon-btn edit-standard-btn"
+                            <button class="icon-btn edit-criteria-btn"
                                     type="button"
                                     title="Chỉnh sửa"
                                     data-id="<?= $criteria->id ?>">
