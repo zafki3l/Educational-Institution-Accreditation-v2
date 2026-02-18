@@ -31,7 +31,10 @@
                 <tr class="criteria-row"
                     data-parent-standard="<?= $standard->id ?>">
                     <td><?= htmlspecialchars($criteria->id) ?></td>
-                    <td><?= htmlspecialchars($criteria->name) ?></td>
+                    <td class="criteria-name"
+                        title="<?= htmlspecialchars($criteria->name) ?>">
+                        <?= htmlspecialchars($criteria->name) ?>
+                    </td>
                     <td class="right">
                         <div class="action-group">
                             <button class="icon-btn edit-standard-btn"
