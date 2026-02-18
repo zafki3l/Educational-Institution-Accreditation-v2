@@ -5,6 +5,7 @@ namespace App\Modules\QualityAssessment\Infrastructure\Models;
 use App\Modules\DepartmentManagement\Infrastructure\Models\Department;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Standard extends Model
 {
@@ -17,5 +18,10 @@ class Standard extends Model
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function criteria(): HasMany
+    {
+        return $this->hasMany(Criteria::class, 'standard_id');
     }
 }
