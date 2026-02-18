@@ -4,18 +4,25 @@ namespace App\Modules\QualityAssessment\Application\UseCases\Criteria;
 
 use App\Modules\QualityAssessment\Application\Requests\Criteria\CreateCriteriaRequestInterface;
 use App\Modules\QualityAssessment\Domain\Entities\Criteria;
+use App\Modules\QualityAssessment\Domain\Exception\Criteria\CriteriaIdExistsException;
 use App\Modules\QualityAssessment\Domain\Repositories\CriteriaRepositoryInterface;
+use App\Modules\QualityAssessment\Domain\Services\CriteriaIdExistsCheckerInterface;
 use App\Shared\Logging\LoggerInterface;
 
 final class CreateCriteriaUseCase
 {
     public function __construct(
         private CriteriaRepositoryInterface $repository,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        private CriteriaIdExistsCheckerInterface $criteriaIdExistsChecker
     ) {}
 
     public function execute(CreateCriteriaRequestInterface $request, string $actor_id): void
     {
+        if ($this->criteriaIdExistsChecker->check($request->getId())) {
+            throw new CriteriaIdExistsException();
+        }
+
         $criteria = Criteria::create(
             $request->getId(),
             $request->getStandardId(),

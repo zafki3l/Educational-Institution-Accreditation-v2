@@ -10,9 +10,6 @@ $route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->get('/criterias', [IndexCriteriaController::class, 'index']);
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
-    ->get('/criterias/create', [CreateCriteriaController::class, 'create']);
-
-$route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->post('/criterias', [CreateCriteriaController::class, 'store']);
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
