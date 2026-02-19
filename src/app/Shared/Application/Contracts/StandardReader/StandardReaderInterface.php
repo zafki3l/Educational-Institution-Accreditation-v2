@@ -9,4 +9,6 @@ interface StandardReaderInterface
     public function all(): Collection;
 
     public function withCriteria(): Collection;
+
+    public function count(): int;
 }

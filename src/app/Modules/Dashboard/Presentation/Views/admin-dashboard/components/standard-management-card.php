@@ -9,14 +9,14 @@
             <a href="/standards">
                 <div class="item">
                     <h4>Quản lý tiêu chuẩn đánh giá</h4>
-                    <span>Framework Setup</span>
+                    <span><?= htmlspecialchars($total_standards) ?> tiêu chuẩn</span>
                 </div>
             </a>
 
-            <a href="">
+            <a href="/criterias">
                 <div class="item">
                     <h4>Quản lý tiêu chí đánh giá</h4>
-                    <span>Evaluation Rules</span>
+                    <span><?= htmlspecialchars($total_criterias) ?> tiêu chí</span>
                 </div>
             </a>
     
