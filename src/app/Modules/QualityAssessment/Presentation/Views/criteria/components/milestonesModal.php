@@ -10,17 +10,43 @@
                 </div>
                 <div>
                     <h3 class="modal-title">Các mốc đánh giá</h3>
-                    <p class="modal-desc" id="milestonesModalDesc"></p>
+                    <h3 class="modal-desc" id="milestonesModalDesc"></h3>
                 </div>
             </div>
 
-            <button class="modal-close" id="closeMilestonesModal">
+            <button type="button" class="modal-close" id="closeMilestonesModal">
                 <span class="material-icons-round">close</span>
             </button>
         </div>
 
         <!-- Table -->
         <div class="modal-body">
+            
+            <div class="add-milestone-bar">
+                <form id="addMilestoneForm" action="/milestones" method="post">
+                    <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
+                    <input type="hidden" name="criteria_id" id="criteriaIdInput">
+                    <input
+                        type="text"
+                        id="newMilestoneOrder"
+                        name="order"
+                        placeholder="Số thứ tự (VD: 1, 2, 3...)"
+                    />
+
+                    <input
+                        type="text"
+                        name="name"
+                        id="newMilestoneName"
+                        placeholder="Nhập tên mốc đánh giá..."
+                    />
+
+                    <button class="btn-primary" type="submit" id="addMilestoneBtn">
+                        <span class="material-icons-round">add</span>
+                        Thêm mốc đánh giá
+                    </button>
+                </form>
+            </div>
+
             <table class="milestones-table">
                 <thead>
                     <tr>
@@ -31,21 +57,17 @@
                 </thead>
                 <tbody id="milestonesTableBody"></tbody>
             </table>
-        </div>
 
-        <!-- Empty -->
-        <div id="emptyMilestonesState" class="empty-state">
-            <span class="material-icons-round">fact_check</span>
-            <p>Chưa có mốc đánh giá nào</p>
+            <!-- Empty -->
+            <div id="emptyMilestonesState" class="empty-state">
+                <span class="material-icons-round">fact_check</span>
+                <p>Chưa có mốc đánh giá nào</p>
+            </div>
         </div>
 
         <!-- Footer -->
         <div class="modal-footer">
-            <button class="btn-outline" id="closeMilestonesBtn">Đóng</button>
-            <button class="btn-primary" id="addMilestoneBtn">
-                <span class="material-icons-round">add</span>
-                Thêm mốc đánh giá
-            </button>
+            <button type="button" class="btn-outline" id="closeMilestonesBtn">Đóng</button>
         </div>
     </div>
 </div>
@@ -67,6 +89,13 @@
     box-shadow: 0 20px 25px -5px rgba(0,0,0,.1);
     overflow: hidden;
 }
+
+.modal-box {
+    max-height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+}
+
 
 /* ===== HEADER ===== */
 .modal-header {
@@ -119,10 +148,18 @@
 }
 
 /* ===== BODY ===== */
+
 .modal-body {
+    flex: 1;
+    overflow-y: auto;
     padding: 8px 32px;
 }
-
+.add-milestone-bar form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
 .milestones-table {
     width: 100%;
     border-collapse: collapse;
@@ -209,6 +246,54 @@
 .milestones-table td {
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+.add-milestone-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.add-milestone-bar input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #dcdfe6;
+}
+
+.add-milestone-bar button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== ADD MILESTONE BAR ===== */
+.add-milestone-bar {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px;
+    margin: 16px 0 24px;
+}
+
+.add-milestone-bar form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#newMilestoneId {
+    width: 160px;
+    flex: 0 0 160px;
+}
+
+#newMilestoneName {
+    flex: 1;
+    min-width: 0;
+}
+
+#addMilestoneBtn {
+    margin-left: auto;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 </style>
 
