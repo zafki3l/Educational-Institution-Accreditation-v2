@@ -10,7 +10,7 @@
                 </div>
                 <div>
                     <h3 class="modal-title">Các mốc đánh giá</h3>
-                    <p class="modal-desc" id="milestonesModalDesc"></p>
+                    <h3 class="modal-desc" id="milestonesModalDesc"></h3>
                 </div>
             </div>
 
@@ -30,7 +30,7 @@
                         type="text"
                         id="newMilestoneOrder"
                         name="order"
-                        placeholder="Mã mốc đánh giá (VD: 1, 2, 3...)"
+                        placeholder="Số thứ tự (VD: 1, 2, 3...)"
                     />
 
                     <input

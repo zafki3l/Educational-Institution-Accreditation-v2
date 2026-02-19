@@ -2,7 +2,9 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Requests\Milestone;
 
-final class CreateMilestoneRequest
+use App\Modules\QualityAssessment\Application\Requests\Milestone\CreateMilestoneRequestInterface;
+
+final class CreateMilestoneRequest implements CreateMilestoneRequestInterface
 {
     private string $order;
     private string $criteria_id;
