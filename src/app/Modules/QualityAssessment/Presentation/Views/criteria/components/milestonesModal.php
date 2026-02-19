@@ -10,9 +10,7 @@
                 </div>
                 <div>
                     <h3 class="modal-title">Các mốc đánh giá</h3>
-                    <p class="modal-desc">
-                        Lãnh đạo CSGD đảm bảo tầm nhìn và sứ mạng của CSGD đáp ứng được nhu cầu và sự hài lòng của các bên liên quan.
-                    </p>
+                    <p class="modal-desc" id="milestonesModalDesc"></p>
                 </div>
             </div>
 

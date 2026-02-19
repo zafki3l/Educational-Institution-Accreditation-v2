@@ -1,47 +1,38 @@
-// Fake milestone data
-const milestonesData = {
-    1: [
-        { id: 1, name: 'CSGD có tuyên bố chính thức về tầm nhìn, sứ mạng.', score: 50, description: 'Đáp ứng các yêu cầu cơ bản của tiêu chí' },
-        { id: 2, name: 'Có sự tham gia của các bên liên quan cán bộ quản lý, GV, NH, nhà sử dụng lao động, các tổ chức xã hội-nghề nghiệp, ...) trong quá trình xây dựng tầm nhìn, sứ mạng.', score: 75, description: 'Vượt quá yêu cầu cơ bản, có chất lượng tốt' },
-        { id: 3, name: 'Hoàn thành xuất sắc', score: 100, description: 'Đáp ứng tất cả các yêu cầu với chất lượng cao' }
-    ],
-    2: [
-        { id: 1, name: 'Đạt mức độ thấp', score: 40, description: 'Đáp ứng mức độ tối thiểu' },
-        { id: 2, name: 'Đạt mức độ trung bình', score: 70, description: 'Đáp ứng mức độ trung bình' },
-        { id: 3, name: 'Đạt mức độ cao', score: 100, description: 'Vượt quá mức độ cao nhất' }
-    ],
-    3: [
-        { id: 1, name: 'Chưa đủ', score: 25, description: 'Chưa đáp ứng yêu cầu' },
-        { id: 2, name: 'Đủ', score: 60, description: 'Đáp ứng đủ yêu cầu' },
-        { id: 3, name: 'Vượt chỉ tiêu', score: 100, description: 'Vượt quá mong đợi' }
-    ]
-};
+async function fetchMilestones(criteriaId) {
+    const res = await fetch(`/criterias/${criteriaId}/milestones`);
+    if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    try {
+        const data = await res.json();
+        return data.criteria.milestones ?? [];
+    } catch (parseError) {
+        throw new Error(`Invalid JSON response: ${parseError.message}`);
+    }
+}
 
-let currentCriteriaId = null;
+document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.milestone-btn');
+    if (!btn) return;
 
-document.addEventListener('DOMContentLoaded', () => {
+    e.preventDefault();
 
-    document.querySelectorAll('.milestone-btn').forEach((btn, index) => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
+    document.getElementById('milestonesModalDesc').textContent = btn.dataset.desc || 'Chưa có mô tả';
 
-            currentCriteriaId = Math.min(index + 1, 3);
-            renderMilestonesTable();
-            openMilestonesModal();
-        });
-    });
-
-    document.getElementById('closeMilestonesModal').onclick =
-    document.getElementById('closeMilestonesBtn').onclick =
-        closeMilestonesModal;
-
-    document.querySelector('.modal-overlay').onclick = closeMilestonesModal;
+    const criteriaId = btn.dataset.id;
+    try {
+        const milestones = await fetchMilestones(criteriaId);
+        renderMilestonesTable(milestones);
+        openMilestonesModal();
+    } catch (error) {
+        console.error('Error fetching milestones:', error);
+        alert('Không thể tải mốc đánh giá. Vui lòng thử lại.');
+    }
 });
 
-function renderMilestonesTable() {
+function renderMilestonesTable(milestones) {
     const tbody = document.getElementById('milestonesTableBody');
     const emptyState = document.getElementById('emptyMilestonesState');
-    const milestones = milestonesData[currentCriteriaId] || [];
 
     if (!milestones.length) {
         tbody.innerHTML = '';
@@ -56,8 +47,22 @@ function renderMilestonesTable() {
             <td>#${m.id}</td>
             <td>${escapeHtml(m.name)}</td>
             <td class="right">
-                <span class="material-symbols-outlined">edit</span>
-                <span class="material-symbols-outlined">delete</span>
+                <div class="action-group">
+                    <button class="icon-btn edit-milestone-btn"
+                            type="button"
+                            title="Chỉnh sửa"
+                            data-id="<?= $milestone->id ?>">
+                        <span class="material-symbols-outlined">edit</span>
+                    </button>
+
+                    <button class="icon-btn danger delete-milestone-btn"
+                            type="button"
+                            title="Xóa"
+                            data-id="<?= $milestone->id ?>"
+                            data-name="<?= htmlspecialchars($milestone->name) ?>">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </div>
             </td>
         </tr>
     `).join('');
@@ -80,3 +85,11 @@ function escapeHtml(text) {
         "'": '&#039;'
     })[c]);
 }
+document.getElementById('closeMilestonesModal')
+    ?.addEventListener('click', closeMilestonesModal);
+
+document.getElementById('closeMilestonesBtn')
+    ?.addEventListener('click', closeMilestonesModal);
+
+document.querySelector('#milestonesModal .modal-overlay')
+    ?.addEventListener('click', closeMilestonesModal);

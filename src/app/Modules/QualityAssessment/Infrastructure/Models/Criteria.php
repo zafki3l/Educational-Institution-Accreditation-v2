@@ -19,7 +19,7 @@ class Criteria extends Model
         return $this->belongsTo(Standard::class);
     }
 
-    public function milestone(): HasMany
+    public function milestones(): HasMany
     {
         return $this->hasMany(Milestone::class, 'criteria_id');
     }

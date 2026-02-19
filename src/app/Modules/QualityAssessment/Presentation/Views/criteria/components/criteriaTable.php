@@ -41,6 +41,7 @@
                         <button 
                         class="milestone-btn" 
                         data-id="<?= $criteria->id ?>"
+                        data-desc="<?= htmlspecialchars($criteria->name) ?>"
                         type="button"><span 
                         class="material-symbols-outlined">fact_check</span></button>
                     </td>
