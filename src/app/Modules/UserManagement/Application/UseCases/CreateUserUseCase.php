@@ -46,7 +46,7 @@ final class CreateUserUseCase
         $this->writeLog($created, $actor_id);
     }
 
-    public function writeLog(User $user, string $actor_id): void
+    private function writeLog(User $user, string $actor_id): void
     {
         $this->logger->write(
             'info',

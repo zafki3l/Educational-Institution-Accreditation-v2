@@ -27,7 +27,7 @@ final class CreateStandardUseCase
         $this->writeLog($request, $actor_id);
     }
 
-    public function writeLog(CreateStandardRequestInterface $request, string $actor_id): void
+    private function writeLog(CreateStandardRequestInterface $request, string $actor_id): void
     {
         $this->logger->write(
             'info',

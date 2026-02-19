@@ -22,7 +22,7 @@ final class DeleteStandardUseCase
         $this->writeLog($standard, $actor_id);
     }
 
-    public function writeLog(Standard $standard, string $actor_id): void
+    private function writeLog(Standard $standard, string $actor_id): void
     {
         $this->logger->write(
             'info',

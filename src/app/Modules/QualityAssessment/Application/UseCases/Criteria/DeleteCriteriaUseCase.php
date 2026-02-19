@@ -22,7 +22,7 @@ final class DeleteCriteriaUseCase
         $this->writeLog($criteria, $actor_id);
     }
 
-    public function writeLog(Criteria $criteria, string $actor_id): void
+    private function writeLog(Criteria $criteria, string $actor_id): void
     {
         $this->logger->write(
             'info',

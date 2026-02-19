@@ -34,7 +34,7 @@ final class CreateCriteriaUseCase
         $this->writeLog($request, $actor_id);
     }
 
-    public function writeLog(CreateCriteriaRequestInterface $request, string $actor_id): void
+    private function writeLog(CreateCriteriaRequestInterface $request, string $actor_id): void
     {
         $this->logger->write(
             'info',
