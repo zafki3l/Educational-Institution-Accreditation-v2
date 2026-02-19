@@ -30,7 +30,7 @@ final class UpdateUserUseCase
         $this->writeLog($request, $actor_id);
     }
 
-    public function writeLog(UpdateUserRequestInterface $request, string $actor_id): void
+    private function writeLog(UpdateUserRequestInterface $request, string $actor_id): void
     {
         $this->logger->write(
             'info',

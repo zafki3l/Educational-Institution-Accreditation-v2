@@ -28,7 +28,7 @@ final class UpdateCriteriaUseCase
         $this->writeLog($request, $actor_id);
     }
 
-    public function writeLog(UpdateCriteriaRequestInterface $request, string $actor_id): void
+    private function writeLog(UpdateCriteriaRequestInterface $request, string $actor_id): void
     {
         $this->logger->write(
             'info',

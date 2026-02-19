@@ -38,7 +38,11 @@
                         <?= htmlspecialchars($criteria->name) ?>
                     </td>
                     <td class="right">
-                        <button class="milestone-btn" type="button"><span class="material-symbols-outlined">fact_check</span></button>
+                        <button 
+                        class="milestone-btn" 
+                        data-id="<?= $criteria->id ?>"
+                        type="button"><span 
+                        class="material-symbols-outlined">fact_check</span></button>
                     </td>
                     <td class="right">
                         <div class="action-group">
@@ -65,5 +69,6 @@
 </table>
 
 <?php include 'deleteModal.php' ?>
+<?php include 'milestonesModal.php' ?>
 
 <script src="/js/criteria/criteriaTable.js"></script>

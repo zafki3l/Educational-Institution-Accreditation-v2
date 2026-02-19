@@ -4,6 +4,7 @@ namespace App\Modules\QualityAssessment\Infrastructure\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Criteria extends Model
 {
@@ -16,5 +17,10 @@ class Criteria extends Model
     public function standard(): BelongsTo
     {
         return $this->belongsTo(Standard::class);
+    }
+
+    public function milestone(): HasMany
+    {
+        return $this->hasMany(Milestone::class, 'criteria_id');
     }
 }

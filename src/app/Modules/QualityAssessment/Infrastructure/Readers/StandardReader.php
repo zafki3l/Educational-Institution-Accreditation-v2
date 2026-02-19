@@ -21,4 +21,9 @@ class StandardReader implements StandardReaderInterface
 
         return $standards;
     }
+
+    public function count(): int
+    {
+        return Standard::count();
+    }
 }
