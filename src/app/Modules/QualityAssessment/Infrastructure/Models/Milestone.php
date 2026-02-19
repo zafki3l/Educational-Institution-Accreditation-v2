@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Milestone extends Model
 {
     protected $primaryKey = 'id';
-    public $incrementing = false;
-    protected $keyType = 'string';
-    protected $fillable = ['id', 'name', 'department_id'];
+    public $incrementing = true;
+    protected $keyType = 'int';
+    protected $fillable = ['id', 'criteria_id', 'code', 'order', 'name'];
     public $timestamps = false;
 
     public function criteria(): BelongsTo
