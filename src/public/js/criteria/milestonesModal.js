@@ -77,6 +77,45 @@ function renderMilestonesTable(milestones) {
     `).join('');
 }
 
+document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.delete-milestone-btn');
+    if (!btn) return;
+
+    e.preventDefault();
+
+    const milestoneId = btn.dataset.id;
+
+    if (!confirm('Xóa mốc đánh giá này?')) return;
+
+    try {
+        const res = await fetch(`/milestones/${milestoneId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!res.ok) {
+            const text = await res.text();
+            console.error(text);
+            throw new Error(res.status);
+        }
+
+        // Xóa dòng khỏi table
+        btn.closest('tr').remove();
+
+        // Nếu hết milestone → hiện empty state
+        const tbody = document.getElementById('milestonesTableBody');
+        if (!tbody.children.length) {
+            document.getElementById('emptyMilestonesState').style.display = 'block';
+        }
+
+    } catch (err) {
+        alert('Không thể xóa mốc đánh giá');
+    }
+});
+
 /* =====================
    MODAL CONTROL
 ===================== */

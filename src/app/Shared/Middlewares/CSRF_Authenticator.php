@@ -8,34 +8,38 @@ final class CSRF_Authenticator
 {
     public function handle(): void
     {
-        if (!$this->isTokenSet()) {
-            throw new Exception('Token is not set!');
+        if (!isset($_SESSION['CSRF-token'])) {
+            throw new Exception('Session token missing!');
         }
 
         $sessionToken = (string) $_SESSION['CSRF-token'];
-        $formToken = (string) $_POST['CSRF-token'];
 
-        if (!$this->verifyToken($sessionToken, $formToken)) {
+        $headerToken = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? null;
+        $formToken   = $_POST['CSRF-token'] ?? null;
+
+        $token = $headerToken ?? $formToken;
+
+        if (!$token) {
+            throw new Exception('Token is not set!');
+        }
+
+        if (!$this->verifyToken($sessionToken, $token)) {
             throw new Exception('Token invalid!');
         }
 
         if ($this->isTokenExpire()) {
-            throw new Exception('Token invalid');
+            throw new Exception('Token expired!');
         }
     }
 
-    private function isTokenSet(): bool
+    private function verifyToken(string $sessionToken, string $token): bool
     {
-        return isset($_SESSION['CSRF-token'], $_POST['CSRF-token']);
-    }
-    
-    private function verifyToken(string $sessionToken, string $formToken): bool
-    {
-        return hash_equals($sessionToken, $formToken);
+        return hash_equals($sessionToken, $token);
     }
 
     private function isTokenExpire(): bool
     {
-        return time() >= $_SESSION['token-expire'];
+        return isset($_SESSION['token-expire'])
+            && time() >= $_SESSION['token-expire'];
     }
 }
