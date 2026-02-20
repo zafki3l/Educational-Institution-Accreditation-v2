@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Modules\QualityAssessment\Infrastructure\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Evidence extends Model
+{
+    protected $primaryKey = 'id';
+
+    public $incrementing = false;
+    
+    protected $keyType = 'string';
+
+    protected $fillable = [
+        'id',
+        'name',
+        'document_number',
+        'issued_date',
+        'issuing_authority',
+        'file_url'
+    ];
+
+    public $timestamps = true;
+}
