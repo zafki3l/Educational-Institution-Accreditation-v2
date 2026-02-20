@@ -77,6 +77,45 @@ function renderMilestonesTable(milestones) {
     `).join('');
 }
 
+document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.delete-milestone-btn');
+    if (!btn) return;
+
+    e.preventDefault();
+
+    const milestoneId = btn.dataset.id;
+
+    if (!confirm('Xóa mốc đánh giá này?')) return;
+
+    try {
+        const res = await fetch(`/milestones/${milestoneId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!res.ok) {
+            const text = await res.text();
+            console.error(text);
+            throw new Error(res.status);
+        }
+
+        // Xóa dòng khỏi table
+        btn.closest('tr').remove();
+
+        // Nếu hết milestone → hiện empty state
+        const tbody = document.getElementById('milestonesTableBody');
+        if (!tbody.children.length) {
+            document.getElementById('emptyMilestonesState').style.display = 'block';
+        }
+
+    } catch (err) {
+        alert('Không thể xóa mốc đánh giá');
+    }
+});
+
 /* =====================
    MODAL CONTROL
 ===================== */
@@ -86,6 +125,8 @@ function openMilestonesModal() {
 
 function closeMilestonesModal() {
     modal.classList.remove('show');
+    clearMilestonesErrors();
+    form.reset();
 }
 
 document.getElementById('closeMilestonesModal')?.addEventListener('click', closeMilestonesModal);
@@ -107,13 +148,16 @@ form.addEventListener('submit', async (e) => {
     });
 
     if (!res.ok) {
-        alert('Backend lỗi');
+        const data = await res.json();
+        renderMilestonesErrors(data.errors ?? []);
         return;
     }
 
     const milestone = await res.json();
     appendMilestoneRow(milestone);
 
+    clearMilestonesErrors();
+    
     orderInput.value = '';
     nameInput.value = '';
     orderInput.focus();
@@ -154,4 +198,24 @@ function escapeHtml(text = '') {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
+
+function renderMilestonesErrors(errors = []) {
+    const box = document.getElementById('formMilestonesErrors');
+    if (!box) return;
+
+    box.innerHTML = '';
+
+    errors.forEach(err => {
+        const span = document.createElement('span');
+        span.className = 'error-message';
+        span.textContent = `- ${err}`;
+        box.appendChild(span);
+    });
+}
+
+function clearMilestonesErrors() {
+    const box = document.getElementById('formMilestonesErrors');
+    if (!box) return;
+    box.innerHTML = '';
 }

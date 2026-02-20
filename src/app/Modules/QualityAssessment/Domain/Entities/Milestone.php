@@ -4,13 +4,15 @@ namespace App\Modules\QualityAssessment\Domain\Entities;
 
 use App\Modules\QualityAssessment\Domain\Exception\Criteria\CriteriaEmptyIdException;
 use App\Modules\QualityAssessment\Domain\Exception\Milestone\MilestoneNameEmptyException;
+use App\Modules\QualityAssessment\Domain\Exception\Milestone\MilestoneOrderInvalidException;
+use App\Modules\QualityAssessment\Domain\ValueObjects\Milestone\MilestoneCode;
 
 class Milestone
 {
     private function __construct(
         private ?int $id,
         private string $criteria_id,
-        private string $code,
+        private MilestoneCode $code,
         private int $order,
         private string $name
     ) {}
@@ -18,12 +20,16 @@ class Milestone
     public static function create(
         ?int $id,
         string $criteria_id,
-        string $code,
+        MilestoneCode $code,
         int $order,
         string $name
     ): self {
         self::checkCriteriaIdEmpty($criteria_id);
         self::checkNameEmpty($name);
+
+        if ($order < 1) {
+            throw new MilestoneOrderInvalidException();
+        }
 
         return new self($id, $criteria_id, $code, $order, $name);
     }
@@ -38,7 +44,7 @@ class Milestone
         return $this->criteria_id;
     }
 
-    public function getCode(): string
+    public function getCode(): MilestoneCode
     {
         return $this->code;
     }

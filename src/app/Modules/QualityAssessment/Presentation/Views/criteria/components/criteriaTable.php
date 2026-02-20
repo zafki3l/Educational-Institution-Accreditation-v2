@@ -13,10 +13,10 @@
             <tr class="standard-row"
                 data-standard-id="<?= $standard->id ?>">
                 <td colspan="4">
-                    <strong>
+                    <span style="font-weight: 600;">
                         Tiêu chuẩn <?= $standard->id ?>:
                         <?= htmlspecialchars($standard->name) ?>
-                    </strong>
+                    </span>
 
                     <button class="toggle-btn"
                             data-standard-id="<?= $standard->id ?>"

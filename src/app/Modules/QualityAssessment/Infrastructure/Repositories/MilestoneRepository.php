@@ -20,4 +20,16 @@ class MilestoneRepository implements MilestoneRepositoryInterface
 
         return MilestoneMapper::toDomain($modelsMilestone);
     }
+
+    public function findOrFail(int $id): EntitiesMilestone
+    {
+        $modelsMilestone = ModelsMilestone::findOrFail($id);
+
+        return MilestoneMapper::toDomain($modelsMilestone);
+    }
+
+    public function delete(EntitiesMilestone $entitiesMilestone): void
+    {
+        ModelsMilestone::where('id', $entitiesMilestone->getId())->delete();
+    }
 }

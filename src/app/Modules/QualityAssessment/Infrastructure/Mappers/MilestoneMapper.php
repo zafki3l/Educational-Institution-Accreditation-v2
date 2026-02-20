@@ -3,6 +3,7 @@
 namespace App\Modules\QualityAssessment\Infrastructure\Mappers;
 
 use App\Modules\QualityAssessment\Domain\Entities\Milestone as EntitiesMilestone;
+use App\Modules\QualityAssessment\Domain\ValueObjects\Milestone\MilestoneCode;
 use App\Modules\QualityAssessment\Infrastructure\Models\Milestone as ModelsMilestone;
 
 class MilestoneMapper
@@ -12,7 +13,7 @@ class MilestoneMapper
         return EntitiesMilestone::create(
             $modelsMilestone->id,
             $modelsMilestone->criteria_id,
-            $modelsMilestone->code,
+            MilestoneCode::fromString($modelsMilestone->code),
             $modelsMilestone->order,
             $modelsMilestone->name
         );
