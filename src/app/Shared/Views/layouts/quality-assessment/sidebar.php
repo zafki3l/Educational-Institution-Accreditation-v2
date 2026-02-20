@@ -41,7 +41,7 @@
                                             <li class="sidebar-criteria">
                                                 <a
                                                     class="sidebar-criteria-link"
-                                                    href="/evidences/<?= htmlspecialchars($criteria->id) ?>"
+                                                    href="/criterias/<?= htmlspecialchars($criteria->id) ?>/evidences"
                                                 >
                                                     <span class="sidebar-criteria-code">
                                                         Tiêu chí <?= htmlspecialchars($criteria->id) ?>
