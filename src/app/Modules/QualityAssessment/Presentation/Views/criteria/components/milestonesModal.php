@@ -47,6 +47,8 @@
                 </form>
             </div>
 
+            <div class="error" id="formMilestonesErrors"></div>
+
             <table class="milestones-table">
                 <thead>
                     <tr>

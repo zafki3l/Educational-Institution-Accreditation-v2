@@ -125,6 +125,8 @@ function openMilestonesModal() {
 
 function closeMilestonesModal() {
     modal.classList.remove('show');
+    clearMilestonesErrors();
+    form.reset();
 }
 
 document.getElementById('closeMilestonesModal')?.addEventListener('click', closeMilestonesModal);
@@ -146,13 +148,16 @@ form.addEventListener('submit', async (e) => {
     });
 
     if (!res.ok) {
-        alert('Backend lỗi');
+        const data = await res.json();
+        renderMilestonesErrors(data.errors ?? []);
         return;
     }
 
     const milestone = await res.json();
     appendMilestoneRow(milestone);
 
+    clearMilestonesErrors();
+    
     orderInput.value = '';
     nameInput.value = '';
     orderInput.focus();
@@ -193,4 +198,24 @@ function escapeHtml(text = '') {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
+
+function renderMilestonesErrors(errors = []) {
+    const box = document.getElementById('formMilestonesErrors');
+    if (!box) return;
+
+    box.innerHTML = '';
+
+    errors.forEach(err => {
+        const span = document.createElement('span');
+        span.className = 'error-message';
+        span.textContent = `- ${err}`;
+        box.appendChild(span);
+    });
+}
+
+function clearMilestonesErrors() {
+    const box = document.getElementById('formMilestonesErrors');
+    if (!box) return;
+    box.innerHTML = '';
 }
