@@ -5,6 +5,8 @@
     background: white;
     border-right: 1px solid #e2e8f0;
     padding: 20px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .sidebar-title {
@@ -45,35 +47,93 @@
     justify-content: space-between;
     align-items: center;
 }
-
+/* Sub menu container */
 .sidebar-sub {
     display: none;
-    padding-left: 16px;
+    margin-top: 4px;
+    padding-left: 0;
 }
 
-.sidebar-sub-item {
-    display: block;
-    padding: 10px 20px;
-    font-size: 13px;
-    color: #64748b;
-    text-decoration: none;
-    border-left: 2px solid transparent;
-}
-
-.sidebar-sub-item:hover {
-    color: #1e40af;
-    background: #f1f5f9;
-}
-
+/* Khi group mở */
 .sidebar-group.open .sidebar-sub {
     display: block;
 }
 
-.sidebar-group.open .arrow {
-    transform: rotate(90deg);
+/* Tree wrapper */
+.sidebar-tree {
+    list-style: none;
+    margin: 6px 0 8px;
+    padding: 4px 0;
+    border-left: 2px solid #e5e7eb;
 }
 
-.arrow {
-    transition: 0.2s;
-    font-size: 12px;
+/* Standard item */
+.sidebar-standard {
+    margin-bottom: 2px;
+}
+
+.sidebar-standard-code {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.sidebar-criteria-code {
+    font-size: 14px;
+}
+
+/* Standard toggle */
+.sidebar-standard-toggle {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+
+    font-size: 13px;
+    color: #0f172a;
+
+    transition: background 0.15s ease;
+}
+
+.sidebar-standard-toggle:hover {
+    background: #f8fafc;
+}
+
+.sidebar-criteria-list {
+    display: none;
+    list-style: none;
+    margin: 4px 0;
+    padding-left: 32px;   /* ⬅️ tăng từ 18px → 32px */
+    border-left: 1px dashed #e5e7eb;
+}
+
+.sidebar-criteria-list.open {
+    display: block;
+}
+
+/* Criteria link */
+.sidebar-criteria-link {
+    display: flex;
+    gap: 6px;
+    padding: 6px 10px;
+    font-size: 12.5px;
+    text-decoration: none;
+    color: #475569;
+    border-radius: 6px;
+
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-criteria-link:hover {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.sidebar-criteria-link.active {
+    background: #e0e7ff;
+    color: #1e40af;
+    font-weight: 600;
 }
