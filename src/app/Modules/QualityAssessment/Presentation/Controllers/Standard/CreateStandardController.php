@@ -6,7 +6,9 @@ use App\Modules\QualityAssessment\Application\UseCases\Standard\CreateStandardUs
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Standard\CreateStandardRequest;
 use App\Shared\Application\Contracts\DepartmentReader\DepartmentReaderInterface;
+use App\Shared\Exception\DomainException;
 use App\Shared\Response\ViewResponse;
+use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
 
 final class CreateStandardController extends QualityAssessmentController
@@ -30,10 +32,18 @@ final class CreateStandardController extends QualityAssessmentController
         );
     }
 
-    public function store(CreateStandardRequest $request)
+    public function store(CreateStandardRequest $request): JsonResponse
     {
-        $this->createStandardUseCase->execute($request, AuthSession::getUserId());
+        try {
+            $this->createStandardUseCase->execute($request, AuthSession::getUserId());
 
-        $this->redirect('/standards');
+            return new JsonResponse([]);
+
+        } catch (DomainException $e) {
+
+            return new JsonResponse([
+                'errors' => [$e->getMessage()]
+            ], 422);
+        }
     }
 }

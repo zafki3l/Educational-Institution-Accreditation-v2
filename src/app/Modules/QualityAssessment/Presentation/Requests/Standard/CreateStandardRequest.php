@@ -12,9 +12,9 @@ final class CreateStandardRequest implements CreateStandardRequestInterface
 
     public function __construct()
     {
-        $this->id = $_POST['id'];
-        $this->name = $_POST['name'];
-        $this->department_id = $_POST['department_id'];
+        $this->id = trim($_POST['id'] ?? '');
+        $this->name = trim($_POST['name'] ?? '');
+        $this->department_id = trim($_POST['department_id'] ?? '');
     }
 
     public function getId(): string

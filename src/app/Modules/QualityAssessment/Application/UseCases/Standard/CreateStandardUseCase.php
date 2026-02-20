@@ -6,6 +6,7 @@ use App\Modules\QualityAssessment\Application\Requests\Standard\CreateStandardRe
 use App\Modules\QualityAssessment\Domain\Entities\Standard;
 use App\Modules\QualityAssessment\Domain\Repositories\StandardRepositoryInterface;
 use App\Shared\Logging\LoggerInterface;
+use App\Shared\Exception\DomainException;
 
 final class CreateStandardUseCase
 {
@@ -16,6 +17,18 @@ final class CreateStandardUseCase
 
     public function execute(CreateStandardRequestInterface $request, string $actor_id): void
     {
+        if ($request->getId() === '') {
+            throw new DomainException('Mã tiêu chuẩn không được để trống');
+        }
+
+        if ($request->getName() === '') {
+            throw new DomainException('Tên tiêu chuẩn không được để trống');
+        }
+
+        if ($request->getDepartmentId() === '') {
+            throw new DomainException('Vui lòng chọn phòng ban');
+        }
+
         $standard = Standard::create(
             $request->getId(),
             $request->getName(),
