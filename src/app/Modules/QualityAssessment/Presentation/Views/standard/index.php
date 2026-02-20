@@ -23,11 +23,9 @@
             <div class="page-header">
                 <h1>Quản lý tiêu chuẩn đánh giá</h1>
 
-                <a href="/standards/create">
-                    <button class="primary-btn" type="submit">
-                        </span>THÊM TIÊU CHUẨN
-                    </button>
-                </a>
+            <button class="primary-btn" id="openStandardModal">
+                THÊM TIÊU CHUẨN
+            </button>
             </div>
 
             <div class="table-box">
@@ -36,6 +34,9 @@
         </div>
     </main>
 </div>
+
+<?php include 'components/createForm.php'; ?>
+<script src="/js/standard/createForm.js"></script>
 
 </body>
 </html>
