@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Modules\QualityAssessment\Domain\Exception\Evidence;
+
+use App\Shared\Exception\DomainException;
+
+final class EvidenceEmptyFileUrlException extends DomainException
+{
+    public function __construct()
+    {
+        parent::__construct(
+            'Đường dẫn file minh chứng không được bỏ trống!',
+            'EVIDENCE_FILE_URL_EMPTY'
+        );
+    }
+}
+

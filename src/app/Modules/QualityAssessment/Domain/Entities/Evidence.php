@@ -2,29 +2,50 @@
 
 namespace App\Modules\QualityAssessment\Domain\Entities;
 
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIdException;
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyNameException;
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyDocumentNumberException;
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIssuedDateException;
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIssuingAuthorityException;
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyFileUrlException;
+use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
+use DateTimeImmutable;
+
 class Evidence
 {
     private function __construct(
-        private string $id,
+        private EvidenceId $id,
         private string $name,
         private string $document_number,
-        private string $issued_date,
+        private DateTimeImmutable $issued_date,
         private string $issuing_authority,
         private string $file_url
     ) {}
 
     public static function create(
-        string $id,
+        EvidenceId $id,
         string $name,
         string $document_number,
-        string $issued_date,
+        DateTimeImmutable $issued_date,
         string $issuing_authority,
         string $file_url
     ): self {
+        self::checkIdEmpty($id);
+
+        self::checkNameEmpty($name);
+
+        self::checkDocumentNumberEmpty($document_number);
+
+        self::checkIssuedDateEmpty($issued_date);
+
+        self::checkIssuingAuthorityEmpty($issuing_authority);
+
+        self::checkFileUrlEmpty($file_url);
+
         return new self($id, $name, $document_number, $issued_date, $issuing_authority, $file_url);
     }
 
-    public function getId(): string
+    public function getId(): EvidenceId
     {
         return $this->id;
     }
@@ -39,7 +60,7 @@ class Evidence
         return $this->document_number;
     }
 
-    public function getIssuedDate(): string
+    public function getIssuedDate(): DateTimeImmutable
     {
         return $this->issued_date;
     }
@@ -52,5 +73,47 @@ class Evidence
     public function getFileUrl(): string
     {
         return $this->file_url;
+    }
+
+    private static function checkDocumentNumberEmpty(string $document_number): void
+    {
+        if ($document_number === '') {
+            throw new EvidenceEmptyDocumentNumberException();
+        }
+    }
+
+    private static function checkIssuedDateEmpty(DateTimeImmutable $issued_date): void
+    {
+        if ($issued_date->format('Y-m-d') === '') {
+            throw new EvidenceEmptyIssuedDateException();
+        }
+    }
+
+    private static function checkIssuingAuthorityEmpty(string $issuing_authority): void
+    {
+        if ($issuing_authority === '') {
+            throw new EvidenceEmptyIssuingAuthorityException();
+        }
+    }
+
+    private static function checkFileUrlEmpty(string $file_url): void
+    {
+        if ($file_url === '') {
+            throw new EvidenceEmptyFileUrlException();
+        }
+    }
+
+    private static function checkNameEmpty(string $name): void
+    {
+        if ($name === '') {
+            throw new EvidenceEmptyNameException();
+        }
+    }
+
+    private static function checkIdEmpty(EvidenceId $id): void
+    {
+        if ($id->value() === '') {
+            throw new EvidenceEmptyIdException();
+        }
     }
 }
