@@ -5,4 +5,4 @@ use App\Shared\Middlewares\EnsureAuth;
 use App\Shared\Middlewares\EnsureStaff;
 
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
-    ->get('/evidences/{criteria_id}', [IndexEvidenceController::class, 'index']);
+    ->get('/criterias/{criteria_id}/evidences', [IndexEvidenceController::class, 'index']);

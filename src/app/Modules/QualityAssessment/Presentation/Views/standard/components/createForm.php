@@ -69,3 +69,5 @@
         </form>
     </div>
 </div>
+
+<script src="/js/standard/createForm.js"></script>

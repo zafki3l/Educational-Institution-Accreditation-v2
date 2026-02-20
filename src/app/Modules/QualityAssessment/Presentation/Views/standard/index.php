@@ -36,7 +36,6 @@
 </div>
 
 <?php include 'components/createForm.php'; ?>
-<script src="/js/standard/createForm.js"></script>
 
 </body>
 </html>
