@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="<?= HOST ?>/css/parts/header.css">
     <link rel="stylesheet" href="<?= HOST ?>/css/main.css">
     <link rel="shortcut icon" href="<?= HOST ?>/assets/icon/fbu.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/components/buttons.css">
     <title><?= $data['title'] ?></title>
 </head>
 <body>

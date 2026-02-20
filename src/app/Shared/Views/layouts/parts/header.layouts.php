@@ -7,7 +7,7 @@
             <li><a href="/">Trang chủ</a></li>
             <li><a href="">Tìm kiếm minh chứng</a></li>
 
-            <li><a href="/admin/dashboard">Admin Dashboard</a></li> <!--show dashboard for admin-->
+            <li><a href="/admin/dashboard">Trang điều khiển</a></li> <!--show dashboard for admin-->
 
             <li><a href="">Staff Dashboard</a></li> <!--Show dashboard for staff-->
         </ul>

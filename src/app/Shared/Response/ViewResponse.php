@@ -6,8 +6,15 @@ use Core\Response;
 
 class ViewResponse extends Response
 {
-    public function __construct(string $module, string $view, string $layout, array $data = [])
+    public function __construct(
+        public string $module, 
+        public string $view, 
+        public string $layout, 
+        array $data = [])
     {
-        return parent::__construct($module, $view, $layout, $data);
+        $this->module = $module;
+        $this->view = $view;
+        $this->layout = $layout;
+        parent::__construct($data);
     }
 }

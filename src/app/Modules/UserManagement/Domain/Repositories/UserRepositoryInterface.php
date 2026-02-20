@@ -6,5 +6,11 @@ use App\Modules\UserManagement\Domain\Entities\User as EntitiesUser;
 
 interface UserRepositoryInterface
 {
-    public function create(EntitiesUser $entitiesUser): void;
+    public function create(EntitiesUser $entitiesUser): EntitiesUser;
+
+    public function findOrFail(string $id): EntitiesUser;
+
+    public function save(EntitiesUser $entitiesUser): void;
+
+    public function delete(string $id): void;
 }

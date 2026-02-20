@@ -2,11 +2,13 @@
 
 namespace App\Modules\UserManagement\Domain\ValueObjects;
 
-class Email
-{
-    private string $value;
+use App\Modules\UserManagement\Domain\Exception\InvalidEmailFormatException;
 
-    private function __construct(string $value)
+final class Email
+{
+    private ?string $value;
+
+    private function __construct(?string $value)
     {
         $this->value = $value;
     }
@@ -15,19 +17,24 @@ class Email
     {
         $email = trim(strtolower($email));
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('Invalid email format');
-        }
+        self::validate($email);
 
         return new self($email);
     }
 
-    public function value(): string
+    private static function validate(?string $email): void
+    {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidEmailFormatException();
+        }
+    }
+
+    public function value(): ?string
     {
         return $this->value;
     }
 
-    public function equals(Email $other): bool
+    public function equals(self $other): bool
     {
         return $this->value === $other->value;
     }

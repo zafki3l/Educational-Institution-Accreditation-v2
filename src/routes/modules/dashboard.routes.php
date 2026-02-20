@@ -2,6 +2,12 @@
 
 use App\Modules\Dashboard\Presentation\Controllers\AdminDashboardController;
 use App\Modules\Dashboard\Presentation\Controllers\StaffDashboardController;
+use App\Shared\Middlewares\EnsureAdmin;
+use App\Shared\Middlewares\EnsureAuth;
+use App\Shared\Middlewares\EnsureStaff;
 
-$route->get('/admin/dashboard', [AdminDashboardController::class, 'dashboard']);
-$route->get('/staff/dashboard', [StaffDashboardController::class, 'dashboard']);
+$route->middleware([EnsureAuth::class, EnsureAdmin::class])
+    ->get('/admin/dashboard', [AdminDashboardController::class, 'dashboard']);
+    
+$route->middleware([EnsureAuth::class, EnsureStaff::class])
+    ->get('/staff/dashboard', [StaffDashboardController::class, 'dashboard']);

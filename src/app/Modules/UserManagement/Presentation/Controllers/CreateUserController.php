@@ -5,7 +5,10 @@ namespace App\Modules\UserManagement\Presentation\Controllers;
 use App\Modules\UserManagement\Application\UseCases\CreateUserUseCase;
 use App\Modules\UserManagement\Presentation\Requests\CreateUserRequest;
 use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
+use App\Shared\Exception\DomainException;
+use App\Shared\Response\JsonResponse;
 use App\Shared\Response\ViewResponse;
+use App\Shared\SessionManager\AuthSession;
 
 final class CreateUserController extends UserController
 {
@@ -29,10 +32,16 @@ final class CreateUserController extends UserController
         );
     }
 
-    public function store(CreateUserRequest $request): void
+    public function store(CreateUserRequest $request): JsonResponse
     {
-        $this->createUserUseCase->execute($request);
+        try {
+            $this->createUserUseCase->execute($request, AuthSession::getUserId());
 
-        $this->redirect(ROOT_URL . '/users');
+            return new JsonResponse([], 200);
+        } catch (DomainException $e) {
+            return new JsonResponse([
+                'errors' => [$e->getMessage()]
+            ], 422);
+        }
     }
 }

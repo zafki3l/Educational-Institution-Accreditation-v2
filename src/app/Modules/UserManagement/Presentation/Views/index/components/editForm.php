@@ -9,65 +9,85 @@
             </button>
         </div>
 
-        <form id="editUserForm" class="user-form">
-            <input type="hidden" id="edit-id" name="id">
-
+        <form id="editUserForm" class="context-form" action="/users/update" method="post">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" id="edit-id" name="id" value="<?= htmlspecialchars($_SESSION['old']['id'] ?? '') ?>">
+            <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
             <div class="form-row">
                 <div class="form-group">
-                    <label for="edit-first_name">Họ *</label>
+                    <label for="edit-first_name">Họ</label>
                     <input 
                         type="text"
                         id="edit-first_name"
                         name="first_name"
                         class="form-input"
-                        required
+                        value="<?= htmlspecialchars($_SESSION['old']['first_name'] ?? '') ?>"
                     >
-                    <span class="error-message" id="edit_error_first_name"></span>
                 </div>
 
                 <div class="form-group">
-                    <label for="edit-last_name">Tên *</label>
+                    <label for="edit-last_name">Tên</label>
                     <input 
                         type="text"
                         id="edit-last_name"
                         name="last_name"
                         class="form-input"
-                        required
+                        value="<?= htmlspecialchars($_SESSION['old']['last_name'] ?? '') ?>"
                     >
-                    <span class="error-message" id="edit_error_last_name"></span>
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="edit-email">Email</label>
+                <input 
+                    type="text"
+                    id="edit-email"
+                    name="email"
+                    class="form-input"
+                    value="<?= htmlspecialchars($_SESSION['old']['email'] ?? '') ?>"
+                >
+            </div>
+
+            <br>
+
             <div class="form-row">
                 <div class="form-group">
-                    <label for="edit-email">Email</label>
-                    <input 
-                        type="email"
-                        id="edit-email"
-                        name="email"
-                        class="form-input"
-                    >
-                    <span class="error-message" id="edit_error_email"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="edit-role_id">Vai Trò *</label>
+                    <label for="edit-role_id">Vai Trò</label>
                     <select 
                         id="edit-role_id"
                         name="role_id"
                         class="form-input"
-                        required
                     >
-                        <option value="">-- Chọn vai trò --</option>
+                        <option value="<?= null ?>">-- Chọn vai trò --</option>
                         <?php foreach ($roles as $role): ?>
-                            <option value="<?= htmlspecialchars($role->id) ?>">
-                                <?= htmlspecialchars($role->name) ?>
+                            <option value="<?= $role->id ?>"
+                                <?= (($_SESSION['old']['role_id'] ?? '') == $role->id) ? 'selected' : '' ?>>
+                                <?= $role->name ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <span class="error-message" id="edit_error_role_id"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-department_id">Phòng ban</label>
+                    <select 
+                        id="edit-department_id"
+                        name="department_id" 
+                        class="form-input"
+                        disabled
+                    >
+                        <option value="<?= null ?>">-- Chọn phòng ban --</option>
+                        <?php foreach ($departments as $department): ?>
+                            <option value="<?= $department->id ?>"
+                                <?= (($_SESSION['old']['department_id'] ?? '') == $department->id) ? 'selected' : '' ?>>
+                                <?= $department->name ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
             </div>
+
+            <div class="error" id="editFormErrors"></div>
 
             <div class="form-actions">
                 <button type="button" class="btn-outline" id="cancelEditModal">

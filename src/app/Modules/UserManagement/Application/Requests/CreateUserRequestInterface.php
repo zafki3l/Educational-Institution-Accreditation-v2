@@ -3,7 +3,7 @@
 namespace App\Modules\UserManagement\Application\Requests;
 
 interface CreateUserRequestInterface
-{
+{    
     public function getFirstName(): string;
 
     public function getLastName(): string;
@@ -12,5 +12,7 @@ interface CreateUserRequestInterface
 
     public function getPassword(): string;
 
-    public function getRoleId(): string;
+    public function getRoleId(): int;
+
+    public function getDepartmentId(): ?string;
 }

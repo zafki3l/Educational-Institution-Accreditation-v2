@@ -1,9 +1,16 @@
 <?php
 
-use App\Modules\Role\Presentation\Controllers\CreateRoleController;
-use App\Modules\Role\Presentation\Controllers\DeleteRoleController;
-use App\Modules\Role\Presentation\Controllers\IndexRoleController;
+use App\Modules\Authorization\Presentation\Controllers\Role\CreateRoleController;
+use App\Modules\Authorization\Presentation\Controllers\Role\DeleteRoleController;
+use App\Modules\Authorization\Presentation\Controllers\Role\IndexRoleController;
+use App\Shared\Middlewares\EnsureAdmin;
+use App\Shared\Middlewares\EnsureAuth;
 
-$route->get('/roles', [IndexRoleController::class, 'index']);
-$route->post('/roles', [CreateRoleController::class, 'store']);
-$route->delete('/roles/{id}', [DeleteRoleController::class, 'destroy']);
+$route->middleware([EnsureAuth::class, EnsureAdmin::class])
+    ->get('/roles', [IndexRoleController::class, 'index']);
+
+$route->middleware([EnsureAuth::class, EnsureAdmin::class])
+    ->post('/roles', [CreateRoleController::class, 'store']);
+    
+$route->middleware([EnsureAuth::class, EnsureAdmin::class])
+    ->delete('/roles/{id}', [DeleteRoleController::class, 'destroy']);

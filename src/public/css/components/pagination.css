@@ -1,0 +1,118 @@
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 18px;
+    border-top: 1px solid #e2e8f0;
+    background: #f8fafc;
+}
+
+.page-btn {
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+}
+
+.pagination-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0;
+    font-size: 14px;
+    color: #475569; /* slate-600 */
+}
+
+.pagination-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8fafc; /* slate-50 */
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0; /* slate-200 */
+}
+
+.pagination-nav {
+    display: flex;
+    gap: 4px;
+}
+
+.pagination-btn {
+    min-width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #334155; /* slate-700 */
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.pagination-btn:hover {
+    background: #e0f2fe; /* sky-100 */
+    border-color: #38bdf8; /* sky-400 */
+    color: #0369a1; /* sky-700 */
+}
+
+.pagination-btn.disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background: #f1f5f9; /* slate-100 */
+}
+
+.pagination-numbers {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 6px;
+}
+
+.pagination-number {
+    min-width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #334155;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.pagination-number:hover {
+    background: #e0f2fe;
+    border-color: #38bdf8;
+    color: #0369a1;
+}
+
+.pagination-number.active {
+    background: #2563eb; /* blue-600 */
+    border-color: #2563eb;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: default;
+}
+
+.pagination-ellipsis {
+    padding: 0 6px;
+    color: #94a3b8; /* slate-400 */
+    user-select: none;
+}
+
+.pagination-info {
+    font-size: 13px;
+    color: #64748b; /* slate-500 */
+}
+
+.pagination-info span {
+    margin: 0 4px;
+}

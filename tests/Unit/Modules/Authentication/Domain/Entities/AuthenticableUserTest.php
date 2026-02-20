@@ -12,15 +12,15 @@ class AuthenticableUserTest extends TestCase
 {
     public function testVerifyTrue(): void
     {
-        $user = AuthenticableUser::create(UserId::generate(), AuthId::generate(), Password::fromPlain('12345'));
+        $user = AuthenticableUser::create(UserId::generate(), AuthId::generate(), Password::fromPlain('password123'), 2);
 
-        $this->assertTrue($user->verify('12345'), 'TRUE');
+        $this->assertTrue($user->verify('password123'), 'TRUE');
     }
 
     public function testVerifyFalse(): void
     {
-        $user = AuthenticableUser::create(UserId::generate(), AuthId::generate(), Password::fromPlain('12345'));
+        $user = AuthenticableUser::create(UserId::generate(), AuthId::generate(), Password::fromPlain('password123'), 2);
 
-        $this->assertFalse($user->verify('123456'), 'FAILURE');
+        $this->assertFalse($user->verify('wrongPass456'), 'FAILURE');
     }
 }

@@ -1,0 +1,65 @@
+.standard-row td {
+    padding: 14px 16px;
+    background: #f3f6ff;
+    border-top: 1px solid #dbe3ff;
+}
+
+.standard-row strong {
+    font-size: 15px;
+}
+
+.criteria-row {
+    transition: opacity .2s ease;
+}
+
+.criteria-row.hidden {
+    display: none;
+}
+
+.toggle-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.toggle-btn[aria-expanded="false"] .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.criteria-name {
+    max-width: 500px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.criteria-name.expanded {
+    white-space: normal;
+}
+
+.milestone-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    background: rgba(59, 130, 246, 0.08); /* xanh rất nhạt */
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.milestone-btn:hover {
+    background: rgba(59, 130, 246, 0.18);
+}
+
+.milestone-btn .material-symbols-outlined {
+    font-size: 20px;
+    color: #2563eb; /* xanh action */
+}

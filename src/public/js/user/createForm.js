@@ -1,96 +1,87 @@
-// Modal Management
-const userModal = document.getElementById('userModal');
-const openUserModalBtn = document.getElementById('openUserModal');
-const closeUserModalBtn = document.getElementById('closeUserModal');
-const cancelUserModalBtn = document.getElementById('cancelUserModal');
-const userForm = document.getElementById('userForm');
+document.addEventListener('DOMContentLoaded', () => {
+    const createUserForm = document.getElementById('createUserForm');
+    const createUserModal = document.getElementById('createUserModal');
+    const openBtn = document.getElementById('openUserModal');
+    const closeBtn = document.getElementById('closeUserModal');
+    const cancelBtn = document.getElementById('cancelUserModal');
 
-// Mở modal
-openUserModalBtn.addEventListener('click', () => {
-    userModal.classList.add('active');
-    userForm.reset();
-    clearErrors();
-});
+    const roleSelect = document.getElementById('role_id');
+    const departmentSelect = document.getElementById('department_id');
+    const ROLE_STAFF = '2';
 
-// Đóng modal
-const closeModal = () => {
-    userModal.classList.remove('active');
-};
+    if (!createUserForm || !createUserModal || !openBtn) return;
+    if (!roleSelect || !departmentSelect) return;
 
-closeUserModalBtn.addEventListener('click', closeModal);
-cancelUserModalBtn.addEventListener('click', closeModal);
+    openBtn.addEventListener('click', () => {
+        createUserModal.classList.add('active');
+    });
 
-// Đóng modal khi click ngoài
-userModal.addEventListener('click', (e) => {
-    if (e.target === userModal || e.target.classList.contains('modal-overlay')) {
-        closeModal();
+    const close = () => {
+        createUserModal.classList.remove('active');
+        clearErrors();
+        createUserForm.reset();
     }
-});
 
-// Submit form tạo người dùng
-userForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    closeBtn?.addEventListener('click', close);
+    cancelBtn?.addEventListener('click', close);
 
-    const formData = new FormData(userForm);
+    createUserForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    try {
-        const response = await fetch('/users', {
+        const response = await fetch(createUserForm.action, {
             method: 'POST',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(Object.fromEntries(formData))
+            body: new FormData(createUserForm),
+            headers: { Accept: 'application/json' }
         });
 
-        const data = await response.json();
+        const text = await response.text();
 
-        if (!response.ok) {
-            // Xử lý lỗi validation
-            if (data.errors) {
-                Object.keys(data.errors).forEach(field => {
-                    const errorElement = document.getElementById(`error_${field}`);
-                    if (errorElement) {
-                        errorElement.textContent = data.errors[field][0];
-                        document.getElementById(field).classList.add('has-error');
-                    }
-                });
-            } else {
-                alert(data.message || 'Có lỗi xảy ra');
-            }
+        let data = {};
+        try {
+            data = JSON.parse(text);
+        } catch {
+            console.error('Invalid JSON:', text);
             return;
         }
 
-        // Thành công
-        alert('Tạo người dùng mới thành công!');
-        closeModal();
-        userForm.reset();
-        window.location.reload();
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Có lỗi xảy ra: ' + error.message);
-    }
-});
+        if (response.ok && !data.errors) {
+            close();
+            location.reload();
+            return;
+        }
 
-// Clear errors
-function clearErrors() {
-    const errorElements = userForm.querySelectorAll('.error-message');
-    errorElements.forEach(el => {
-        el.textContent = '';
+        renderErrors(data.errors);
+        createUserModal.classList.add('active');
     });
 
-    const inputs = userForm.querySelectorAll('.form-input.has-error');
-    inputs.forEach(input => {
-        input.classList.remove('has-error');
+    roleSelect.addEventListener('change', function () {
+        if (this.value === ROLE_STAFF) {
+            departmentSelect.disabled = false;
+            departmentSelect.required = true;
+        } else {
+            departmentSelect.disabled = true;
+            departmentSelect.required = false;
+            departmentSelect.value = '';
+        }
+    });
+});
+
+function renderErrors(errors = []) {
+    const box = document.getElementById('formErrors');
+    if (!box) return;
+
+    box.innerHTML = '';
+
+    errors.forEach(err => {
+        const span = document.createElement('span');
+        span.className = 'error-message';
+        span.textContent = `- ${err}`;
+        box.appendChild(span);
     });
 }
 
-// Clear errors khi user bắt đầu nhập
-userForm.addEventListener('input', (e) => {
-    const field = e.target;
-    const errorElement = document.getElementById(`error_${field.name}`);
-    if (errorElement) {
-        errorElement.textContent = '';
-        field.classList.remove('has-error');
-    }
-});
+function clearErrors() {
+    const box = document.getElementById('formErrors');
+    if (!box) return;
+    box.innerHTML = '';
+}
