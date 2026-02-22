@@ -44,5 +44,5 @@ services:
 
 volumes:
   educational-institution-accreditation_db_data:
-    external: true
+    name: educational-institution-accreditation_db_data
   mongo_data:
