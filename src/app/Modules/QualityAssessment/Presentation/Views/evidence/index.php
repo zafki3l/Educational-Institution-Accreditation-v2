@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/index/createUser.css">
     <link rel="stylesheet" href="/css/pagination.css">
     <link rel="stylesheet" href="/css/criteria/table.css">
+    <link rel="stylesheet" href="/css/evidence/index.css">
 </head>
 <body>
 
@@ -21,15 +22,17 @@
         <div class="container">
 
             <div class="page-header">
-                <h1>Quản lý tiêu chí đánh giá</h1>
+                <h1>Quản lý minh chứng đánh giá</h1>
 
                 <button class="primary-btn" id="openCriteriaModal">
-                    </span>THÊM TIÊU CHÍ MỚI
+                    </span>THÊM MINH CHỨNG ĐÁNH GIÁ
                 </button>
             </div>
 
+            <h2 class="criteria-subtitle"><?= htmlspecialchars("Tiêu chí {$criteriaId}: {$criteriaName}") ?></h2>
+
             <div class="table-box">
-                
+                <?php include_once 'partials/evidenceTable.php' ?>
             </div>
         </div>
     </main>
