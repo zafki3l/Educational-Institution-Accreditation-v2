@@ -30,7 +30,7 @@
             </div>
 
             <div class="table-box">
-                <?php include 'components/roleTable.php' ?>
+                <?php include 'partials/roleTable.php' ?>
             </div>
         </div>
     </main>

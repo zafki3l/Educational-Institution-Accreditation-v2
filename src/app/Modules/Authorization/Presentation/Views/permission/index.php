@@ -31,7 +31,7 @@
             </div>
 
             <div class="table-box">
-                <?php include 'components/permissionTable.php' ?>
+                <?php include 'partials/permissionTable.php' ?>
             </div>
         </div>
     </main>

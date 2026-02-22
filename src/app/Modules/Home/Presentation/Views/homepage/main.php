@@ -9,13 +9,13 @@
 </head>
 <body>
     <main>
-        <?php include 'components/banner.php' ?>
+        <?php include 'partials/banner.php' ?>
 
-        <?php include 'components/introduction.php' ?>
+        <?php include 'partials/introduction.php' ?>
 
-        <?php include 'components/features.php' ?>
+        <?php include 'partials/features.php' ?>
 
-        <?php include 'components/actions.php' ?>
+        <?php include 'partials/actions.php' ?>
     </main>
 </body>
 </html>

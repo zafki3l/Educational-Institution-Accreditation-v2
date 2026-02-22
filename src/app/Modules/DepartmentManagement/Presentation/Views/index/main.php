@@ -32,7 +32,7 @@
             </div>
 
             <div class="table-box">
-                <?php include 'components/departmentTable.php' ?>
+                <?php include 'partials/departmentTable.php' ?>
             </div>
         </div>
     </main>
