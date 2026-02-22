@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Evidence extends Model
 {
+    protected $table = 'evidences';
     protected $primaryKey = 'id';
 
     public $incrementing = false;

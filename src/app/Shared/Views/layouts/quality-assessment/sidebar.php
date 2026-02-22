@@ -37,14 +37,14 @@
                                         id="standard-<?= htmlspecialchars($standard->id) ?>"
                                         class="sidebar-criteria-list"
                                     >
-                                        <?php foreach ($criterias as $criteria): ?>
+                                        <?php foreach ($criterias as $sidebarCriteria): ?>
                                             <li class="sidebar-criteria">
                                                 <a
                                                     class="sidebar-criteria-link"
-                                                    href="/criterias/<?= htmlspecialchars($criteria->id) ?>/evidences"
+                                                    href="/criterias/<?= htmlspecialchars($sidebarCriteria->id) ?>/evidences"
                                                 >
                                                     <span class="sidebar-criteria-code">
-                                                        Tiêu chí <?= htmlspecialchars($criteria->id) ?>
+                                                        Tiêu chí <?= htmlspecialchars($sidebarCriteria->id) ?>
                                                     </span>
                                                 </a>
                                             </li>
