@@ -27,10 +27,10 @@
                 </button>
             </div>
 
-           <?php include 'components/searchStaff.php' ?>
+           <?php include 'partials/searchStaff.php' ?>
 
             <div class="table-box">
-                <?php include 'components/staffTable.php' ?>
+                <?php include 'partials/staffTable.php' ?>
 
                 <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/parts/pagination.php'?>
             </div>
@@ -38,8 +38,8 @@
     </main>
 </div>
 
-<?php include 'components/createForm.php' ?>
-<?php include 'components/editForm.php' ?>
+<?php include 'partials/createForm.php' ?>
+<?php include 'partials/editForm.php' ?>
 
 
 <script src="/js/staff/createForm.js"></script>

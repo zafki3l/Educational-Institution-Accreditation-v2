@@ -29,14 +29,14 @@
             </div>
 
             <div class="table-box">
-                <?php include 'components/criteriaTable.php' ?>
+                <?php include 'partials/criteriaTable.php' ?>
             </div>
         </div>
     </main>
 </div>
 
-<?php include 'components/createForm.php' ?>
-<?php include 'components/editForm.php' ?>
+<?php include 'partials/createForm.php' ?>
+<?php include 'partials/editForm.php' ?>
 
 </body>
 </html>

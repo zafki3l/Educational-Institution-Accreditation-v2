@@ -27,10 +27,10 @@
                 </button>
             </div>
 
-           <?php include 'components/searchUser.php' ?>
+           <?php include 'partials/searchUser.php' ?>
 
             <div class="table-box">
-                <?php include 'components/userTable.php' ?>
+                <?php include 'partials/userTable.php' ?>
 
                 <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/parts/pagination.php'?>
             </div>
@@ -38,9 +38,9 @@
     </main>
 </div>
 
-<?php include 'components/createForm.php' ?>
-<?php include 'components/editForm.php' ?>
-<?php include 'components/deleteForm.php' ?>
+<?php include 'partials/createForm.php' ?>
+<?php include 'partials/editForm.php' ?>
+<?php include 'partials/deleteForm.php' ?>
 
 <script src="/js/user/createForm.js"></script>
 <script src="/js/user/editForm.js"></script>

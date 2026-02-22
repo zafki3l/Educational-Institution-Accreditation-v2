@@ -29,13 +29,13 @@
             </div>
 
             <div class="table-box">
-                <?php include 'components/standardTable.php' ?>
+                <?php include 'partials/standardTable.php' ?>
             </div>
         </div>
     </main>
 </div>
 
-<?php include 'components/createForm.php'; ?>
+<?php include 'partials/createForm.php'; ?>
 
 </body>
 </html>

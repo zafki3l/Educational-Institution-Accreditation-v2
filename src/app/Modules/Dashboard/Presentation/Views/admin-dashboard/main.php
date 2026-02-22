@@ -9,13 +9,13 @@
 
     <main class="layout">
         <section class="card-grid">
-            <?php include 'components/user-management-card.php' ?>
+            <?php include 'partials/user-management-card.php' ?>
 
-            <?php include 'components/standard-management-card.php' ?>
+            <?php include 'partials/standard-management-card.php' ?>
         </section>
 
         <section class="stats-section">
-            <?php include 'components/stats-section.php' ?>
+            <?php include 'partials/stats-section.php' ?>
         </section>
     </main>
 </body>
