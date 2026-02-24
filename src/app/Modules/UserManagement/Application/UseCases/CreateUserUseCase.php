@@ -11,6 +11,7 @@ use App\Modules\UserManagement\Domain\Services\EmailExistsCheckerInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
+use App\Shared\Infrastructure\UuidGenerator;
 use App\Shared\Logging\LoggerInterface;
 
 final class CreateUserUseCase
@@ -31,7 +32,7 @@ final class CreateUserUseCase
         }
         
         $user = User::create(
-            UserId::generate(),
+            UserId::fromString(UuidGenerator::v4()),
             AuthId::generate(),
             $request->getFirstName(),
             $request->getLastName(),

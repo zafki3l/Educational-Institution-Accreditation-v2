@@ -1,4 +1,4 @@
-<form action="/evidences" method="post">
+<form action="/evidences" method="post" enctype="multipart/form-data">
     <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?? '' ?>">
 
     <input type="text" name="id" placeholder="Nhập mã minh chứng">
@@ -21,6 +21,8 @@
     <input type="text" name="issued_date" placeholder="YYYY-MM-DD">
 
     <input type="text" name="issuing_authority" placeholder="nơi phát hành">
+
+    <input type="file" id="file" name="file" placeholder="file">
 
     <button type="submit">Create</button>
 </form>
