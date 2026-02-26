@@ -1,0 +1,28 @@
+INSERT INTO educational_institution_accreditation.standards
+(id, name, department_id)
+VALUES
+('1',  'Tầm nhìn, sứ mạng và văn hóa', 'PB_007'),
+('2',  'Quản trị', 'PB_007'),
+('3',  'Lãnh đạo và quản lý', 'PB_007'),
+('4',  'Quản trị chiến lược', 'PB_007'),
+('5',  'Các chính sách về đào tạo, nghiên cứu khoa học và phục vụ cộng đồng', 'PB_007'),
+('6',  'Quản lý nguồn nhân lực', 'PB_004'),
+('7',  'Quản lý tài chính và cơ sở vật chất', 'PB_003'),
+('8',  'Các mạng lưới và quan hệ đối ngoại', 'PB_011'),
+('9',  'Hệ thống đảm bảo chất lượng bên trong', 'PB_007'),
+('10', 'Tự đánh giá và đánh giá ngoài', 'PB_007'),
+('11', 'Hệ thống thông tin đảm bảo chất lượng bên trong', 'PB_001'),
+('12', 'Nâng cao chất lượng', 'PB_007'),
+('13', 'Tuyển sinh và nhập học', 'PB_005'),
+('14', 'Thiết kế và rà soát chương trình dạy học', 'PB_005'),
+('15', 'Giảng dạy và học tập', 'PB_005'),
+('16', 'Đánh giá người học', 'PB_005'),
+('17', 'Các hoạt động phục vụ và hỗ trợ người học', 'PB_005'),
+('18', 'Quản lý nghiên cứu khoa học', 'PB_010'),
+('19', 'Quản lý tài sản trí tuệ', 'PB_010'),
+('20', 'Hợp tác và đối tác nghiên cứu khoa học', 'PB_010'),
+('21', 'Kết nối và phục vụ cộng đồng', 'PB_009'),
+('22', 'Kết quả đào tạo', 'PB_005'),
+('23', 'Kết quả nghiên cứu khoa học', 'PB_010'),
+('24', 'Kết quả phục vụ cộng đồng', 'PB_008'),
+('25', 'Kết quả tài chính và thị trường', 'PB_003');
