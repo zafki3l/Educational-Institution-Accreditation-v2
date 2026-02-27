@@ -18,7 +18,6 @@ final class UploadFileUseCase
         $size = $file['size'];
 
         // Generate stored name
-
         $safeName = str_replace('.', '_', $name);
 
         $stored_name = ($name === '') 
