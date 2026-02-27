@@ -20,17 +20,17 @@
                 </div>
             </a>
     
-            <a href="">
+            <a href="/criterias">
                 <div class="item">
                     <h4>Quản lý mốc đánh giá</h4>
-                    <span>24 Milestones</span>
+                    <span><?= htmlspecialchars($total_milestones) ?> Mốc đánh giá</span>
                 </div>
             </a>
             
-            <a href="">
+            <a href="/criterias/1.1/evidences">
                 <div class="item">
                     <h4>Cập nhật minh chứng</h4>
-                    <span>142 Files</span>
+                    <span><?= htmlspecialchars($total_evidences) ?> Minh chứng</span>
                 </div>
             </a>
         </div>

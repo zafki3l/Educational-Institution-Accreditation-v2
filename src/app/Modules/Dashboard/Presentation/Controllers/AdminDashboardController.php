@@ -2,6 +2,8 @@
 
 namespace App\Modules\Dashboard\Presentation\Controllers;
 
+use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
+use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
 use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
 use App\Shared\Application\Contracts\DepartmentReader\DepartmentReaderInterface;
 use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
@@ -17,7 +19,7 @@ final class AdminDashboardController extends DashboardController
         private DepartmentReaderInterface $departmentReader,
         private RoleReaderInterface $roleReader,
         private StandardReaderInterface $standardReader,
-        private CriteriaReaderInterface $criteriaReader
+        private CriteriaReaderInterface $criteriaReader,
     ) {}
 
     public function dashboard(): ViewResponse
@@ -28,6 +30,8 @@ final class AdminDashboardController extends DashboardController
         $total_roles = $this->roleReader->count();
         $total_standards =  $this->standardReader->count();
         $total_criterias = $this->criteriaReader->count();
+        $total_milestones = Milestone::count();
+        $total_evidences = Evidence::count();
         
         return new ViewResponse(
             self::MODULE_NAME,
@@ -40,7 +44,9 @@ final class AdminDashboardController extends DashboardController
                 'total_departments' => $total_departments,
                 'total_roles' => $total_roles,
                 'total_standards' => $total_standards,
-                'total_criterias' => $total_criterias
+                'total_criterias' => $total_criterias,
+                'total_milestones' => $total_milestones,
+                'total_evidences' => $total_evidences
             ]
         );
     }
