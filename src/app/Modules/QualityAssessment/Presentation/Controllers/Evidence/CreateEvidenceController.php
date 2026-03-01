@@ -9,21 +9,28 @@ use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
 use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\CreateEvidenceRequest;
+use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use App\Shared\Response\JsonResponse;
 use App\Shared\Response\ViewResponse;
 
 final class CreateEvidenceController extends QualityAssessmentController
 {
-    public function __construct(private CreateEvidenceUseCase $createEvidenceUseCase) {}
+    public function __construct(
+        private CreateEvidenceUseCase $createEvidenceUseCase,
+        private StandardReaderInterface $standardReader
+    ) {}
 
     public function create()
     {
+        $standards = $this->standardReader->withCriteria();
+
         return new ViewResponse(
             self::MODULE_NAME,
             'evidence/create',
             'main.layouts',
             [
-                'title' => 'Thêm minh chứng đánh giá | ' . SYSTEM_NAME
+                'title' => 'Thêm minh chứng đánh giá | ' . SYSTEM_NAME,
+                'standards' => $standards
             ]
         );
     }

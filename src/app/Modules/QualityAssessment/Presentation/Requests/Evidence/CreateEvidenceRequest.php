@@ -20,7 +20,7 @@ final class CreateEvidenceRequest implements CreateEvidenceRequestInterface
         $this->id = $_POST['id'];
         $this->name = $_POST['name'];
         $this->criteria_id = $_POST['criteria_id'];
-        $this->milestone_id = $_POST['milestone_id'];
+        $this->milestone_id = (int) $_POST['milestone_id'];
         $this->document_number = $_POST['document_number'];
         $this->issued_date = $_POST['issued_date'];
         $this->issuing_authority = $_POST['issuing_authority'];

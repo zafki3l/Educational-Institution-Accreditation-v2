@@ -5,6 +5,7 @@ async function getStandards() {
     result.standards.forEach(standard => {
         const option = document.createElement('option');
         option.value = standard.id;
+        option.title = standard.name;
         option.textContent = `Tiêu chuẩn ${standard.id}: ${standard.name}`;
 
         if (standard.id == oldStandardId) {
@@ -45,6 +46,7 @@ standardSelect.addEventListener('change', async () => {
     result.criterias.forEach(criteria => {
         const option = document.createElement('option');
         option.value = criteria.id;
+        option.title = criteria.name;
         option.textContent = `Tiêu chí ${criteria.id}: ${criteria.name}`;
 
         if (criteria.id == oldCriteriaId) {
@@ -83,6 +85,7 @@ criteriaSelect.addEventListener('change', async () => {
     result.milestones.forEach(milestone => {
         const option = document.createElement('option');
         option.value = milestone.id;
+        option.title = milestone.name;
         option.textContent = `${milestone.order} - ${milestone.name}`;
 
         if (milestone.id == oldMilestoneId) {

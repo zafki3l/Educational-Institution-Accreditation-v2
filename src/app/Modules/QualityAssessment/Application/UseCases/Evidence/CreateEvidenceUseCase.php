@@ -18,8 +18,6 @@ final class CreateEvidenceUseCase
     
     public function execute(CreateEvidenceRequestInterface $request)
     {
-        $file_url = $this->evidenceFileUploader->upload($request->getFile(), $request->getId());
-
         $evidence = Evidence::create(
             EvidenceId::fromString($request->getId()),
             $request->getName(),
@@ -30,7 +28,7 @@ final class CreateEvidenceUseCase
         );
 
         if ($request->getFile()['error'] === UPLOAD_ERR_OK) {
-            $evidence->changeFileUrl($file_url);
+            $evidence->changeFileUrl($this->evidenceFileUploader->upload($request->getFile(), $request->getId()));
         }
         
         $this->repository->create($evidence);
