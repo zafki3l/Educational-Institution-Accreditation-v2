@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Evidence extends Model
 {
     protected $table = 'evidences';
+    
     protected $primaryKey = 'id';
 
     public $incrementing = false;

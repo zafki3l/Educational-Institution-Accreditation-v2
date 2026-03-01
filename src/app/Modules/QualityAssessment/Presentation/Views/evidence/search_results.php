@@ -122,7 +122,6 @@
                                         <a href="/evidences/results/<?= htmlspecialchars($evidence['id']) ?>/view">
                                             <?= htmlspecialchars("Tiêu chuẩn {$evidence['id']}: {$evidence['name']}") ?>
                                         </a>
-                                        
                                     </h3>
                                 </div>
                             <?php endforeach; ?>
