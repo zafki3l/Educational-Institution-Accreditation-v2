@@ -6,15 +6,21 @@ use App\Modules\QualityAssessment\Application\UseCases\Evidence\UpdateEvidenceUs
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\UpdateEvidenceRequest;
+use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
+use App\Shared\Exception\DomainException;
 use App\Shared\Response\ViewResponse;
 use App\Shared\SessionManager\AuthSession;
 
 final class UpdateEvidenceController extends QualityAssessmentController
 {
-    public function __construct(private UpdateEvidenceUseCase $updateEvidenceUseCase) {}
+    public function __construct(
+        private UpdateEvidenceUseCase $updateEvidenceUseCase,
+        private StandardReaderInterface $standardReader
+    ) {}
 
     public function edit(string $id): ViewResponse
     {
+        $standards = $this->standardReader->withCriteria();
         $evidence = Evidence::with(['milestone.criteria.standard'])->findOrFail($id);
 
         return new ViewResponse(
@@ -23,15 +29,22 @@ final class UpdateEvidenceController extends QualityAssessmentController
             'main.layouts',
             [
                 'title' => 'Cập nhật minh chứng đánh giá | ' . SYSTEM_NAME,
-                'evidence' => $evidence
+                'evidence' => $evidence,
+                'standards' => $standards
             ]
         );
     }
 
     public function update(UpdateEvidenceRequest $request): void
     {
-        $criteria_id = $this->updateEvidenceUseCase->execute($request, AuthSession::getUserId());
+        try {
+            $criteria_id = $this->updateEvidenceUseCase->execute($request, AuthSession::getUserId());
 
-        $this->redirect("/criterias/{$criteria_id}/evidences");
+            $this->redirect("/criterias/{$criteria_id}/evidences");
+        } catch (DomainException $e) {
+            $_SESSION['errors'] = [$e->getMessage()];
+
+            $this->redirect("/evidences/{$request->getId()}/edit");
+        }
     }
 }
