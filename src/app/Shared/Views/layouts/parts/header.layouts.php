@@ -19,8 +19,8 @@
         </ul>
 
         <ul class="right-nav">
-            <li><a href="">Tài khoản của tôi</a></li>
             <?php if (isAuth()): ?>
+                <li><a href="">Tài khoản của tôi</a></li>
                 <li>
                     <a href="#" onclick="document.getElementById('logoutForm').submit(); return false;">Đăng xuất</a>
                 </li>
