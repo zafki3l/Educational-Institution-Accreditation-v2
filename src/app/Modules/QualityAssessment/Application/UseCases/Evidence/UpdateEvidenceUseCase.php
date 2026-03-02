@@ -4,8 +4,10 @@ namespace App\Modules\QualityAssessment\Application\UseCases\Evidence;
 
 use App\Modules\QualityAssessment\Application\Requests\Evidence\UpdateEvidenceRequestInterface;
 use App\Modules\QualityAssessment\Domain\Entities\Evidence;
+use App\Modules\QualityAssessment\Domain\Exception\Evidence\EvidenceEmptyIssuedDateException;
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
+use App\Modules\QualityAssessment\Domain\Services\EvidenceIssuedDateEmptyCheckerInterface;
 use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
 use App\Shared\Logging\LoggerInterface;
 use DateTimeImmutable;
@@ -15,11 +17,16 @@ final class UpdateEvidenceUseCase
     public function __construct(
         private EvidenceRepositoryInterface $repository,
         private EvidenceFileUploaderInterface $evidenceFileUploader,
+        private EvidenceIssuedDateEmptyCheckerInterface $evidenceIssuedDateEmptyChecker,
         private LoggerInterface $logger
     ) {}
 
     public function execute(UpdateEvidenceRequestInterface $request, string $actor_id): string
     {
+        if ($this->evidenceIssuedDateEmptyChecker->check($request->getIssuedDate())) {
+            throw new EvidenceEmptyIssuedDateException();
+        }
+
         $evidence = Evidence::create(
             EvidenceId::fromString($request->getId()),
             $request->getName(),

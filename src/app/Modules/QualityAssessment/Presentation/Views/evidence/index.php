@@ -8,10 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link rel="stylesheet" href="/css/sidebar.css">
     <link rel="stylesheet" href="/css/index/index.css">
-    <link rel="stylesheet" href="/css/index/createUser.css">
-    <link rel="stylesheet" href="/css/pagination.css">
     <link rel="stylesheet" href="/css/criteria/table.css">
     <link rel="stylesheet" href="/css/evidence/index.css">
+
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
