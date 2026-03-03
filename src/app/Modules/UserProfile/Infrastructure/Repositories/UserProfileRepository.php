@@ -43,7 +43,7 @@ class UserProfileRepository implements UserProfileRepositoryInterface
             $user->id,
             $user->first_name,
             $user->last_name,
-            empty($user->email) ? $user->email : null
+            !empty($user->email) ? $user->email : null
         );
     }
 }
