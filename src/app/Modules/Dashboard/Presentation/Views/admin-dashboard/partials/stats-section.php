@@ -14,77 +14,131 @@
             </div>
         </div>
 
-        <div class="bar-chart">
-            <canvas id="departmentChart"></canvas>
-        </div>
-    </div>
-
-    <div class="stats-card">
-        <h4>Minh chứng đánh giá</h4>
-        <p class="subtitle">Trạng thái phê duyệt tài liệu</p>
-
-        <div class="donut">
-            <div class="donut-inner">
-                <strong>75%</strong>
-                <span>Hoàn tất</span>
-            </div>
-        </div>
-
-        <div class="donut-info">
-            <div>
-                <small>Duyệt</small>
-                <strong>106</strong>
-            </div>
-            <div>
-                <small>Chờ</small>
-                <strong>24</strong>
-            </div>
-            <div>
-                <small>Từ chối</small>
-                <strong class="danger">12</strong>
-            </div>
+        <div id="custom-bar-chart-container" class="custom-bar-chart">
         </div>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     fetch('/api/departments/standards')
 .then(res => res.json())
 .then(data => {
 
-    const labels = data.department.map(d => d.name);
-    const values = data.department.map(d => d.standards_count);
+    const container = document.getElementById('custom-bar-chart-container');
+    if (!data.department || data.department.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #94a3b8; padding: 20px;">Chưa có dữ liệu</p>';
+        return;
+    }
 
-    new Chart(document.getElementById('departmentChart'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: values,
-                borderRadius: 12,
-                barThickness: 20,
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        afterLabel: function(context) {
-                            const standards = data.department[context.dataIndex].standards;
-                            return standards.map(s => '• ' + s.name);
-                        }
-                    }
-                }
-            },
-            scales: {
-                x: { beginAtZero: true }
-            }
+    const maxVal = Math.max(...data.department.map(d => d.standards_count), 8); 
+    const tickCount = 8;
+    const roundedMax = Math.ceil(maxVal / tickCount) * tickCount; 
+
+    let yAxisHtml = '<div class="chart-y-axis">';
+    for(let i=0; i<=tickCount; i++) {
+        const val = Math.round((roundedMax / tickCount) * i);
+        const bottomPct = (i / tickCount) * 100;
+        yAxisHtml += `<div class="chart-y-tick" style="position: absolute; bottom: ${bottomPct}%; right: 16px; transform: translateY(50%);">${val}</div>`;
+    }
+    yAxisHtml += '</div>';
+
+    let gridHtml = '<div class="chart-main-area"><div class="chart-grid-bg" aria-hidden="true">';
+    for(let i=0; i<tickCount; i++) {
+        gridHtml += '<div class="chart-grid-line"></div>';
+    }
+    gridHtml += '<div class="chart-grid-line last"></div></div>';
+
+    let barsHtml = '<div class="chart-bars-container" id="chart-body">';
+    window.chartTooltipData = {}; 
+
+    data.department.forEach((d, idx) => {
+        const pct = (d.standards_count / roundedMax) * 100;
+        const ttKey = 'dept_' + idx;
+        window.chartTooltipData[ttKey] = d;
+
+        let deptCode = d.department_id || d.id; 
+        if (!deptCode) {
+            deptCode = 'P' + (idx + 1);
         }
+
+        barsHtml += `
+            <div class="chart-col" data-tooltip-key="${ttKey}">
+                <div class="chart-track">
+                    <div class="chart-bar-fill" style="height: 0%;" data-height="${pct}%">
+                        <span class="chart-bar-value">${d.standards_count}</span>
+                    </div>
+                </div>
+                <div class="chart-col-label" title="${d.name}">${deptCode}</div>
+            </div>
+        `;
     });
+    barsHtml += '</div></div>';
+
+    container.innerHTML = yAxisHtml + gridHtml + barsHtml;
+
+    let tooltip = document.getElementById('chart-tooltip');
+    if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.id = 'chart-tooltip';
+        document.body.appendChild(tooltip);
+    }
+
+    const cols = container.querySelectorAll('.chart-col');
+    cols.forEach(col => {
+        col.addEventListener('mouseenter', (e) => {
+            const key = col.getAttribute('data-tooltip-key');
+            const deptData = window.chartTooltipData[key];
+            if (!deptData) return;
+
+            let standards = deptData.standards || [];
+            
+            let html = `<div class="chart-tooltip-title">${deptData.name} - ${deptData.standards_count} tiêu chuẩn</div>`;
+            
+            if (standards.length > 0) {
+                html += '<ul class="chart-tooltip-list">';
+                const limit = 6;
+                const shown = standards.slice(0, limit);
+                shown.forEach(s => {
+                    html += `<li>${s.name}</li>`;
+                });
+                html += '</ul>';
+                
+                if (standards.length > limit) {
+                    html += `<div class="chart-tooltip-more">+ ${standards.length - limit} tiêu chuẩn khác...</div>`;
+                }
+            } else {
+                html += '<div style="color: #94a3b8">Không có tiêu chuẩn nào</div>';
+            }
+
+            tooltip.innerHTML = html;
+            tooltip.classList.add('visible');
+        });
+
+        col.addEventListener('mousemove', (e) => {
+            let x = e.pageX + 15;
+            let y = e.pageY + 15;
+            
+            if (x + 300 > window.innerWidth) {
+                x = e.pageX - 315;
+            }
+
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
+        });
+
+        col.addEventListener('mouseleave', () => {
+            tooltip.classList.remove('visible');
+        });
+    });
+
+    setTimeout(() => {
+        const bars = container.querySelectorAll('.chart-bar-fill');
+        bars.forEach((bar, index) => {
+            setTimeout(() => {
+                bar.style.height = bar.getAttribute('data-height');
+            }, 100 * index);
+        });
+    }, 50);
+
 });
 </script>
