@@ -24,4 +24,4 @@ $route->middleware([EnsureAuth::class, EnsureAdmin::class])
     ->get('/standards/{id}/edit', [UpdateStandardController::class, 'edit']);
 
 $route->middleware([EnsureAuth::class, EnsureAdmin::class])
-    ->put('/standards', [UpdateStandardController::class, 'update']);
+    ->put('/standards/{id}', [UpdateStandardController::class, 'update']);

@@ -22,18 +22,19 @@
                             <button class="icon-btn edit-standard-btn"
                                     type="button"
                                     title="Chỉnh sửa"
-                                    data-id="<?= $standard->id ?>">
+                                    data-id="<?= htmlspecialchars($standard->id) ?>"
+                                    data-name="<?= htmlspecialchars($standard->name) ?>"
+                                    data-department-id="<?= htmlspecialchars($standard->department_id) ?>">
                                 <span class="material-symbols-outlined">edit</span>
                             </button>
 
-                            <form action="/standards/<?= htmlspecialchars($standard->id) ?>" method="post">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="CSRF-token" value="<?= $_SESSION['CSRF-token'] ?>">
-
-                                <button class="icon-btn danger" title="Xóa" type="submit">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </button>
-                            </form>
+                            <button class="icon-btn danger delete-standard-btn"
+                                    type="button"
+                                    title="Xóa"
+                                    data-id="<?= htmlspecialchars($standard->id) ?>"
+                                    data-name="<?= htmlspecialchars($standard->name) ?>">
+                                <span class="material-symbols-outlined">delete</span>
+                            </button>
                         </div>
                     </td>
                 <?php endif; ?>
