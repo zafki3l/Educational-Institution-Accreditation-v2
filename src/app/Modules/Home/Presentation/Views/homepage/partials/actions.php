@@ -8,7 +8,9 @@
     </div>
 
     <div class="actions-buttons">
+        <?php if (!isAuth()): ?>
         <a href="/login" class="btn-login">Đăng nhập hệ thống</a>
+        <?php endif; ?>
         <a href="/evidences/find" class="btn-find-evidences">Tìm kiếm minh chứng</a>
     </div>
 </section>

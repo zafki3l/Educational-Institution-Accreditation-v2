@@ -15,4 +15,4 @@
 
 </div>
 
-<script src="/js/evidence/selectionOption.js"></script>
+<script src="/js/evidence/findFilter.js"></script>

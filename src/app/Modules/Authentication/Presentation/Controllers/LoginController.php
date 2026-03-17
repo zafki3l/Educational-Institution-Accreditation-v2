@@ -13,6 +13,10 @@ final class LoginController extends AuthController
 
     public function showLogin(): ViewResponse
     {
+        if (isAuth()) {
+            $this->redirect('/');
+        }
+
         return new ViewResponse(
             self::MODULE_NAME,
             'login/main',
