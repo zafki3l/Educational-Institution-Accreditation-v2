@@ -22,6 +22,9 @@ $route->middleware([EnsureAuth::class, EnsureStaff::class])
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->get('/api/standards', [CreateEvidenceController::class, 'getAllStandard']);
 
+$route->middleware([EnsureAuth::class])
+    ->get('/api/standards/find', [FindEvidenceController::class, 'findFilter']);
+
 $route->middleware([EnsureAuth::class, EnsureStaff::class])
     ->get('/api/standards/{standard_id}/criterias', [CreateEvidenceController::class, 'getAllCriteriasByStandard']);
 

@@ -3,10 +3,12 @@
 namespace App\Modules\QualityAssessment\Presentation\Controllers\Evidence;
 
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
+use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
 use App\Modules\QualityAssessment\Infrastructure\Readers\EvidenceReader;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\SearchEvidenceRequest;
 use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
+use App\Shared\Response\JsonResponse;
 use App\Shared\Response\ViewResponse;
 
 final class FindEvidenceController extends QualityAssessmentController
@@ -64,5 +66,14 @@ final class FindEvidenceController extends QualityAssessmentController
                 'standards' => $standards
             ]
         );
+    }
+
+    public function findFilter()
+    {
+        $standards = Standard::select('id', 'name')->orderByRaw('CAST(id AS UNSIGNED) ASC')->get();
+
+        return new JsonResponse([
+            'standards' => $standards
+        ]);
     }
 }
