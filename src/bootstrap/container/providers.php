@@ -19,5 +19,6 @@ return [
     new CriteriaServiceProvider(),
     new MilestoneServiceProvider(),
     new EvidenceServiceProvider(),
-    new UserProfileServiceProvider()
+    new UserProfileServiceProvider(),
+    new MilestoneServiceProvider()
 ];
