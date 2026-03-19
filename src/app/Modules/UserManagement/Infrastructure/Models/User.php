@@ -13,7 +13,6 @@ class User extends Model
     protected $keyType = 'string';
     protected $fillable = [
         'id',
-        'auth_id',
         'first_name',
         'last_name',
         'email',
@@ -21,7 +20,7 @@ class User extends Model
         'role_id',
         'department_id'
     ];
-    protected $hidden = ['auth_id', 'password'];
+    protected $hidden = ['password'];
 
     public function role(): BelongsTo
     {

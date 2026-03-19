@@ -26,11 +26,16 @@ $response = $route->dispatch($path, $_SERVER['REQUEST_METHOD']);
 
 if ($response instanceof ViewResponse) {
     $viewRender = new ViewRender();
-
     $viewRender->view($response);
+    
+    if (function_exists('fastcgi_finish_request')) {
+        fastcgi_finish_request();
+    }
 } else if ($response instanceof JsonResponse) {
     $response->send();
-    exit;
-} else {
-    throw new \Exception('Response not valid');
-}
+    
+    if (function_exists('fastcgi_finish_request')) {
+        fastcgi_finish_request();
+    }
+} 
+

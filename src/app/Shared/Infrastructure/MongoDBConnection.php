@@ -11,7 +11,11 @@ class MongoDBConnection
 
     public function __construct()
     {
-        $this->client = new Client("mongodb://mongo:{$_ENV['MONGO_PORT']}");
+        $this->client = new Client(
+            "mongodb://mongo:{$_ENV['MONGO_PORT']}", [
+                'serverSelectionTimeoutMS' => 500, 
+                'connectTimeoutMS' => 500
+            ]);
     }
 
     public function getCollection(string $db, string $collection): Collection

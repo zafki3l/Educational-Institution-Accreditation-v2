@@ -13,14 +13,14 @@ class UserRepository implements UserRepositoryInterface
     {
         $modelsUser = ModelsUser::create([
             'id' => $entitiesUser->getUserId()->value(),
-            'auth_id' => $entitiesUser->getAuthId()->value(),
             'first_name' => $entitiesUser->getFirstName(),
             'last_name' => $entitiesUser->getLastName(),
-            'email' => $entitiesUser->getEmail() ? $entitiesUser->getEmail()->value() : null,
+            'email' => $entitiesUser->getEmail()->value(),
             'password' => $entitiesUser->getPassword()->value(),
             'role_id' => $entitiesUser->getRoleId(),
             'department_id' => $entitiesUser->getDepartmentId() ? $entitiesUser->getDepartmentId() : null
         ]);
+
         return UserMapper::toDomain($modelsUser);
     }
 

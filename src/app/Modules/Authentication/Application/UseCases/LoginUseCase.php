@@ -22,7 +22,9 @@ final class LoginUseCase
         $identifier = strtolower($request->getIdentifier());
         $authUser = $this->repository->findByIdentifier($identifier);
         
-        $password = $this->getHashedPassword($authUser);
+        $password = $authUser 
+            ? $authUser->getPassword()
+            : Password::fromHash(self::DUMMY_HASH);
 
         $isVerify = $password->verify($request->getPassword());
 
@@ -31,12 +33,5 @@ final class LoginUseCase
         }
 
         return $authUser;
-    }
-
-    private function getHashedPassword(?AuthenticableUser $authUser): Password
-    {
-        return $authUser 
-            ? $authUser->getPassword()
-            : Password::fromHash(self::DUMMY_HASH);
     }
 }

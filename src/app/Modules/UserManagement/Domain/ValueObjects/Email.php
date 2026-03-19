@@ -2,6 +2,7 @@
 
 namespace App\Modules\UserManagement\Domain\ValueObjects;
 
+use App\Modules\UserManagement\Domain\Exception\EmailEmptyException;
 use App\Modules\UserManagement\Domain\Exception\InvalidEmailFormatException;
 
 final class Email
@@ -16,6 +17,10 @@ final class Email
     public static function fromString(string $email): self
     {
         $email = trim(strtolower($email));
+
+        if (self::isEmpty($email)) {
+            throw new EmailEmptyException();
+        }
 
         self::validate($email);
 
@@ -37,5 +42,10 @@ final class Email
     public function equals(self $other): bool
     {
         return $this->value === $other->value;
+    }
+
+    public static function isEmpty(string $string): bool 
+    {
+        return empty(trim($string));
     }
 }
