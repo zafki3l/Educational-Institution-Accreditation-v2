@@ -6,5 +6,5 @@ use App\Modules\Authentication\Domain\Entities\AuthenticableUser;
 
 interface AuthenticableUserRepositoryInterface
 {
-    public function findByIdentifier(string $auth_id): ?AuthenticableUser;
+    public function findByIdentifier(string $identifier): ?AuthenticableUser;
 }

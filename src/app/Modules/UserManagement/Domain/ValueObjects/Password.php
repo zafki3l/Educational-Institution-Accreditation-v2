@@ -19,9 +19,11 @@ class Password
 
     public static function fromPlain(string $plain): self
     {
-        $plain = trim($plain);
+        if (self::isEmpty($plain)) {
+            throw new PasswordEmptyException();
+        }
 
-        self::checkEmpty($plain);
+        $plain = trim($plain);
         
         self::checkMinimiumLength($plain);
 
@@ -30,11 +32,9 @@ class Password
         return new self(password_hash($plain, PASSWORD_DEFAULT));
     }
 
-    private static function checkEmpty(string $plain): void
+    public static function isEmpty($plain): bool
     {
-        if (empty($plain)) {
-            throw new PasswordEmptyException();
-        }
+        return empty($plain);
     }
 
     private static function checkMinimiumLength(string $plain): void
