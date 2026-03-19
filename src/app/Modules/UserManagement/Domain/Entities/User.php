@@ -53,7 +53,7 @@ class User
             $this->changeLastName($new_last_name);
         }
 
-        if ($this->email->equals($new_email)) {
+        if (!$this->email->equals($new_email)) {
             $this->changeEmail($new_email);
         }
 
@@ -131,7 +131,7 @@ class User
         $this->role_id = $role_id;
     }
 
-    public function changeDepartmentId(string $department_id): void
+    public function changeDepartmentId(?string $department_id): void
     {
         $this->department_id = $department_id;
     }

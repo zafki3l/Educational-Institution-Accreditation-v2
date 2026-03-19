@@ -2,20 +2,20 @@
 
 namespace App\Modules\UserManagement\Application\Listeners;
 
-use App\Modules\UserManagement\Domain\Events\UserCreated;
+use App\Modules\UserManagement\Domain\Events\UserUpdated;
 use App\Shared\Logging\LoggerInterface;
 
-final class UserCreatedLoggerListener
+final class UserUpdatedLoggerListener
 {
     public function __construct(private LoggerInterface $logger) {}
 
-    public function handle(UserCreated $event): void 
+    public function handle(UserUpdated $event): void 
     {
         try {
             $this->logger->write(
                 'info',
-                'create',
-                "Người dùng {$event->actor_id} đã thêm một người dùng mới",
+                'update',
+                "Người dùng {$event->actor_id} đã sửa thông tin người dùng {$event->user->getUserId()->value()}",
                 $event->actor_id,
                 ['id' => $event->user->getUserId()->value()]
             );
