@@ -1,12 +1,14 @@
 .sidebar {
     position: fixed;
+    top: 70px;
     width: 250px;
-    height: 100vh;
+    height: calc(100vh - 70px);
     background: white;
     border-right: 1px solid #e2e8f0;
     padding: 20px 0;
     overflow-y: auto;
     overflow-x: hidden;
+    z-index: 100;
 }
 
 .sidebar-title {

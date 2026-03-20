@@ -32,7 +32,7 @@
                         type="text"
                         name="name"
                         id="newCriteriaName"
-                        placeholder="Nhập tên tiêu chí..."
+                        placeholder="Nhập tên tiêu chí"
                     />
 
                     <button class="btn-primary" type="submit" id="addCriteriaBtn">
