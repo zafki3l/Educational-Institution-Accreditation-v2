@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Authorization\Presentation\Controllers\Role;
+namespace App\Modules\Authorization\Presentation\Controllers;
 
-use App\Modules\Authorization\Presentation\Controllers\AuthorizationController;
-use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
+use App\Modules\Authorization\Application\Readers\RoleReaderInterface;
+use App\Modules\Authorization\Presentation\ViewModels\IndexRoleViewModel;
 use App\Shared\Response\ViewResponse;
 
 final class IndexRoleController extends AuthorizationController
@@ -14,23 +14,19 @@ final class IndexRoleController extends AuthorizationController
     {
         $roles = $this->roleReader->all();
 
+        $indexRoleViewModels = array_map(
+            fn ($roleReaderResponse) => new IndexRoleViewModel($roleReaderResponse->id, $roleReaderResponse->name), 
+            $roles
+        );
+
         return new ViewResponse(
             self::MODULE_NAME,
-            'role/index', 
+            'index', 
             'main.layouts', 
             [
                 'title' => 'Cập nhật vai trò | ' . SYSTEM_NAME,
-                'roles' => $roles
+                'roles' => $indexRoleViewModels
             ]
-        );
-    }
-
-    public function assign()
-    {
-        return new ViewResponse(
-            self::MODULE_NAME,
-            'assign-permission/index',
-            'main.layouts'
         );
     }
 }

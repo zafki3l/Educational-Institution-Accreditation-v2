@@ -2,10 +2,10 @@
 
 namespace App\Modules\UserManagement\Presentation\Controllers;
 
+use App\Modules\Authorization\Application\Readers\RoleReaderInterface;
 use App\Modules\UserManagement\Infrastructure\Readers\UserReader;
 use App\Modules\UserManagement\Presentation\Requests\IndexUserRequest;
 use App\Shared\Application\Contracts\DepartmentReader\DepartmentReaderInterface;
-use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use App\Shared\Response\ViewResponse;
 
 final class IndexUserController extends UserController

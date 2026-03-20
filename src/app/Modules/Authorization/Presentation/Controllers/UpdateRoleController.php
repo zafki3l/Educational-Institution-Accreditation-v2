@@ -1,22 +1,25 @@
 <?php
 
-namespace App\Modules\Authorization\Presentation\Controllers\Role;
+namespace App\Modules\Authorization\Presentation\Controllers;
 
-use App\Modules\Authorization\Application\Role\UseCases\UpdateRoleUseCase;
+use App\Modules\Authorization\Application\UseCases\UpdateRoleUseCase;
 use App\Modules\Authorization\Presentation\Controllers\AuthorizationController;
-use App\Modules\Authorization\Presentation\Requests\Role\UpdateRoleRequest;
+use App\Modules\Authorization\Presentation\Requests\UpdateRoleRequest;
 use App\Shared\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\SessionManager\AuthSession;
 
 final class UpdateRoleController extends AuthorizationController
 {
-    public function __construct(private UpdateRoleUseCase $updateRoleUseCase) {}
+    public function __construct(
+        private UpdateRoleUseCase $updateRoleUseCase,
+        private AuthSession $authSession
+    ) {}
 
     public function update(UpdateRoleRequest $request): JsonResponse
     {
         try {
-            $this->updateRoleUseCase->execute($request, AuthSession::getUserId());
+            $this->updateRoleUseCase->execute($request, $this->authSession->authUser()->user_id);
 
             return new JsonResponse([]);
         } catch (DomainException $e) {

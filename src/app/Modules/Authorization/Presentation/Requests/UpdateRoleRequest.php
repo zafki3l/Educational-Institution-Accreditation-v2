@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Authorization\Presentation\Requests\Role;
+namespace App\Modules\Authorization\Presentation\Requests;
 
-use App\Modules\Authorization\Application\Role\Requests\UpdateRoleRequestInterface;
+use App\Modules\Authorization\Application\Requests\UpdateRoleRequestInterface;
 
 final class UpdateRoleRequest implements UpdateRoleRequestInterface
 {

@@ -1,9 +1,9 @@
 <?php
 
-use App\Modules\Authorization\Presentation\Controllers\Role\CreateRoleController;
-use App\Modules\Authorization\Presentation\Controllers\Role\DeleteRoleController;
-use App\Modules\Authorization\Presentation\Controllers\Role\IndexRoleController;
-use App\Modules\Authorization\Presentation\Controllers\Role\UpdateRoleController;
+use App\Modules\Authorization\Presentation\Controllers\CreateRoleController;
+use App\Modules\Authorization\Presentation\Controllers\DeleteRoleController;
+use App\Modules\Authorization\Presentation\Controllers\IndexRoleController;
+use App\Modules\Authorization\Presentation\Controllers\UpdateRoleController;
 use App\Shared\Middlewares\EnsureAdmin;
 use App\Shared\Middlewares\EnsureAuth;
 

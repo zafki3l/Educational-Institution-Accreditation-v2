@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Application\Contracts\RoleReader;
+namespace App\Modules\Authorization\Application\Readers;
 
 interface RoleReaderInterface
 {

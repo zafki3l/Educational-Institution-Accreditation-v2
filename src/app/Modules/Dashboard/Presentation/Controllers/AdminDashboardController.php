@@ -2,11 +2,11 @@
 
 namespace App\Modules\Dashboard\Presentation\Controllers;
 
+use App\Modules\Authorization\Application\Readers\RoleReaderInterface;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
 use App\Shared\Application\Contracts\CriteriaReader\CriteriaReaderInterface;
 use App\Shared\Application\Contracts\DepartmentReader\DepartmentReaderInterface;
-use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
 use App\Shared\Domain\UserRole;
