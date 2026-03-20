@@ -40,9 +40,9 @@ final class LoginController extends AuthController
         session_regenerate_id(true);
 
         AuthSession::set([
-            'user_id' => $auth_user->getUserId()->value(),
-            'identifier' => $auth_user->getIdentifier(),
-            'role_id' => $auth_user->getRoleId()
+            'user_id' => $auth_user->user_id,
+            'identifier' => $auth_user->identifier,
+            'role_id' => $auth_user->role_id
         ]);
 
         if (isAdmin()) {

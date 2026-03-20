@@ -2,9 +2,9 @@
 
 namespace App\Modules\UserManagement\Presentation\Controllers;
 
+use App\Modules\Authorization\Application\Readers\RoleReaderInterface;
 use App\Modules\UserManagement\Application\UseCases\CreateUserUseCase;
 use App\Modules\UserManagement\Presentation\Requests\CreateUserRequest;
-use App\Shared\Application\Contracts\RoleReader\RoleReaderInterface;
 use App\Shared\Exception\DomainException;
 use App\Shared\Response\JsonResponse;
 use App\Shared\Response\ViewResponse;

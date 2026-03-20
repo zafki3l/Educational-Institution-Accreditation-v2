@@ -2,14 +2,15 @@
 
 namespace App\Modules\DepartmentManagement\Application\UseCases;
 
+use App\Modules\DepartmentManagement\Domain\Events\DepartmentDeleted;
 use App\Modules\DepartmentManagement\Domain\Repositories\DepartmentRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Events\EventDispatcherInterface;
 
 final class DeleteDepartmentUseCase
 {
     public function __construct(
         private DepartmentRepositoryInterface $repository,
-        private LoggerInterface $logger
+        private EventDispatcherInterface $eventDispatcher
     ) {}
 
     public function execute(string $id, string $actor_id): void
@@ -18,17 +19,6 @@ final class DeleteDepartmentUseCase
 
         $this->repository->delete($department);
 
-        $this->writeLog($id, $actor_id);
-    }
-
-    private function writeLog(string $id, string $actor_id): void
-    {
-        $this->logger->write(
-            'info',
-            'delete', 
-            "Người dùng {$actor_id} đã xóa 1 phòng ban: {$id}", 
-            $actor_id, 
-            ['id' => $id]
-        );
+        $this->eventDispatcher->dispatch(new DepartmentDeleted($department->getId(), $department->getName(), $actor_id));
     }
 }

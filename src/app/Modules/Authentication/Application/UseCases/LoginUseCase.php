@@ -3,7 +3,7 @@
 namespace App\Modules\Authentication\Application\UseCases;
 
 use App\Modules\Authentication\Application\Requests\LoginRequestInterface;
-use App\Modules\Authentication\Domain\Entities\AuthenticableUser;
+use App\Modules\Authentication\Application\Responses\LoginResponse;
 use App\Modules\Authentication\Domain\Events\UserLoggedIn;
 use App\Modules\Authentication\Domain\Events\UserLoginFailed;
 use App\Modules\Authentication\Domain\Repositories\AuthenticableUserRepositoryInterface;
@@ -23,7 +23,7 @@ final class LoginUseCase
         private EventDispatcherInterface $eventDispatcher
     ) {}
 
-    public function execute(LoginRequestInterface $request): ?AuthenticableUser
+    public function execute(LoginRequestInterface $request): ?LoginResponse
     {
         $identifier = strtolower($request->getIdentifier());
         $authUser = $this->repository->findByIdentifier($identifier);
@@ -42,6 +42,10 @@ final class LoginUseCase
 
         $this->eventDispatcher->dispatch(new UserLoggedIn($authUser->getUserId()->value()));
 
-        return $authUser;
+        return new LoginResponse(
+            $authUser->getUserId()->value(),
+            $authUser->getIdentifier(),
+            $authUser->getRoleId()
+        );
     }
 }

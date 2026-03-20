@@ -2,8 +2,8 @@
 
 namespace App\Modules\QualityAssessment\Presentation\Controllers\Standard;
 
+use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
-use App\Shared\Application\Contracts\DepartmentReader\DepartmentReaderInterface;
 use App\Shared\Application\Contracts\StandardReader\StandardReaderInterface;
 use App\Shared\Response\ViewResponse;
 

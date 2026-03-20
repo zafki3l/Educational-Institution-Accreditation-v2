@@ -10,12 +10,15 @@ use App\Shared\SessionManager\AuthSession;
 
 final class CreateDepartmentController extends DepartmentController
 {
-    public function __construct(private CreateDepartmentUseCase $createDepartmentUseCase) {}
+    public function __construct(
+        private CreateDepartmentUseCase $createDepartmentUseCase,
+        private AuthSession $authSession
+    ) {}
 
     public function store(CreateDepartmentRequest $request): JsonResponse
     {
         try {
-            $this->createDepartmentUseCase->execute($request, AuthSession::getUserId());
+            $this->createDepartmentUseCase->execute($request, $this->authSession->authUser()->user_id);
 
             return new JsonResponse([], 200);
         } catch (DomainException $e) {
