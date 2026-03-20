@@ -1,5 +1,9 @@
 <?php
 
+use App\Modules\Authentication\Infrastructure\ListenerProvider\AuthenticationListenerProvider;
+use App\Modules\UserManagement\Infrastructure\ListenerProvider\UserListenerProvider;
+
 return array_merge(
-    require 'events/user.events.php'
+    UserListenerProvider::register(),
+    AuthenticationListenerProvider::register()
 );

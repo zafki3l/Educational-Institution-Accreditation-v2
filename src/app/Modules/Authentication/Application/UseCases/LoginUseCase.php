@@ -4,8 +4,11 @@ namespace App\Modules\Authentication\Application\UseCases;
 
 use App\Modules\Authentication\Application\Requests\LoginRequestInterface;
 use App\Modules\Authentication\Domain\Entities\AuthenticableUser;
+use App\Modules\Authentication\Domain\Events\UserLoggedIn;
+use App\Modules\Authentication\Domain\Events\UserLoginFailed;
 use App\Modules\Authentication\Domain\Repositories\AuthenticableUserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
+use App\Shared\Events\EventDispatcherInterface;
 
 final class LoginUseCase
 {
@@ -15,7 +18,10 @@ final class LoginUseCase
      */
     private const DUMMY_HASH = '$2y$10$usesomesillystringfore7hnbRJHxXVLeakoG8K30oukPsA.ztMG';
 
-    public function __construct(private AuthenticableUserRepositoryInterface $repository) {}
+    public function __construct(
+        private AuthenticableUserRepositoryInterface $repository,
+        private EventDispatcherInterface $eventDispatcher
+    ) {}
 
     public function execute(LoginRequestInterface $request): ?AuthenticableUser
     {
@@ -29,8 +35,12 @@ final class LoginUseCase
         $isVerify = $password->verify($request->getPassword());
 
         if (!$isVerify || !$authUser) {
+            $this->eventDispatcher->dispatch(new UserLoginFailed($identifier));
+
             return null;
         }
+
+        $this->eventDispatcher->dispatch(new UserLoggedIn($identifier, $authUser->getUserId()->value()));
 
         return $authUser;
     }
