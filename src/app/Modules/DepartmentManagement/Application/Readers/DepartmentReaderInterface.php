@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Application\Contracts\DepartmentReader;
+namespace App\Modules\DepartmentManagement\Application\Readers;
 
 interface DepartmentReaderInterface
 {

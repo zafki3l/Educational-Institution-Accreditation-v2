@@ -7,11 +7,14 @@ use App\Shared\SessionManager\AuthSession;
 
 final class DeleteDepartmentController extends DepartmentController
 {
-    public function __construct(private DeleteDepartmentUseCase $deleteDepartmentUseCase) {}
+    public function __construct(
+        private DeleteDepartmentUseCase $deleteDepartmentUseCase,
+        private AuthSession $authSession
+    ) {}
 
     public function destroy(string $id): void
     {
-        $this->deleteDepartmentUseCase->execute($id, AuthSession::getUserId());
+        $this->deleteDepartmentUseCase->execute($id, $this->authSession->authUser()->user_id);
 
         $this->redirect('/departments?success=delete');
     }

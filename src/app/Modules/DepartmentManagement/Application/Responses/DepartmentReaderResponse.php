@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Shared\Application\DTOs\DepartmentView;
+namespace App\Modules\DepartmentManagement\Application\Responses;
 
-class DepartmentViewDTO
+final class DepartmentReaderResponse
 {
     public function __construct(
         public readonly string $id, 

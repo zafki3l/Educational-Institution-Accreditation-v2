@@ -10,12 +10,15 @@ use App\Shared\SessionManager\AuthSession;
 
 final class UpdateDepartmentController extends DepartmentController
 {
-    public function __construct(private UpdateDepartmentUseCase $updateDepartmentUseCase) {}
+    public function __construct(
+        private UpdateDepartmentUseCase $updateDepartmentUseCase,
+        private AuthSession $authSession
+    ) {}
 
     public function update(string $id, UpdateDepartmentRequest $request): JsonResponse
     {
         try {
-            $this->updateDepartmentUseCase->execute($id, $request, AuthSession::getUserId());
+            $this->updateDepartmentUseCase->execute($id, $request, $this->authSession->authUser()->user_id);
 
             return new JsonResponse([], 200);
         } catch (DomainException $e) {

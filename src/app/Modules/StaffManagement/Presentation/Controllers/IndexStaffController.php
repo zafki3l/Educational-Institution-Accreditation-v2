@@ -2,7 +2,7 @@
 
 namespace App\Modules\StaffManagement\Presentation\Controllers;
 
-use App\Shared\Application\Contracts\DepartmentReader\DepartmentReaderInterface;
+use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
 use App\Shared\Application\Contracts\UserReader\UserReaderInterface;
 use App\Shared\Response\ViewResponse;
 
