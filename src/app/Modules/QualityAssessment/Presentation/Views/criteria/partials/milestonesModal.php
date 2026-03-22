@@ -56,7 +56,9 @@
                     <tr>
                         <th class="w-sm">Mốc</th>
                         <th>Tên mốc đánh giá</th>
-                        <th class="right w-xs">Thao tác</th>
+                        <?php if (isAdmin()): ?>
+                            <th class="right w-xs">Thao tác</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody id="milestonesTableBody"></tbody>

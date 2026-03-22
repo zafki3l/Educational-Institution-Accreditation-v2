@@ -21,7 +21,8 @@ final class IndexCriteriaController extends QualityAssessmentController
             'criteria/index',
             'main.layouts',
             [
-                'title' => 'Quản lý tiêu chí đánh giá | ' . SYSTEM_NAME,
+                'title' => (isAdmin()) ? 'Quản lý tiêu chí đánh giá' : 'Danh sách tiêu chí đánh giá' . ' | ' . SYSTEM_NAME,
+                'header' => (isAdmin()) ? 'Quản lý tiêu chí đánh giá' : 'Danh sách tiêu chí đánh giá',
                 'standards' => $standards,
                 'sidebarStandards' => $sidebarStandards
             ]

@@ -21,7 +21,7 @@
         <div class="container">
 
             <div class="page-header">
-                <h1>Quản lý tiêu chí đánh giá</h1>
+                <h1><?= htmlspecialchars($header) ?></h1>
 
                 <?php if (isAdmin()): ?>
                     <button class="primary-btn" id="openCriteriaModal">

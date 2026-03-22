@@ -2,7 +2,7 @@
 
 use App\Modules\Authentication\Infrastructure\ServiceProvider\AuthServiceProvider;
 use App\Modules\Authorization\Infrastructure\ServiceProvider\RoleServiceProvider;
-use App\Modules\Dashboard\Infrastructure\ServiceProvider\AdminDashboardServiceProvider;
+use App\Modules\Dashboard\Infrastructure\ServiceProvider\DashboardServiceProvider;
 use App\Modules\DepartmentManagement\Infrastructure\ServiceProvider\DepartmentServiceProvider;
 use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\CriteriaServiceProvider;
 use App\Modules\QualityAssessment\Infrastructure\ServiceProvider\EvidenceServiceProvider;
@@ -23,5 +23,5 @@ return [
     new EvidenceServiceProvider(),
     new UserProfileServiceProvider(),
     new MilestoneEvidenceServiceProvider(),
-    new AdminDashboardServiceProvider()
+    new DashboardServiceProvider()
 ];
