@@ -1,6 +1,6 @@
 <?php
-$firstName = $user->first_name ?? '';
-$lastName = $user->last_name ?? '';
+$firstName = $overview->staffInfo->first_name ?? '';
+$lastName = $overview->staffInfo->last_name ?? '';
 $initials = '';
 if (!empty($firstName)) $initials .= mb_substr($firstName, 0, 1);
 if (!empty($lastName)) $initials .= mb_substr($lastName, 0, 1);
@@ -24,7 +24,9 @@ $initials = strtoupper($initials);
                 </div>
                 
                 <div class="profile-name-section">
-                    <h3 class="user-full-name"><?= htmlspecialchars(($user->first_name ?? '') . ' ' . ($user->last_name ?? '')) ?></h3>
+                    <h3 class="user-full-name">
+                        <?= htmlspecialchars(($overview->staffInfo->first_name ?? '') . ' ' . ($overview->staffInfo->last_name ?? '')) ?>
+                    </h3>
                     
                     <div class="info-list">
                         <div class="info-item-new">
@@ -33,7 +35,7 @@ $initials = strtoupper($initials);
                             </div>
                             <div class="info-text">
                                 <label>EMAIL CÔNG VIỆC</label>
-                                <p><?= htmlspecialchars($user->email ?? 'Chưa cập nhật') ?></p>
+                                <p><?= htmlspecialchars($overview->staffInfo->email ?? 'Chưa cập nhật') ?></p>
                             </div>
                         </div>
 
@@ -43,7 +45,7 @@ $initials = strtoupper($initials);
                             </div>
                             <div class="info-text">
                                 <label>PHÒNG BAN</label>
-                                <p><?= htmlspecialchars($user->department->name ?? 'Chưa xác định') ?></p>
+                                <p><?= htmlspecialchars($overview->staffInfo->department_name ?? 'Chưa xác định') ?></p>
                             </div>
                         </div>
                     </div>

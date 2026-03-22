@@ -25,7 +25,8 @@ final class IndexStandardController extends QualityAssessmentController
             'standard/index',
             'main.layouts',
             [
-                'title' => 'Quản lý tiêu chuẩn đánh giá | ' . SYSTEM_NAME,
+                'title' => isAdmin() ? 'Quản lý tiêu chuẩn đánh giá' : 'Danh sách tiêu chuẩn đánh giá' . ' | ' . SYSTEM_NAME,
+                'header' => isAdmin() ? 'Quản lý tiêu chuẩn đánh giá' : 'Danh sách tiêu chuẩn đánh giá',
                 'standards' => $standards,
                 'departments' => $departments,
                 'sidebarStandards' => $sidebarStandards
