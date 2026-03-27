@@ -6,142 +6,102 @@ use App\Modules\Authentication\Application\Requests\LoginRequestInterface;
 use App\Modules\Authentication\Application\UseCases\LoginUseCase;
 use App\Modules\Authentication\Domain\Entities\AuthenticableUser;
 use App\Modules\Authentication\Domain\Repositories\AuthenticableUserRepositoryInterface;
-use App\Modules\Authentication\Domain\ValueObjects\AuthId;
-use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
-use App\Shared\Infrastructure\UuidGenerator;
+use App\Shared\Events\EventDispatcherInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Tests\TraitHelper\DebugHelper;
 
 final class LoginUseCaseTest extends TestCase
 {
-    use DebugHelper;
+    private const VALID_EMAIL = 'phamdinhthai123@gmail.com';
+    private const VALID_PASS = 'password123';
+    private const WRONG_PASS = 'wrong_password';
+    private const NON_EXISTENT_EMAIL = 'nonexistent@example.com';
 
-    private AuthenticableUser $authenticableUser;
     private AuthenticableUserRepositoryInterface&MockObject $repositoryMock;
-    private LoginUseCase $loginUseCase;
-    private string $expectedIdentifier;
-    private string $plainPassword;
+    private EventDispatcherInterface&MockObject $eventDispatcherMock;
+    private LoginUseCase $useCase;
+    private AuthenticableUser $stubUser;
 
     protected function setUp(): void
     {
-        parent::setUp();
-
-        $withAuthId = AuthId::generate()->value();
-        $withEmail = Email::fromString('phamdinhthai123@gmail.com')->value();
+        $this->repositoryMock = $this->createMock(AuthenticableUserRepositoryInterface::class);
+        $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
         
-        $this->expectedIdentifier = strtolower($withEmail); 
-        $this->plainPassword = 'phamdinhthai123';
-        
-        $userId = UserId::fromString(UuidGenerator::v4());
-        $password = Password::fromPlain($this->plainPassword); 
-        $role_id = 2;
-
-        $this->authenticableUser = AuthenticableUser::create(
-            $userId,
-            $this->expectedIdentifier,
-            $password,
-            $role_id
+        $this->useCase = new LoginUseCase(
+            $this->repositoryMock, 
+            $this->eventDispatcherMock
         );
 
-        $this->repositoryMock = $this->createMock(AuthenticableUserRepositoryInterface::class);
-        
-        $this->loginUseCase = new LoginUseCase($this->repositoryMock);
+        // Create a stub user for successful scenarios
+        $this->stubUser = AuthenticableUser::create(
+            UserId::fromString('550e8400-e29b-41d4-a716-446655440000'),
+            self::VALID_EMAIL,
+            Password::fromPlain(self::VALID_PASS),
+            2
+        );
+    }
+
+    public function testExecuteSuccess(): void
+    {
+        $request = $this->createMockRequest(self::VALID_EMAIL, self::VALID_PASS);
+
+        $this->repositoryMock->expects($this->once())
+            ->method('findByIdentifier')
+            ->with(self::VALID_EMAIL)
+            ->willReturn($this->stubUser);
+
+        // Verify that success event is dispatched
+        $this->eventDispatcherMock->expects($this->once())
+            ->method('dispatch');
+
+        $response = $this->useCase->execute($request);
+
+        $this->assertNotNull($response);
+        $this->assertSame($this->stubUser->getUserId()->value(), $response->user_id);
+        $this->assertSame(self::VALID_EMAIL, $response->identifier);
+    }
+
+    #[DataProvider('provideInvalidCredentials')]
+    public function testExecuteFailure(string $email, string $password, ?AuthenticableUser $repoReturn): void
+    {
+        $request = $this->createMockRequest($email, $password);
+
+        $this->repositoryMock->method('findByIdentifier')
+            ->willReturn($repoReturn);
+
+        // Verify that failure event is dispatched
+        $this->eventDispatcherMock->expects($this->once())
+            ->method('dispatch');
+
+        $response = $this->useCase->execute($request);
+
+        $this->assertNull($response);
+    }
+
+    public static function provideInvalidCredentials(): array
+    {
+        // We need to recreate a user for the 'wrong password' case because it's a static provider
+        $user = AuthenticableUser::create(
+            UserId::fromString('550e8400-e29b-41d4-a716-446655440000'),
+            self::VALID_EMAIL,
+            Password::fromPlain(self::VALID_PASS),
+            2
+        );
+
+        return [
+            'Email not found'    => [self::NON_EXISTENT_EMAIL, self::VALID_PASS, null],
+            'Password incorrect' => [self::VALID_EMAIL, self::WRONG_PASS, $user],
+        ];
     }
 
     private function createMockRequest(string $identifier, string $password): LoginRequestInterface&MockObject
     {
-        $request = $this->createMock(LoginRequestInterface::class);
-        $request->method('getIdentifier')->willReturn($identifier);
-        $request->method('getPassword')->willReturn($password);
-        
-        return $request;
-    }
-
-    /**
-     * Run: composer test -- --filter LoginUseCaseTest::testExecuteReturnUserWhenEmailAndPasswordCorrect
-     * 
-     * @return void
-     */
-    public function testExecuteReturnUserWhenEmailAndPasswordCorrect(): void
-    {
-        $request = $this->createMockRequest($this->expectedIdentifier, $this->plainPassword);
-
-        $this->debug('testExecuteReturnUserWhenEmailAndPasswordCorrect INPUT', [
-            'identifier' => $request->getIdentifier(),
-            'password' => $request->getPassword()
-        ]);
-
-        $this->repositoryMock->expects($this->once())
-            ->method('findByIdentifier')
-            ->with($request->getIdentifier())
-            ->willReturn($this->authenticableUser);
-
-        $result = $this->loginUseCase->execute($request);
-
-        $this->debug('testExecuteReturnUserWhenEmailAndPasswordCorrect OUTPUT', [
-            'user_id' => $result->getUserId()->value(),
-            'identifier' => $result->getIdentifier(),
-            'password' => $result->getPassword()->value(),
-            'role_id' => $result->getRoleId(),
-        ]);
-
-        $this->assertNotNull($result);
-        $this->assertSame($this->authenticableUser, $result);
-    }
-
-    /**
-     * Run: composer test -- --filter LoginUseCaseTest::testExecuteReturnNullWhenEmailNotExists
-     * 
-     * @return void
-     */
-    public function testExecuteReturnNullWhenEmailNotExists(): void
-    {
-        $request = $this->createMockRequest('abc123@email.com', $this->plainPassword);
-
-        $this->debug('testExecuteReturnNullWhenEmailNotExists INPUT', [
-            'identifier' => $request->getIdentifier(),
-            'password' => $request->getPassword()
-        ]);
-
-        $this->repositoryMock
-                ->expects($this->once())
-                ->method('findByIdentifier')
-                ->with($request->getIdentifier())
-                ->willReturn(null);
-
-        $result = $this->loginUseCase->execute($request);
-
-        $this->debug('testExecuteReturnNullWhenEmailNotExists OUTPUT', $result);
-
-        $this->assertNull($result);
-    }
-
-    /**
-     * Run: composer test -- --filter LoginUseCaseTest::testExecuteReturnNullWhenPasswordIncorrect
-     * @return void
-     */
-    public function testExecuteReturnNullWhenPasswordIncorrect(): void
-    {
-        $request = $this->createMockRequest($this->expectedIdentifier, 'phamdt12341312incorrectpass');
-
-        $this->debug('testExecuteReturnNullWhenPasswordIncorrect INPUT', [
-            'identifier' => $request->getIdentifier(),
-            'password' => $request->getPassword()
-        ]);
-
-        $this->repositoryMock
-                ->expects($this->once())
-                ->method('findByIdentifier')
-                ->with($request->getIdentifier())
-                ->willReturn($this->authenticableUser);
-
-        $result = $this->loginUseCase->execute($request);
-
-        $this->debug('testExecuteReturnNullWhenPasswordIncorrect OUTPUT', $result);
-
-        $this->assertNull($result);
+        $mock = $this->createMock(LoginRequestInterface::class);
+        $mock->method('getIdentifier')->willReturn($identifier);
+        $mock->method('getPassword')->willReturn($password);
+        return $mock;
     }
 }
