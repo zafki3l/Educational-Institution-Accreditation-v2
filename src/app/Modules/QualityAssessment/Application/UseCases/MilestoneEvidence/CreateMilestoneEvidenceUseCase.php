@@ -6,8 +6,8 @@ use App\Modules\QualityAssessment\Application\Requests\MilestoneEvidence\CreateM
 use App\Modules\QualityAssessment\Domain\Entities\MilestoneEvidence;
 use App\Modules\QualityAssessment\Domain\Repositories\MilestoneEvidenceRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
-use App\Shared\Logging\LoggerInterface;
-use App\Shared\Exception\DomainException; 
+use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Shared\Domain\Exception\DomainException;
 
 final class CreateMilestoneEvidenceUseCase
 {

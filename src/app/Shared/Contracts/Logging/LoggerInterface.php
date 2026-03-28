@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Logging;
+namespace App\Shared\Contracts\Logging;
 
 interface LoggerInterface
 {

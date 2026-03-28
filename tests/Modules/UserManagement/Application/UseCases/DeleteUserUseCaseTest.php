@@ -6,7 +6,7 @@ use App\Modules\UserManagement\Application\UseCases\DeleteUserUseCase;
 use App\Modules\UserManagement\Domain\Entities\User;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;

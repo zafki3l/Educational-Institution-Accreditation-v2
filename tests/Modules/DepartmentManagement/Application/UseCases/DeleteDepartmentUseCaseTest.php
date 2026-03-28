@@ -5,7 +5,7 @@ namespace Tests\Unit\Modules\DepartmentManagement\Application\UseCases;
 use App\Modules\DepartmentManagement\Application\UseCases\DeleteDepartmentUseCase;
 use App\Modules\DepartmentManagement\Domain\Entities\Department;
 use App\Modules\DepartmentManagement\Domain\Repositories\DepartmentRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;

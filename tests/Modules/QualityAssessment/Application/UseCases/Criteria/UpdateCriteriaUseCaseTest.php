@@ -6,7 +6,7 @@ use App\Modules\QualityAssessment\Application\Requests\Criteria\UpdateCriteriaRe
 use App\Modules\QualityAssessment\Application\UseCases\Criteria\UpdateCriteriaUseCase;
 use App\Modules\QualityAssessment\Domain\Entities\Criteria;
 use App\Modules\QualityAssessment\Domain\Repositories\CriteriaRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;

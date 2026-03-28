@@ -6,7 +6,7 @@ use App\Modules\QualityAssessment\Application\Requests\Milestone\CreateMilestone
 use App\Modules\QualityAssessment\Domain\Entities\Milestone;
 use App\Modules\QualityAssessment\Domain\Repositories\MilestoneRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\ValueObjects\Milestone\MilestoneCode;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class CreateMilestoneUseCase
 {

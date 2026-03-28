@@ -6,7 +6,7 @@ use App\Modules\UserManagement\Application\Requests\UpdateUserRequestInterface;
 use App\Modules\UserManagement\Application\UseCases\UpdateUserUseCase;
 use App\Modules\UserManagement\Domain\Entities\User;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;

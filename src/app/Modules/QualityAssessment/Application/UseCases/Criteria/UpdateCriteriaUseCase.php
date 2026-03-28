@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Application\UseCases\Criteria;
 
 use App\Modules\QualityAssessment\Application\Requests\Criteria\UpdateCriteriaRequestInterface;
 use App\Modules\QualityAssessment\Domain\Repositories\CriteriaRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class UpdateCriteriaUseCase
 {

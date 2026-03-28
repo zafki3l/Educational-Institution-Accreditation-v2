@@ -7,7 +7,7 @@ use App\Modules\DepartmentManagement\Application\UseCases\UpdateDepartmentUseCas
 use App\Modules\DepartmentManagement\Domain\Entities\Department;
 use App\Modules\DepartmentManagement\Domain\Exception\DepartmentNotFoundException;
 use App\Modules\DepartmentManagement\Domain\Repositories\DepartmentRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;

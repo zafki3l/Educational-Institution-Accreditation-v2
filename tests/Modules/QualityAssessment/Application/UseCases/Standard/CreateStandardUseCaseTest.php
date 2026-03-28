@@ -6,8 +6,8 @@ use App\Modules\QualityAssessment\Application\Requests\Standard\CreateStandardRe
 use App\Modules\QualityAssessment\Application\UseCases\Standard\CreateStandardUseCase;
 use App\Modules\QualityAssessment\Domain\Entities\Standard;
 use App\Modules\QualityAssessment\Domain\Repositories\StandardRepositoryInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use App\Shared\Domain\Exception\DomainException;
-use App\Shared\Logging\LoggerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

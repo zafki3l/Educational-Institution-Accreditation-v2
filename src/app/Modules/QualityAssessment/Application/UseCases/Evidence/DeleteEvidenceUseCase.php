@@ -3,7 +3,7 @@
 namespace App\Modules\QualityAssessment\Application\UseCases\Evidence;
 
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class DeleteEvidenceUseCase
 {

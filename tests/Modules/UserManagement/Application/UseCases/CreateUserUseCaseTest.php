@@ -9,7 +9,7 @@ use App\Modules\UserManagement\Domain\Exception\EmailExistException;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
 use App\Modules\UserManagement\Domain\Services\EmailExistsCheckerInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Email;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;

@@ -1,9 +1,9 @@
 <?php
 
 use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use App\Shared\Infrastructure\EventDispatcher;
 use App\Shared\Infrastructure\MySQLDatabase;
-use App\Shared\Logging\LoggerInterface;
 use App\Shared\Logging\MongoLogger;
 use Core\App;
 use Illuminate\Container\Container;

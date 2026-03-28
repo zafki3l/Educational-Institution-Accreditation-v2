@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Application\UseCases\Standard;
 
 use App\Modules\QualityAssessment\Domain\Entities\Standard;
 use App\Modules\QualityAssessment\Domain\Repositories\StandardRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class DeleteStandardUseCase
 {

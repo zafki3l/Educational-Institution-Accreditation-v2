@@ -6,7 +6,7 @@ use App\Modules\QualityAssessment\Application\UseCases\Milestone\DeleteMilestone
 use App\Modules\QualityAssessment\Domain\Entities\Milestone;
 use App\Modules\QualityAssessment\Domain\Repositories\MilestoneRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\ValueObjects\Milestone\MilestoneCode;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;

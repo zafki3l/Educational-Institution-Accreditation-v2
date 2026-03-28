@@ -7,7 +7,7 @@ use App\Modules\QualityAssessment\Domain\Entities\Criteria;
 use App\Modules\QualityAssessment\Domain\Exception\Criteria\CriteriaIdExistsException;
 use App\Modules\QualityAssessment\Domain\Repositories\CriteriaRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\Services\CriteriaIdExistsCheckerInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class CreateCriteriaUseCase
 {

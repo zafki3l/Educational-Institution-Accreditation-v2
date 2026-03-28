@@ -3,7 +3,7 @@
 namespace App\Modules\UserProfile\Application\Listeners;
 
 use App\Modules\UserProfile\Domain\Events\UserProfileUpdated;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class UserProfileUpdatedLoggerListener
 {

@@ -11,7 +11,7 @@ use App\Modules\QualityAssessment\Domain\Services\EvidenceFileUploaderInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceIdExistsCheckerInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidenceIssuedDateEmptyCheckerInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidencePermissionCheckerInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;

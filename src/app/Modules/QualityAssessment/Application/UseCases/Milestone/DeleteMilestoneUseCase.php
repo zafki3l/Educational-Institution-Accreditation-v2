@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Application\UseCases\Milestone;
 
 use App\Modules\QualityAssessment\Domain\Entities\Milestone;
 use App\Modules\QualityAssessment\Domain\Repositories\MilestoneRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class DeleteMilestoneUseCase
 {

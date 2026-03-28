@@ -12,7 +12,7 @@ use App\Modules\QualityAssessment\Domain\Services\EvidenceIdExistsCheckerInterfa
 use App\Modules\QualityAssessment\Domain\Services\EvidenceIssuedDateEmptyCheckerInterface;
 use App\Modules\QualityAssessment\Domain\Services\EvidencePermissionCheckerInterface;
 use App\Modules\QualityAssessment\Domain\ValueObjects\Evidence\EvidenceId;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use DateTimeImmutable;
 
 final class CreateEvidenceUseCase

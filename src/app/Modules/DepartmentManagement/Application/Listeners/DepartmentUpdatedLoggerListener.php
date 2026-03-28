@@ -3,7 +3,7 @@
 namespace App\Modules\DepartmentManagement\Application\Listeners;
 
 use App\Modules\DepartmentManagement\Domain\Events\DepartmentUpdated;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class DepartmentUpdatedLoggerListener
 {
