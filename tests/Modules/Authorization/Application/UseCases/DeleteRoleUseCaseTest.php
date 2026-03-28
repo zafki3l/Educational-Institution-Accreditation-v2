@@ -6,6 +6,7 @@ use App\Modules\Authorization\Application\UseCases\DeleteRoleUseCase;
 use App\Modules\Authorization\Domain\Entities\Role;
 use App\Modules\Authorization\Domain\Repositories\RoleRepositoryInterface;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -14,15 +15,21 @@ final class DeleteRoleUseCaseTest extends TestCase
     private DeleteRoleUseCase $useCase;
     private RoleRepositoryInterface&MockObject $repositoryMock;
     private EventDispatcherInterface&MockObject $eventDispatcherMock;
+    private UnitOfWorkInterface&MockObject $unitOfWorkMock;
 
     protected function setUp(): void
     {
         $this->repositoryMock = $this->createMock(RoleRepositoryInterface::class);
         $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWorkMock = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWorkMock->method('execute')
+            ->willReturnCallback(fn(callable $work) => $work());
 
         $this->useCase = new DeleteRoleUseCase(
             $this->repositoryMock, 
-            $this->eventDispatcherMock
+            $this->eventDispatcherMock,
+            $this->unitOfWorkMock
         );
     }
 

@@ -8,6 +8,7 @@ use App\Modules\Authorization\Domain\Entities\Role;
 use App\Modules\Authorization\Domain\Exception\EmptyRoleNameException;
 use App\Modules\Authorization\Domain\Repositories\RoleRepositoryInterface;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -16,6 +17,7 @@ final class UpdateRoleUseCaseTest extends TestCase
     private UpdateRoleUseCase $useCase;
     private RoleRepositoryInterface&MockObject $repositoryMock;
     private EventDispatcherInterface&MockObject $eventDispatcherMock;
+    private UnitOfWorkInterface&MockObject $unitOfWorkMock;
 
     private const ROLE_ID = 1;
     private const OLD_NAME = 'Old Role';
@@ -26,10 +28,15 @@ final class UpdateRoleUseCaseTest extends TestCase
     {
         $this->repositoryMock = $this->createMock(RoleRepositoryInterface::class);
         $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWorkMock = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWorkMock->method('execute')
+            ->willReturnCallback(fn(callable $work) => $work());
 
         $this->useCase = new UpdateRoleUseCase(
             $this->repositoryMock,
-            $this->eventDispatcherMock
+            $this->eventDispatcherMock,
+            $this->unitOfWorkMock
         );
     }
 

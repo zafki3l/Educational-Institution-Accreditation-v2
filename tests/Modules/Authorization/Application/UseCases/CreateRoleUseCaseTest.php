@@ -7,6 +7,7 @@ use App\Modules\Authorization\Application\UseCases\CreateRoleUseCase;
 use App\Modules\Authorization\Domain\Entities\Role;
 use App\Modules\Authorization\Domain\Repositories\RoleRepositoryInterface;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -15,6 +16,7 @@ final class CreateRoleUseCaseTest extends TestCase
     private CreateRoleUseCase $useCase;
     private RoleRepositoryInterface&MockObject $repositoryMock;
     private EventDispatcherInterface&MockObject $eventDispatcherMock;
+    private UnitOfWorkInterface&MockObject $unitOfWorkMock;
     
     private const ROLE_NAME = 'Admin';
     private const ACTOR_ID = 'user-123';
@@ -23,10 +25,15 @@ final class CreateRoleUseCaseTest extends TestCase
     {
         $this->repositoryMock = $this->createMock(RoleRepositoryInterface::class);
         $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWorkMock = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWorkMock->method('execute')
+            ->willReturnCallback(fn(callable $work) => $work());
 
         $this->useCase = new CreateRoleUseCase(
             $this->repositoryMock, 
-            $this->eventDispatcherMock
+            $this->eventDispatcherMock,
+            $this->unitOfWorkMock 
         );
     }
 
@@ -37,9 +44,7 @@ final class CreateRoleUseCaseTest extends TestCase
 
         $this->repositoryMock->expects($this->once())
             ->method('create')
-            ->with($this->callback(function (Role $role) {
-                return $role->getName() === self::ROLE_NAME;
-            }));
+            ->with($this->callback(fn(Role $role) => $role->getName() === self::ROLE_NAME));
 
         $this->eventDispatcherMock->expects($this->once())
             ->method('dispatch');
