@@ -9,6 +9,7 @@ use App\Modules\Authentication\Domain\Events\UserLoginFailed;
 use App\Modules\Authentication\Domain\Repositories\AuthenticableUserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 
 final class LoginUseCase
 {
@@ -20,7 +21,8 @@ final class LoginUseCase
 
     public function __construct(
         private AuthenticableUserRepositoryInterface $repository,
-        private EventDispatcherInterface $eventDispatcher
+        private EventDispatcherInterface $eventDispatcher,
+        private UnitOfWorkInterface $unitOfWork
     ) {}
 
     public function execute(LoginRequestInterface $request): ?LoginResponse
@@ -34,18 +36,20 @@ final class LoginUseCase
 
         $isVerify = $password->verify($request->getPassword());
 
-        if (!$isVerify || !$authUser) {
-            $this->eventDispatcher->dispatch(new UserLoginFailed($identifier));
+        return $this->unitOfWork->execute(function () use ($isVerify, $authUser, $identifier) {
+            if (!$isVerify || !$authUser) {
+                $this->eventDispatcher->dispatch(new UserLoginFailed($identifier));
 
-            return null;
-        }
+                return null;
+            }
 
-        $this->eventDispatcher->dispatch(new UserLoggedIn($authUser->getUserId()->value()));
+            $this->eventDispatcher->dispatch(new UserLoggedIn($authUser->getUserId()->value()));
 
-        return new LoginResponse(
-            $authUser->getUserId()->value(),
-            $authUser->getIdentifier(),
-            $authUser->getRoleId()
-        );
+            return new LoginResponse(
+                $authUser->getUserId()->value(),
+                $authUser->getIdentifier(),
+                $authUser->getRoleId()
+            );
+        });
     }
 }

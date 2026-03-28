@@ -4,6 +4,7 @@ namespace Tests\Modules\Authentication\Application\UseCases;
 
 use App\Modules\Authentication\Application\UseCases\LogoutUseCase;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use App\Shared\Security\Session\AuthSession;
 use App\Shared\Security\Session\SessionAuthUser;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -13,22 +14,27 @@ final class LogoutUseCaseTest extends TestCase
 {
     private AuthSession&MockObject $sessionMock;
     private EventDispatcherInterface&MockObject $eventDispatcherMock;
+    private UnitOfWorkInterface&MockObject $unitOfWorkMock;
     private LogoutUseCase $useCase;
 
     protected function setUp(): void
     {
         $this->sessionMock = $this->createMock(AuthSession::class);
         $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWorkMock = $this->createMock(UnitOfWorkInterface::class);
         
+        $this->unitOfWorkMock->method('execute')
+            ->willReturnCallback(fn(callable $work) => $work());
+
         $this->useCase = new LogoutUseCase(
             $this->sessionMock, 
-            $this->eventDispatcherMock
+            $this->eventDispatcherMock,
+            $this->unitOfWorkMock
         );
     }
 
     public function testExecuteLogsOutUserWhenSessionIsActive(): void
     {
-        // Simulate user in session
         $stubUser = new SessionAuthUser(
             user_id: 'user-123',
             identifier: 'test@example.com',
@@ -37,7 +43,6 @@ final class LogoutUseCaseTest extends TestCase
     
         $this->sessionMock->method('authUser')->willReturn($stubUser);
 
-        // Expecting event excuted and session cleared
         $this->eventDispatcherMock->expects($this->once())
             ->method('dispatch');
             
@@ -49,15 +54,10 @@ final class LogoutUseCaseTest extends TestCase
 
     public function testExecuteDoesNothingWhenNoUserInSession(): void
     {
-        // Simulate no user in session
         $this->sessionMock->method('authUser')->willReturn(null);
 
-        // expecting no event excuted and no session cleared
-        $this->eventDispatcherMock->expects($this->never())
-            ->method('dispatch');
-            
-        $this->sessionMock->expects($this->never())
-            ->method('clear');
+        $this->eventDispatcherMock->expects($this->never())->method('dispatch');
+        $this->sessionMock->expects($this->never())->method('clear');
 
         $this->useCase->execute();
     }
