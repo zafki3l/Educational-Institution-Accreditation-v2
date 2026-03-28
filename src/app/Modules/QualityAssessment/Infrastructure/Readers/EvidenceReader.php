@@ -5,7 +5,7 @@ namespace App\Modules\QualityAssessment\Infrastructure\Readers;
 use App\Modules\QualityAssessment\Application\Readers\EvidenceReaderInterface;
 use App\Modules\QualityAssessment\Infrastructure\Models\Evidence;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\SearchEvidenceRequest;
-use App\Shared\Paginator\PaginatedResult;
+use App\Shared\Domain\Paginator\PaginatedResult;
 
 class EvidenceReader implements EvidenceReaderInterface
 {

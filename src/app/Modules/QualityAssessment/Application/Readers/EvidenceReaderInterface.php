@@ -3,7 +3,7 @@
 namespace App\Modules\QualityAssessment\Application\Readers;
 
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\SearchEvidenceRequest;
-use App\Shared\Paginator\PaginatedResult;
+use App\Shared\Domain\Paginator\PaginatedResult;
 
 interface EvidenceReaderInterface
 {

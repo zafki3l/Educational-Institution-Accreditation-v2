@@ -3,7 +3,7 @@
 namespace App\Modules\UserManagement\Application\Readers;
 
 use App\Modules\UserManagement\Application\Responses\UserByIdResponse;
-use App\Shared\Paginator\PaginatedResult;
+use App\Shared\Domain\Paginator\PaginatedResult;
 
 interface UserReaderInterface
 {

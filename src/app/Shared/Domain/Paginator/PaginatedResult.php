@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Paginator;
+namespace App\Shared\Domain\Paginator;
 
 class PaginatedResult
 {
