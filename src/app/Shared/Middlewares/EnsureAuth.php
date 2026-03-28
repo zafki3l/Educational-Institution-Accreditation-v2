@@ -2,7 +2,7 @@
 
 namespace App\Shared\Middlewares;
 
-use App\Shared\Http\Traits\HttpResponse;
+use App\Shared\Web\Http\HttpResponse;
 
 final class EnsureAuth
 {

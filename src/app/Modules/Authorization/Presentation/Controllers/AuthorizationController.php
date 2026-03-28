@@ -2,7 +2,7 @@
 
 namespace App\Modules\Authorization\Presentation\Controllers;
 
-use App\Shared\Http\Traits\HttpResponse;
+use App\Shared\Web\Http\HttpResponse;
 
 abstract class AuthorizationController
 {

@@ -4,8 +4,8 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers;
 
 use App\Modules\QualityAssessment\Application\Readers\StandardReaderInterface;
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\Http\Traits\HttpResponse;
 use App\Shared\SessionManager\AuthSession;
+use App\Shared\Web\Http\HttpResponse;
 use Illuminate\Database\Eloquent\Collection;
 
 abstract class QualityAssessmentController
