@@ -10,7 +10,7 @@ final class AdminDashboardController extends DashboardController
 {
     public function __construct(private AdminDashboardReaderInterface $adminDashboardReader) {}
 
-    public function dashboard(): ViewResponse
+    public function dashboard(): ViewResponse   
     {
         $overview = new AdminDashboardOverviewViewModel(
             $this->adminDashboardReader->getOverviewUserManagementStats(),

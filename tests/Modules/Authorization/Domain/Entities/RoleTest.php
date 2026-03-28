@@ -5,68 +5,72 @@ namespace Tests\Modules\Authorization\Domain\Entities;
 use App\Modules\Authorization\Domain\Entities\Role;
 use App\Modules\Authorization\Domain\Exception\EmptyRoleNameException;
 use App\Modules\Authorization\Domain\Exception\RoleIdExistsException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class RoleTest extends TestCase
 {
-    private Role $role;
-    private string $expectedName;
-    private int $expectedRoleId;
-    
-    public function setUp(): void
-    {
-        $this->expectedName = 'Admin';
-        $this->expectedRoleId = 3;
+    private const DEFAULT_NAME = 'Editor';
 
-        $this->role = Role::create($this->expectedName);
-    }
-    
-    /**
-     * Run: composer test -- --filter RoleTest::testGetIdReturnNull
-     * @return void
-     */
-    public function testGetIdReturnNull(): void
+    public function testInitializationWithValidData(): void
     {
-        $this->assertNull($this->role->getId());
+        $role = Role::create(self::DEFAULT_NAME);
+
+        $this->assertNull($role->getId());
+        $this->assertSame(self::DEFAULT_NAME, $role->getName());
     }
 
-    /**
-     * Run: composer test -- --filter RoleTest::testGetters
-     * 
-     * @return void
-     */
-    public function testGetters()
+    public function testAssignIdSuccess(): void
     {
-        $this->role->assignId($this->expectedRoleId);
+        $role = Role::create(self::DEFAULT_NAME);
+        
+        $role->assignId(Role::ROLE_ADMIN);
 
-        $this->assertNotNull($this->role->getId());
-        $this->assertSame($this->expectedRoleId, $this->role->getId());
-        $this->assertSame($this->expectedName, $this->role->getName());
+        $this->assertSame(Role::ROLE_ADMIN, $role->getId());
     }
 
-    /**
-     * Run: composer test -- --filter RoleTest::testCreateShouldThrowExceptionWhenNameIsEmpty
-     * 
-     * @return void
-     */
-    public function testCreateShouldThrowExceptionWhenNameIsEmpty(): void
+    public function testAssignIdThrowsExceptionWhenAlreadyAssigned(): void
+    {
+        $role = Role::create(self::DEFAULT_NAME);
+        $role->assignId(Role::ROLE_USER);
+
+        $this->expectException(RoleIdExistsException::class);
+        
+        $role->assignId(Role::ROLE_STAFF);
+    }
+
+    #[DataProvider('provideInvalidNames')]
+    public function testCreateThrowsExceptionForInvalidNames(string $invalidName): void
     {
         $this->expectException(EmptyRoleNameException::class);
         
-        Role::create('');
+        Role::create($invalidName);
     }
 
-    /**
-     * Run: composer test -- --filter RoleTest::testAssignIdShouldThrowExceptionWhenIdAlreadyExists
-     * 
-     * @return void
-     */
-    public function testAssignIdShouldThrowExceptionWhenIdAlreadyExists(): void
+    public function testRenameSuccess(): void
     {
-        $this->role->assignId(1);
+        $role = Role::create('Old Name');
+        $newName = 'New Modern Name';
+
+        $role->rename($newName);
+
+        $this->assertSame($newName, $role->getName());
+    }
+
+    #[DataProvider('provideInvalidNames')]
+    public function testRenameThrowsExceptionForInvalidNames(string $invalidName): void
+    {
+        $role = Role::create(self::DEFAULT_NAME);
+
+        $this->expectException(EmptyRoleNameException::class);
         
-        $this->expectException(RoleIdExistsException::class);
-        
-        $this->role->assignId(2);
+        $role->rename($invalidName);
+    }
+
+    public static function provideInvalidNames(): array
+    {
+        return [
+            'empty string' => [''],
+        ];
     }
 }
