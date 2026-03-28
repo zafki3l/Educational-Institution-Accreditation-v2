@@ -131,7 +131,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/parts/pagination.php'?>
+                        <?php include dirname(__DIR__, 5) . '/Shared/Web/Views/layouts/parts/pagination.php'?>
                     </div>
                 </div>
             </div>

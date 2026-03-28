@@ -2,6 +2,7 @@
 
 namespace App\Shared\Logging;
 
+use App\Shared\Contracts\Logging\LoggerInterface;
 use App\Shared\Infrastructure\MongoDBConnection;
 use MongoDB\Collection;
 

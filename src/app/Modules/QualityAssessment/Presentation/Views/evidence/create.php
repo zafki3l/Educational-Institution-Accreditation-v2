@@ -21,7 +21,7 @@
 <body class="app-bg">
 
     <div class="layout">
-        <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/quality-assessment/sidebar.php' ?>
+        <?php include dirname(__DIR__, 5) . '/Shared/Web/Views/layouts/quality-assessment/sidebar.php' ?>
 
         <main class="main">
             <div class="container">

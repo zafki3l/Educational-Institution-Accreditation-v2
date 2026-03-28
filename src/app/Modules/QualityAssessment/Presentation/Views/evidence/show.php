@@ -39,7 +39,7 @@
 <body>
 
     <div class="layout">
-        <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/quality-assessment/sidebar.php' ?>
+        <?php include dirname(__DIR__, 5) . '/Shared/Web/Views/layouts/quality-assessment/sidebar.php' ?>
 
         <?php if (isset($evidence->file_url)): ?>
             <main class="main" style="position: relative;">
