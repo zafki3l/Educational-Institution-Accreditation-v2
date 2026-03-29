@@ -3,87 +3,97 @@
 namespace Tests\Unit\Modules\UserProfile\Domain\Entities;
 
 use App\Modules\UserProfile\Domain\Entities\UserProfile;
-use App\Modules\UserProfile\Domain\Exceptions\InvalidEmailFormatException;
 use App\Modules\UserProfile\Domain\Exceptions\UserIdEmptyException;
 use App\Modules\UserProfile\Domain\Exceptions\UserNameEmptyException;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 
 class UserProfileTest extends TestCase
 {
-    /**
-     * Run: composer test -- --filter UserProfileTest::it_can_be_created_successfully
-     */
-    #[Test]
-    public function it_can_be_created_successfully(): void
+    public function testCanBeCreatedSuccessfully(): void
     {
         $id = 'user-123';
         $firstName = 'Nguyen';
         $lastName = 'An';
+        $email = 'an@gmail.com';
 
-        $profile = UserProfile::create($id, $firstName, $lastName);
+        $profile = UserProfile::create($id, $firstName, $lastName, $email);
 
         $this->assertEquals($id, $profile->getId());
         $this->assertEquals($firstName, $profile->getFirstName());
         $this->assertEquals($lastName, $profile->getLastName());
-        $this->assertNull($profile->getEmail());
+        $this->assertEquals($email, $profile->getEmail());
+        $this->assertNull($profile->getPassword());
     }
 
-    /**
-     * Run: composer test -- --filter UserProfileTest::it_throws_exception_if_id_is_empty
-     */
-    #[Test]
-    public function it_throws_exception_if_id_is_empty(): void
+    public function testThrowsExceptionIfIdIsEmpty(): void
     {
         $this->expectException(UserIdEmptyException::class);
-        UserProfile::create('', 'Nguyen', 'An');
+        UserProfile::create('', 'Nguyen', 'An', 'an@gmail.com');
     }
 
-    /**
-     * Run: composer test -- --filter UserProfileTest::it_throws_exception_if_both_names_are_empty
-     */
-    #[Test]
-    public function it_throws_exception_if_both_names_are_empty(): void
+    public function testThrowsExceptionIfBothNamesAreEmpty(): void
     {
         $this->expectException(UserNameEmptyException::class);
-        UserProfile::create('id-1', '', '');
+        UserProfile::create('id-1', '', '', 'an@gmail.com');
     }
 
-    /**
-     * Run: composer test -- --filter UserProfileTest::it_can_be_reconstituted_from_persistence
-     */    
-    #[Test]
-    public function it_can_be_reconstituted_from_persistence(): void
+    public function testCanBeReconstitutedFromPersistence(): void
     {
-        // Giả lập dữ liệu từ DB (có thể chứa email)
-        $profile = UserProfile::fromPersistent('id-1', 'Nguyen', 'An', 'an@gmail.com', null);
+        $id = 'id-1';
+        $fname = 'Nguyen';
+        $lname = 'An';
+        $email = 'an@gmail.com';
+        $hashedPass = 'hashed_123';
 
-        $this->assertEquals('an@gmail.com', $profile->getEmail());
+        $profile = UserProfile::fromPersistent($id, $fname, $lname, $email, $hashedPass);
+
+        $this->assertEquals($email, $profile->getEmail());
+        $this->assertEquals($hashedPass, $profile->getPassword());
     }
 
-    /**
-     * Run: composer test -- --filter UserProfileTest::it_can_update_email_with_valid_format
-     */ 
-    #[Test]
-    public function it_can_update_email_with_valid_format(): void
+    public function testUpdateInformationAndTrackChanges(): void
     {
-        $profile = UserProfile::create('id-1', 'Nguyen', 'An');
-        $newEmail = 'new-email@example.com';
+        $profile = UserProfile::create('id-1', 'Nguyen', 'An', 'old@gmail.com');
+        
+        $newFirstName = 'Tran';
+        $newEmail = 'new@gmail.com';
 
-        $profile->updateEmail($newEmail);
+        $profile->update($newFirstName, 'An', $newEmail);
 
+        $this->assertEquals($newFirstName, $profile->getFirstName());
         $this->assertEquals($newEmail, $profile->getEmail());
+        
+        $changes = $profile->getChanges();
+        
+        $this->assertArrayHasKey('first_name', $changes);
+        $this->assertEquals('Nguyen', $changes['first_name']['old']);
+        $this->assertEquals('Tran', $changes['first_name']['new']);
+
+        $this->assertArrayHasKey('email', $changes);
+        $this->assertEquals('old@gmail.com', $changes['email']['old']);
+        $this->assertEquals('new@gmail.com', $changes['email']['new']);
+
+        $this->assertArrayNotHasKey('last_name', $changes);
     }
 
-    /**
-     * Run: composer test -- --filter UserProfileTest::it_throws_exception_for_invalid_email_format
-     */ 
-    #[Test]
-    public function it_throws_exception_for_invalid_email_format(): void
+    public function testChangePassword(): void
     {
-        $profile = UserProfile::create('id-1', 'Nguyen', 'An');
+        $profile = UserProfile::create('id-1', 'Nguyen', 'An', 'an@gmail.com');
+        $newHashedPassword = 'new_hashed_password';
 
-        $this->expectException(InvalidEmailFormatException::class);
-        $profile->updateEmail('invalid-email');
+        $profile->changePassword($newHashedPassword);
+
+        $this->assertEquals($newHashedPassword, $profile->getPassword());
+    }
+
+    public function testHasChangesReturnsCorrectValue(): void
+    {
+        $profile = UserProfile::create('id-1', 'Nguyen', 'An', 'an@gmail.com');
+        
+        $this->assertFalse($profile->hasChanges());
+
+        $profile->update('Nguyen', 'An', 'new-email@gmail.com');
+        
+        $this->assertTrue($profile->hasChanges());
     }
 }

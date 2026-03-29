@@ -5,10 +5,11 @@ namespace Tests\Unit\Modules\UserProfile\Application\UseCases;
 use App\Modules\UserProfile\Application\Requests\ChangePasswordRequestInterface;
 use App\Modules\UserProfile\Application\UseCases\ChangePasswordUseCase;
 use App\Modules\UserProfile\Domain\Entities\UserProfile;
-use App\Modules\UserProfile\Domain\Exceptions\NewPasswordNotMatchingException;
 use App\Modules\UserProfile\Domain\Repositories\UserProfileRepositoryInterface;
 use App\Modules\UserProfile\Domain\Services\VerifyCurrentPasswordInterface;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Modules\UserProfile\Domain\Services\NewPasswordMatchingCheckerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;
@@ -18,97 +19,117 @@ final class ChangePasswordUseCaseTest extends TestCase
     use DebugHelper;
 
     private UserProfileRepositoryInterface&MockObject $repository;
-    private LoggerInterface&MockObject $logger;
     private VerifyCurrentPasswordInterface&MockObject $verifyCurrentPassword;
+    private NewPasswordMatchingCheckerInterface&MockObject $newPasswordMatchingChecker;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private ChangePasswordUseCase $useCase;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(UserProfileRepositoryInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
         $this->verifyCurrentPassword = $this->createMock(VerifyCurrentPasswordInterface::class);
+        $this->newPasswordMatchingChecker = $this->createMock(NewPasswordMatchingCheckerInterface::class);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')
+            ->willReturnCallback(fn(callable $work) => $work());
 
         $this->useCase = new ChangePasswordUseCase(
             $this->repository,
-            $this->logger,
-            $this->verifyCurrentPassword
+            $this->verifyCurrentPassword,
+            $this->newPasswordMatchingChecker,
+            $this->eventDispatcher,
+            $this->unitOfWork
         );
     }
 
-    /**
-     * Run: composer test -- --filter ChangePasswordUseCaseTest::testExecuteSuccessfully
-     * 
-     * @return void
-     */
     public function testExecuteSuccessfully(): void
     {
         $actorId = 'user-123';
+        $oldPass = 'OldPassword123@';
         $newPass = 'NewPassword123@';
-        $this->debug('START', 'Bắt đầu test đổi mật khẩu thành công');
+        $hashedOldPass = 'hashed_old_password';
 
         $request = $this->createMock(ChangePasswordRequestInterface::class);
-        $request->method('getCurrentPassword')->willReturn('OldPassword123@');
+        $request->method('getCurrentPassword')->willReturn($oldPass);
         $request->method('getNewPassword')->willReturn($newPass);
         $request->method('getNewPasswordConfirmation')->willReturn($newPass);
 
-        $this->verifyCurrentPassword->expects($this->once())
-            ->method('verify')
-            ->with('OldPassword123@', $actorId);
-
         $userProfile = $this->createMock(UserProfile::class);
         $userProfile->method('getId')->willReturn($actorId);
-        $userProfile->method('getFirstName')->willReturn('Huy');
-        $userProfile->method('getLastName')->willReturn('Nguyen');
-        
-        $userProfile->method('getPassword')->willReturn('hashed_password_123');
+        $userProfile->method('getPassword')->willReturn($hashedOldPass);
 
         $this->repository->method('getUserProfile')->with($actorId)->willReturn($userProfile);
 
+        $this->verifyCurrentPassword->expects($this->once())
+            ->method('verify')
+            ->with($oldPass, $hashedOldPass);
+
+        $this->newPasswordMatchingChecker->expects($this->once())
+            ->method('check')
+            ->with($newPass, $newPass);
+
         $this->repository->expects($this->once())
             ->method('changePassword')
-            ->willReturnCallback(function($hashedPassword, $id) use ($userProfile) {
-                $this->debug('REPO_ACTION', ['id' => $id]);
-                return $userProfile; 
-            });
+            ->with($this->anything(), $actorId);
+
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch');
 
         $this->useCase->execute($request, $actorId);
-
-        $this->debug('END', 'Đổi mật khẩu thành công và đã ghi log');
+        
+        $this->debug('SUCCESS', 'Password changed and event dispatched');
     }
 
-    /**
-     * Run: composer test -- --filter ChangePasswordUseCaseTest::testExecuteSuccessfully
-     * 
-     * @return void
-     */
     public function testExecuteThrowsExceptionWhenNewPasswordNotMatching(): void
     {
-        $this->debug('START', 'Test lỗi mật khẩu xác nhận không khớp');
-
+        $actorId = 'user-123';
         $request = $this->createMock(ChangePasswordRequestInterface::class);
-        $request->method('getNewPassword')->willReturn('password123');
-        $request->method('getNewPasswordConfirmation')->willReturn('password456');
+        $request->method('getNewPassword')->willReturn('p1');
+        $request->method('getNewPasswordConfirmation')->willReturn('p2');
 
-        $this->expectException(NewPasswordNotMatchingException::class);
+        $userProfile = $this->createMock(UserProfile::class);
+        $userProfile->method('getPassword')->willReturn('some_hash'); 
+        $this->repository->method('getUserProfile')->willReturn($userProfile);
 
-        try {
-            $this->useCase->execute($request, 'user-123');
-        } catch (NewPasswordNotMatchingException $e) {
-            $this->debug('CATCHED', 'Bắt được lỗi khớp mật khẩu thành công');
-            throw $e;
-        }
+        $this->newPasswordMatchingChecker->method('check')
+            ->willThrowException(new \Exception('Mật khẩu xác nhận không khớp'));
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Mật khẩu xác nhận không khớp');
+
+        $this->useCase->execute($request, $actorId);
     }
 
-    /**
-     * Run: composer test -- --filter ChangePasswordUseCaseTest::testExecuteSuccessfully
-     * 
-     * @return void
-     */
-    public function testExecuteThrowsExceptionWhenCurrentPasswordInvalid(): void
+    public function testExecuteEarlyReturnWhenPasswordIsSame(): void
     {
-        $this->debug('START', 'Test lỗi mật khẩu hiện tại không đúng');
+        $actorId = 'user-123';
+        $password = 'SamePassword123@';
 
         $request = $this->createMock(ChangePasswordRequestInterface::class);
+        $request->method('getCurrentPassword')->willReturn($password);
+        $request->method('getNewPassword')->willReturn($password);
+
+        $userProfile = $this->createMock(UserProfile::class);
+        $userProfile->method('getPassword')->willReturn('some_hash');
+        $this->repository->method('getUserProfile')->willReturn($userProfile);
+
+        $this->unitOfWork->expects($this->never())->method('execute');
+        $this->repository->expects($this->never())->method('changePassword');
+
+        $this->useCase->execute($request, $actorId);
+        
+        $this->debug('EARLY_RETURN', 'No DB action because password is unchanged');
+    }
+
+    public function testExecuteThrowsExceptionWhenCurrentPasswordInvalid(): void
+    {
+        $request = $this->createMock(ChangePasswordRequestInterface::class);
+        $userProfile = $this->createMock(UserProfile::class);
+        $userProfile->method('getPassword')->willReturn('hash');
+        $this->repository->method('getUserProfile')->willReturn($userProfile);
         
         $this->verifyCurrentPassword->method('verify')
             ->willThrowException(new \Exception('Mật khẩu hiện tại không chính xác'));

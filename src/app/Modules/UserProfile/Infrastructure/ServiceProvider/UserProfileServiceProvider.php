@@ -6,9 +6,11 @@ use App\Modules\UserProfile\Application\Requests\ChangePasswordRequestInterface;
 use App\Modules\UserProfile\Application\Requests\UpdateUserProfileRequestInterface;
 use App\Modules\UserProfile\Domain\Repositories\UserProfileRepositoryInterface;
 use App\Modules\UserProfile\Domain\Services\EmailExistsCheckerInterface;
+use App\Modules\UserProfile\Domain\Services\NewPasswordMatchingCheckerInterface;
 use App\Modules\UserProfile\Domain\Services\VerifyCurrentPasswordInterface;
 use App\Modules\UserProfile\Infrastructure\Repositories\UserProfileRepository;
 use App\Modules\UserProfile\Infrastructure\Services\EmailExistsChecker;
+use App\Modules\UserProfile\Infrastructure\Services\NewPasswordMatchingChecker;
 use App\Modules\UserProfile\Infrastructure\Services\VerifyCurrentPassword;
 use App\Modules\UserProfile\Presentation\Requests\ChangePasswordRequest;
 use App\Modules\UserProfile\Presentation\Requests\UpdateUserProfileRequest;
@@ -42,6 +44,11 @@ final class UserProfileServiceProvider extends ServiceProvider
         $container->bind(
             VerifyCurrentPasswordInterface::class,
             VerifyCurrentPassword::class
+        );
+
+        $container->bind(
+            NewPasswordMatchingCheckerInterface::class,
+            NewPasswordMatchingChecker::class
         );
     }
 }

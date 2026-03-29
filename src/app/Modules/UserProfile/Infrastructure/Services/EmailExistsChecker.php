@@ -3,14 +3,15 @@
 namespace App\Modules\UserProfile\Infrastructure\Services;
 
 use App\Modules\UserManagement\Infrastructure\Models\User;
+use App\Modules\UserProfile\Domain\Exceptions\EmailExistException;
 use App\Modules\UserProfile\Domain\Services\EmailExistsCheckerInterface;
 
 final class EmailExistsChecker implements EmailExistsCheckerInterface
 {
-    public function isExists(string $email): bool
+    public function check(string $email): void
     {
-        return User::query()
-                ->where('email', $email)
-                ->exists();
+        if (User::query()->where('email', $email)->exists()) {
+            throw new EmailExistException();
+        }
     }
 }

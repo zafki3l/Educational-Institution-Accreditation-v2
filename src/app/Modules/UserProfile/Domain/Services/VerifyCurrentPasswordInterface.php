@@ -4,5 +4,5 @@ namespace App\Modules\UserProfile\Domain\Services;
 
 interface VerifyCurrentPasswordInterface
 {
-    public function verify(string $password, string $actor_id): void;
+    public function verify(string $from_request, string $from_db): void;
 }
