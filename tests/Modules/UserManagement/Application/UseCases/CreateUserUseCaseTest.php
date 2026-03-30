@@ -8,10 +8,9 @@ use App\Modules\UserManagement\Domain\Entities\User;
 use App\Modules\UserManagement\Domain\Exception\EmailExistException;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
 use App\Modules\UserManagement\Domain\Services\EmailExistsCheckerInterface;
-use App\Modules\UserManagement\Domain\ValueObjects\Email;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;
 
@@ -21,88 +20,66 @@ class CreateUserUseCaseTest extends TestCase
 
     private UserRepositoryInterface&MockObject $userRepository;
     private EmailExistsCheckerInterface&MockObject $emailChecker;
-    private LoggerInterface&MockObject $logger;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private CreateUserUseCase $useCase;
 
     protected function setUp(): void
     {
         $this->userRepository = $this->createMock(UserRepositoryInterface::class);
         $this->emailChecker = $this->createMock(EmailExistsCheckerInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')->willReturnCallback(function ($callback) {
+            return $callback();
+        });
 
         $this->useCase = new CreateUserUseCase(
             $this->userRepository,
             $this->emailChecker,
-            $this->logger
+            $this->eventDispatcher,
+            $this->unitOfWork
         );
     }
 
-    /**
-     * Run: composer test -- --filter CreateUserUseCaseTest::it_creates_user_successfully
-     */
-    #[Test]
-    public function it_creates_user_successfully(): void
+    public function testCreateUserSuccessfully(): void
     {
         $request = $this->createMock(CreateUserRequestInterface::class);
-        $request->method('getEmail')->willReturn('test@example.com');
-        $request->method('getFirstName')->willReturn('An');
+        $request->method('getEmail')->willReturn('anh.nguyen@example.com');
+        $request->method('getFirstName')->willReturn('Anh');
         $request->method('getLastName')->willReturn('Nguyen');
-        $request->method('getPassword')->willReturn('Password123');
+        $request->method('getPassword')->willReturn('SecurePass123');
         $request->method('getRoleId')->willReturn(1);
+        
+        $request->method('getDepartmentId')->willReturn('101'); 
 
-        // assuming that the email does not exist in the database
         $this->emailChecker->method('isExists')->willReturn(false);
 
         $this->userRepository->expects($this->once())
             ->method('create')
-            ->with($this->isInstanceOf(User::class))
-            ->willReturnCallback(function (User $user) {
-                $this->debug('USER DATA BEFORE SAVING', [
-                    'id' => $user->getUserId()->value(),
-                    'auth_id' => $user->getAuthId()->value(),
-                    'full_name' => $user->getFullName(),
-                    'email' => $user->getEmail()?->value(),
-                    'role_id' => $user->getRoleId(),
-                    'department_id' => $user->getDepartmentId()
-                ]);
-                return $user;
-            });
+            ->with($this->isInstanceOf(User::class));
 
-        $this->logger->expects($this->once())
-            ->method('write')
-            ->willReturnCallback(function ($level, $action, $message, $actorId, $context) {
-                $this->debug('DỮ LIỆU LOG HỆ THỐNG', [
-                    'message'  => $message,
-                    'actor_id' => $actorId,
-                    'context'  => $context
-                ]);
-            });
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch');
 
-        $this->useCase->execute($request, 'actor-uuid');
+        $this->useCase->execute($request, 'actor-uuid-123');
+        
+        $this->debug('TEST SUCCESS', ['status' => 'User created and event dispatched']);
     }
 
-    /**
-     * Run: composer test -- --filter CreateUserUseCaseTest::it_throws_exception_when_email_already_exists
-     */
-    #[Test]
-    public function it_throws_exception_when_email_already_exists(): void
+    public function testCreateUserThrowsExceptionWhenEmailExists(): void
     {
         $request = $this->createMock(CreateUserRequestInterface::class);
         $request->method('getEmail')->willReturn('existing@example.com');
 
-        $this->emailChecker->method('isExists')
-            ->willReturnCallback(function (Email $email) {
-                $this->debug('CHECKING EMAIL EXISTENCE', [
-                    'email_value' => $email->value(),
-                    'status' => 'Mocking as EXISTS'
-                ]);
-                return true;
-            });
+        $this->emailChecker->method('isExists')->willReturn(true);
 
         $this->expectException(EmailExistException::class);
         
         $this->userRepository->expects($this->never())->method('create');
+        $this->eventDispatcher->expects($this->never())->method('dispatch');
 
-        $this->useCase->execute($request, 'actor-uuid');
+        $this->useCase->execute($request, 'actor-uuid-123');
     }
 }

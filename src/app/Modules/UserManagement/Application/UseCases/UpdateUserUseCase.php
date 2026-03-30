@@ -7,12 +7,14 @@ use App\Modules\UserManagement\Domain\Events\UserUpdated;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 
 final class UpdateUserUseCase
 {
     public function __construct(
         private UserRepositoryInterface $repository,
-        private EventDispatcherInterface $eventDispatcher
+        private EventDispatcherInterface $eventDispatcher,
+        private UnitOfWorkInterface $unitOfWorkInterface
     ) {}
 
     public function execute(UpdateUserRequestInterface $request, string $actor_id)
@@ -27,12 +29,14 @@ final class UpdateUserUseCase
             $request->getDepartmentId() == '' ? null : $request->getDepartmentId()
         );
 
-        $this->repository->update($user);
+        $this->unitOfWorkInterface->execute(function () use ($user, $actor_id) {
+            $this->repository->update($user);
 
-        $this->eventDispatcher->dispatch(new UserUpdated(
-            $user->getUserId()->value(), 
-            $user->getChanges(),
-            $actor_id
-        ));
+            $this->eventDispatcher->dispatch(new UserUpdated(
+                $user->getUserId()->value(), 
+                $user->getChanges(),
+                $actor_id
+            ));
+        });
     }
 }

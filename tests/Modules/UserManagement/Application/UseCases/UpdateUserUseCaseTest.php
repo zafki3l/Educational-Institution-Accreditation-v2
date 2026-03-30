@@ -6,9 +6,11 @@ use App\Modules\UserManagement\Application\Requests\UpdateUserRequestInterface;
 use App\Modules\UserManagement\Application\UseCases\UpdateUserUseCase;
 use App\Modules\UserManagement\Domain\Entities\User;
 use App\Modules\UserManagement\Domain\Repositories\UserRepositoryInterface;
-use App\Shared\Contracts\Logging\LoggerInterface;
+use App\Modules\UserManagement\Domain\ValueObjects\Email;
+use App\Modules\UserManagement\Domain\ValueObjects\UserId;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;
 
@@ -17,24 +19,31 @@ class UpdateUserUseCaseTest extends TestCase
     use DebugHelper;
 
     private UserRepositoryInterface&MockObject $repository;
-    private LoggerInterface&MockObject $logger;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private UpdateUserUseCase $useCase;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(UserRepositoryInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
-        $this->useCase = new UpdateUserUseCase($this->repository, $this->logger);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')->willReturnCallback(function ($callback) {
+            return $callback();
+        });
+
+        $this->useCase = new UpdateUserUseCase(
+            $this->repository,
+            $this->eventDispatcher,
+            $this->unitOfWork
+        );
     }
 
-    /**
-     * Run: composer test -- --filter UpdateUserUseCaseTest::it_updates_user_successfully
-     */
-    #[Test]
-    public function it_updates_user_successfully(): void
+    public function testUpdateUserSuccessfully(): void
     {
-        $userId = 'user-uuid-123';
-        $actorId = 'actor-uuid-456';
+        $userId = '550e8400-e29b-41d4-a716-446655440000'; 
+        $actorId = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
 
         $request = $this->createMock(UpdateUserRequestInterface::class);
         $request->method('getId')->willReturn($userId);
@@ -45,7 +54,9 @@ class UpdateUserUseCaseTest extends TestCase
         $request->method('getDepartmentId')->willReturn('dept-002');
 
         $user = $this->createMock(User::class);
-        
+        $user->method('getUserId')->willReturn(UserId::fromString($userId));
+        $user->method('getChanges')->willReturn(['first_name' => 'Tran']);
+
         $this->repository->expects($this->once())
             ->method('findOrFail')
             ->with($userId)
@@ -56,31 +67,31 @@ class UpdateUserUseCaseTest extends TestCase
             ->with(
                 'Tran',
                 'B',
-                'tranb@example.com',
+                $this->isInstanceOf(Email::class),
                 2,
                 'dept-002'
             );
 
-        $this->repository->expects($this->once())
-            ->method('save')
-            ->with($user);
-
-        $this->logger->expects($this->once())->method('write');
+        $this->repository->expects($this->once())->method('update')->with($user);
+        $this->eventDispatcher->expects($this->once())->method('dispatch');
 
         $this->useCase->execute($request, $actorId);
+        
+        $this->debug('UPDATE SUCCESS', ['user' => $userId]);
     }
 
-    /**
-     * Run: composer test -- --filter UpdateUserUseCaseTest::it_converts_empty_strings_to_null_during_update
-     */
-    #[Test]
-    public function it_converts_empty_strings_to_null_during_update(): void
+    public function testUpdateConvertsEmptyDepartmentToNull(): void
     {
+        $validUuid = '550e8400-e29b-41d4-a716-446655440000';
+
         $request = $this->createMock(UpdateUserRequestInterface::class);
-        $request->method('getEmail')->willReturn('');
+        $request->method('getId')->willReturn('uuid-123');
+        $request->method('getEmail')->willReturn('valid@email.com');
         $request->method('getDepartmentId')->willReturn('');
 
         $user = $this->createMock(User::class);
+        $user->method('getUserId')->willReturn(UserId::fromString($validUuid));
+        
         $this->repository->method('findOrFail')->willReturn($user);
 
         $user->expects($this->once())
@@ -88,7 +99,7 @@ class UpdateUserUseCaseTest extends TestCase
             ->with(
                 $this->anything(),
                 $this->anything(),
-                $this->isNull(),
+                $this->anything(),
                 $this->anything(),
                 $this->isNull()
             );

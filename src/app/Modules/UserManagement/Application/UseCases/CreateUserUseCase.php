@@ -12,6 +12,7 @@ use App\Modules\UserManagement\Domain\ValueObjects\Email;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
 use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use App\Shared\Infrastructure\Utils\UuidGenerator;
 
 final class CreateUserUseCase
@@ -19,7 +20,8 @@ final class CreateUserUseCase
     public function __construct(
         private UserRepositoryInterface $userRepository,
         private EmailExistsCheckerInterface $emailExistsChecker,
-        private EventDispatcherInterface $EventDispatcher
+        private EventDispatcherInterface $EventDispatcher,
+        private UnitOfWorkInterface $unitOfWork
     ) {}
 
     public function execute(CreateUserRequestInterface $request, string $actor_id): void
@@ -40,11 +42,13 @@ final class CreateUserUseCase
             $request->getDepartmentId()
         );
 
-        $this->userRepository->create($user);
+        $this->unitOfWork->execute(function () use ($user, $actor_id) {
+            $this->userRepository->create($user);
 
-        $this->EventDispatcher->dispatch(new UserCreated(
-            $user->getUserId()->value(), 
-            $actor_id
-        ));
+            $this->EventDispatcher->dispatch(new UserCreated(
+                $user->getUserId()->value(), 
+                $actor_id
+            ));
+        });
     }
 }
