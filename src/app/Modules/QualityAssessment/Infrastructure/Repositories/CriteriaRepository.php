@@ -30,13 +30,10 @@ class CriteriaRepository implements CriteriaRepositoryInterface
         ModelsCriteria::where('id', $entitiesCriteria->getId())->delete();
     }
 
-    public function save(EntitiesCriteria $entitiesCriteria): void
+    public function update(EntitiesCriteria $entitiesCriteria): void
     {
-        $modelsCriteria = ModelsCriteria::findOrFail($entitiesCriteria->getId());
-
-        $modelsCriteria->standard_id = $entitiesCriteria->getStandardId();
-        $modelsCriteria->name = $entitiesCriteria->getName();
-
-        $modelsCriteria->save();
+        ModelsCriteria::where('id', $entitiesCriteria->getId())->update([
+            'name' => $entitiesCriteria->getName()
+        ]);
     }
 }

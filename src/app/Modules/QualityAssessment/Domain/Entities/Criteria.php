@@ -9,6 +9,8 @@ use App\Modules\QualityAssessment\Domain\Exception\Standard\StandardEmptyIdExcep
 
 class Criteria
 {
+    private array $changes = [];
+
     private function __construct(
         private string $id,
         private string $standard_id,
@@ -33,14 +35,18 @@ class Criteria
         return new self($id, $standard_id, $name);
     }
 
-    public function update(string $standard_id, string $name): void
+    public function update(string $name): void
     {
-        self::checkStandardIdEmpty($standard_id);
-
         self::checkNameEmpty($name);
 
-        $this->changeStandardId($standard_id);
-        $this->changeName($name);
+        if ($this->name !== $name) {
+            $this->changes['name'] = [
+                'old' => $this->name,
+                'new' => $name
+            ];
+
+            $this->name = $name;
+        }
     }
 
     public function getId(): string
@@ -58,14 +64,14 @@ class Criteria
         return $this->name;
     }
 
-    public function changeStandardId(string $standard_id): void
+    public function getChanges(): array
     {
-        $this->standard_id = $standard_id;
+        return $this->changes;
     }
 
-    public function changeName(string $name): void
+    public function hasChanges(): bool
     {
-        $this->name = $name;
+        return !empty($this->changes);
     }
 
     private static function validateFormat(string $id, string $standard_id): void

@@ -12,11 +12,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 final class CriteriaTest extends TestCase
 {
-    /**
-     * Run: composer test -- --filter CriteriaTest::testCreateCriteriaSuccessfully
-     * 
-     * @return void
-     */
     public function testCreateCriteriaSuccessfully(): void
     {
         $id = '1.5';
@@ -27,58 +22,60 @@ final class CriteriaTest extends TestCase
 
         $this->assertInstanceOf(Criteria::class, $criteria);
         $this->assertEquals($id, $criteria->getId());
+        $this->assertEquals($standardId, $criteria->getStandardId());
         $this->assertEquals($name, $criteria->getName());
+        $this->assertFalse($criteria->hasChanges());
     }
 
-    /**
-     * Run: composer test -- --filter CriteriaTest::testUpdateCriteriaSuccessfully
-     * 
-     * @return void
-     */
     public function testUpdateCriteriaSuccessfully(): void
     {
-        $criteria = Criteria::create('1.1', '1', 'Tên cũ');
-        
-        $newStandardId = '1';
-        $newName = 'Tên mới đã cập nhật';
+        $criteria = Criteria::create('1.1', '1', 'Old name');
+        $newName = 'New name updated';
 
-        $criteria->update($newStandardId, $newName);
+        $criteria->update($newName);
 
         $this->assertEquals($newName, $criteria->getName());
-        $this->assertEquals($newStandardId, $criteria->getStandardId());
+        $this->assertTrue($criteria->hasChanges());
+        
+        $changes = $criteria->getChanges();
+        $this->assertArrayHasKey('name', $changes);
+        $this->assertEquals('Old name', $changes['name']['old']);
+        $this->assertEquals($newName, $changes['name']['new']);
     }
 
-    /**
-     * Run: composer test -- --filter CriteriaTest::testCreateThrowsExceptionWhenIdFormatIsInvalid
-     * 
-     * @return void
-     */
+    public function testUpdateDoesNotRecordChangesWhenNameIsSame(): void
+    {
+        $criteria = Criteria::create('1.1', '1', 'Old name');
+        $criteria->update('Old name');
+
+        $this->assertFalse($criteria->hasChanges());
+    }
+
     #[DataProvider('invalidFormatProvider')]
     public function testCreateThrowsExceptionWhenIdFormatIsInvalid(string $id, string $standardId): void
     {
         $this->expectException(CriteriaIdInvalidFormatException::class);
-        Criteria::create($id, $standardId, 'Tên tiêu chí');
+        Criteria::create($id, $standardId, 'Name');
     }
 
     public static function invalidFormatProvider(): array
     {
         return [
-            'sai_standard_id' => ['2.1', '1'],
-            'thieu_dau_cham' => ['11', '1'],
-            'so_thu_tu_la_0' => ['1.0', '1'],
-            'co_chu_cai' => ['1.a', '1'],
-            'sai_hoan_toan' => ['abc.def', 'abc']
+            'incorrect_standard_id' => ['2.1', '1'], 
+            'missing_dot' => ['11', '1'],
+            'not_allowed_zero' => ['1.0', '1'], 
+            'contains_characters' => ['1.a', '1'],
+            'characters' => ['abc.def', 'abc']
         ];
     }
 
-    /**
-     * Run: composer test -- --filter CriteriaTest::testCreateThrowsExceptionWhenDataIsEmpty
-     * 
-     * @return void
-     */
     #[DataProvider('emptyDataProvider')]
-    public function testCreateThrowsExceptionWhenDataIsEmpty(string $id, string $standardId, string $name, string $expectedException): void
-    {
+    public function testCreateThrowsExceptionWhenDataIsEmpty(
+        string $id, 
+        string $standardId, 
+        string $name, 
+        string $expectedException
+    ): void {
         $this->expectException($expectedException);
         Criteria::create($id, $standardId, $name);
     }
@@ -86,9 +83,9 @@ final class CriteriaTest extends TestCase
     public static function emptyDataProvider(): array
     {
         return [
-            'id_trong' => ['', '1', 'Name', CriteriaEmptyIdException::class],
-            'standard_id_trong' => ['1.1', '', 'Name', StandardEmptyIdException::class],
-            'name_trong' => ['1.1', '1', '', CriteriaEmptyNameException::class],
+            'empty_id' => ['', '1', 'Name', CriteriaEmptyIdException::class],
+            'empty_standard_id' => ['1.1', '', 'Name', StandardEmptyIdException::class],
+            'empty_name' => ['1.1', '1', '', CriteriaEmptyNameException::class],
         ];
     }
 }
