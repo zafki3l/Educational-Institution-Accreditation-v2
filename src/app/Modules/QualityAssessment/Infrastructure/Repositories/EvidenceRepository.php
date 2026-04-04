@@ -29,7 +29,6 @@ class EvidenceRepository implements EvidenceRepositoryInterface
 
         $criteriaId = $evidence->milestone->criteria->id;
 
-        // delete pivot
         MilestoneEvidence::where('evidence_id', $id)->delete();
 
         $evidence->delete();
@@ -37,20 +36,20 @@ class EvidenceRepository implements EvidenceRepositoryInterface
         return $criteriaId;
     }
 
-    public function update(EntitiesEvidence $e): string
+    public function update(EntitiesEvidence $entitiesEvidence): string
     {
         $evidence = ModelsEvidence::with('milestone.criteria')
-            ->findOrFail($e->getId()->value());
+            ->findOrFail($entitiesEvidence->getId()->value());
 
         $data = [
-            'name' => $e->getName(),
-            'document_number' => $e->getDocumentNumber() ?: null,
-            'issued_date' => $e->getIssuedDate()?->format('Y-m-d'),
-            'issuing_authority' => $e->getIssuingAuthority()
+            'name' => $entitiesEvidence->getName(),
+            'document_number' => $entitiesEvidence->getDocumentNumber() ?: null,
+            'issued_date' => $entitiesEvidence->getIssuedDate()?->format('Y-m-d'),
+            'issuing_authority' => $entitiesEvidence->getIssuingAuthority()
         ];
 
-        if ($e->getFileUrl()) {
-            $data['file_url'] = $e->getFileUrl();
+        if ($entitiesEvidence->getFileUrl()) {
+            $data['file_url'] = $entitiesEvidence->getFileUrl();
         }
 
         $evidence->update($data);
