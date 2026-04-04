@@ -19,4 +19,9 @@ class MilestoneReader implements MilestoneReaderInterface
     {
         return Milestone::count();
     }
+
+    public function getCodeById(int $id): string
+    {
+        return Milestone::findOrFail($id)->value('code');
+    }
 }
