@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="/css/evidence/index.css">
 
     <style>
+        .layout {
+            padding-top: 32px;
+        }
         .evidence-fullscreen {
             position: absolute;
             inset: 0;

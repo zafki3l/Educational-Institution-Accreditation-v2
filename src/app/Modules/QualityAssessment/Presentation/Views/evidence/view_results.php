@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="/css/evidence/index.css">
 
     <style>
+        .layout {
+            padding-top: 32px;
+        }
+
         .evidence-fullscreen {
             position: absolute;
             inset: 0;
@@ -57,6 +61,8 @@
         <?php else: ?>
             <main class="main" style="position: relative;">
                 <div class="evidence-fullscreen">
+                    <br>
+                    <br>
                     <h1>Chưa có file upload!</h1>
                 </div>
             </main>
