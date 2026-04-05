@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="/css/login/main.css">
-    <link rel="stylesheet" href="/css/login/error.css">
+    <link rel="stylesheet" href="/css/login/main.css?<?= SYSTEM_VERSION ?>">
+    <link rel="stylesheet" href="/css/login/error.css?<?= SYSTEM_VERSION ?>">
 </head>
 
 <body>

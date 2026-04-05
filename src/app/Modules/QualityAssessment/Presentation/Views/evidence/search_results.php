@@ -7,13 +7,13 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <link rel="stylesheet" href="/css/sidebar.css">
-    <link rel="stylesheet" href="/css/pagination.css">
+    <link rel="stylesheet" href="/css/sidebar.css?<?= SYSTEM_VERSION ?>">
+    <link rel="stylesheet" href="/css/pagination.css?<?= SYSTEM_VERSION ?>">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/css/evidence-search.css">
+    <link rel="stylesheet" href="/css/evidence-search.css?<?= SYSTEM_VERSION ?>">
 
     <style>
         /* ===== SEARCH RESULT ===== */

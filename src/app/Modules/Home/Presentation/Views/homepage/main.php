@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/css/homepage/main.css">
-    <link rel="stylesheet" href="/css/homepage/banner.css">
+    <link rel="stylesheet" href="/css/homepage/main.css?<?= SYSTEM_VERSION ?>">
+    <link rel="stylesheet" href="/css/homepage/banner.css?<?= SYSTEM_VERSION ?>">
 </head>
 <body>
     <main>
