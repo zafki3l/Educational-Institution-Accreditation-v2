@@ -16,11 +16,9 @@
     <link rel="stylesheet" href="/css/layouts/layouts.css">
     <title><?= $data['title'] ?></title>
 </head>
-<body>
-    <!-- HEADER -->
+<body class="has-header">
     <?php include_once dirname(__DIR__) . '/parts/header.layouts.php' ?>
 
-    <!-- MAIN CONTENT -->
     <?= $data['content']; ?>
 </body>
 </html>
