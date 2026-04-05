@@ -7,8 +7,8 @@
 
     <style>
         .wrapper {
-            width: 100%;
-            padding: 30px 240px;
+            max-width: 1440px;
+            padding: 70px 240px;
         }
 
         h1 {
@@ -41,7 +41,7 @@
         }
 
         input {
-            width: 100%;
+            max-width: 500px;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ccc;
@@ -54,7 +54,7 @@
         }
 
         .btn {
-            width: 100%;
+            max-width: 500px;
             padding: 12px;
             background: #1e40af;
             color: #fff;
@@ -67,6 +67,13 @@
 
         .btn:hover {
             background: #183288;
+        }
+
+        @media (max-width: 1024px) {
+            .wrapper {
+                max-width: 1440px;
+                padding: 70px 100px;
+            }
         }
     </style>
 </head>

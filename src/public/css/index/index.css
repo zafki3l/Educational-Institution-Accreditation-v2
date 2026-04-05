@@ -4,7 +4,7 @@
 
 .main {
     flex: 1;
-    padding: 40px;
+    padding: 70px 40px 40px;
     margin-left: 250px;
 }
 
@@ -168,11 +168,7 @@ tbody tr:hover {
 @media (max-width: 1024px) and (max-height: 700px) {
     .main {
         margin-left: 180px;
-        padding: 20px;
-    }
-
-    .container {
-        padding: 0 10px;
+        padding: 70px 20px 20px;
     }
 
     .table-box {
