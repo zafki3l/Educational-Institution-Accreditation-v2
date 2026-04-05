@@ -4,7 +4,7 @@ namespace App\Modules\QualityAssessment\Application\UseCases\MilestoneEvidence;
 
 use App\Modules\QualityAssessment\Application\Requests\MilestoneEvidence\DeleteMilestoneEvidenceRequestInterface;
 use App\Modules\QualityAssessment\Domain\Repositories\MilestoneEvidenceRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class DeleteMilestoneEvidenceUseCase
 {

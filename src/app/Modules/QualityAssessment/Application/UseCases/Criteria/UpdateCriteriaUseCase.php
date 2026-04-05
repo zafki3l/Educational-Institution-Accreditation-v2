@@ -3,42 +3,37 @@
 namespace App\Modules\QualityAssessment\Application\UseCases\Criteria;
 
 use App\Modules\QualityAssessment\Application\Requests\Criteria\UpdateCriteriaRequestInterface;
+use App\Modules\QualityAssessment\Domain\Events\Criteria\CriteriaUpdated;
 use App\Modules\QualityAssessment\Domain\Repositories\CriteriaRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 
 final class UpdateCriteriaUseCase
 {
     public function __construct(
         private CriteriaRepositoryInterface $repository,
-        private LoggerInterface $logger,
+        private EventDispatcherInterface $eventDispatcher,
+        private UnitOfWorkInterface $unitOfWork
     ) {}
 
     public function execute(UpdateCriteriaRequestInterface $request, string $actor_id): void
     {
         $criteria = $this->repository->findOrFail($request->getId());
 
-        $criteria->update(
-            $request->getStandardId(),
-            $request->getName()
-        );
+        $criteria->update($request->getName());
 
-        $this->repository->save($criteria);
+        if (!$criteria->hasChanges()) {
+            return;
+        }
+        
+        $this->unitOfWork->execute(function () use ($criteria, $actor_id) {
+            $this->repository->update($criteria);
 
-        $this->writeLog($request, $actor_id);
-    }
-
-    private function writeLog(UpdateCriteriaRequestInterface $request, string $actor_id): void
-    {
-        $this->logger->write(
-            'info',
-            'update', 
-            "Người dùng {$actor_id} đã cập nhật tiêu chí {$request->getId()}", 
-            $actor_id, 
-            [
-                'id' => $request->getId(),
-                'name' => $request->getName(),
-                'standard_id' => $request->getStandardId()
-            ]
-        );
+            $this->eventDispatcher->dispatch(new CriteriaUpdated(
+                $criteria->getId(),
+                $criteria->getChanges(),
+                $actor_id
+            ));
+        });
     }
 }

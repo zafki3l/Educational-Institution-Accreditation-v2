@@ -16,7 +16,7 @@ class UserProfileRepository implements UserProfileRepositoryInterface
             $user->id, 
             $user->first_name, 
             $user->last_name, 
-            !empty($user->email) ? $user->email : null,
+            $user->email,
             $user->password
         );
 
@@ -44,7 +44,7 @@ class UserProfileRepository implements UserProfileRepositoryInterface
             $user->id,
             $user->first_name,
             $user->last_name,
-            !empty($user->email) ? $user->email : null,
+            $user->email,
             null
         );
     }
@@ -63,7 +63,7 @@ class UserProfileRepository implements UserProfileRepositoryInterface
             $user->id,
             $user->first_name,
             $user->last_name,
-            null,
+            $user->email,
             null
         );
     }

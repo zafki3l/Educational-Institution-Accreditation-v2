@@ -2,7 +2,7 @@
 
 namespace Core;
 
-use App\Shared\Response\ViewResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 class ViewRender
 {
@@ -41,6 +41,6 @@ class ViewRender
             'content' => ob_get_clean(),
         ];
 
-        return $this->render('Shared/Views/layouts/main-layouts/' . $response->layout, $view_data);
+        return $this->render('Shared/Web/Views/layouts/main-layouts/' . $response->layout, $view_data);
     }
 }

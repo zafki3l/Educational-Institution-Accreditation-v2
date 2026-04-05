@@ -7,7 +7,7 @@ use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
 use App\Modules\UserManagement\Application\Responses\UserAllResponse;
 use App\Modules\UserManagement\Application\Responses\UserByIdResponse;
 use App\Modules\UserManagement\Infrastructure\Models\User;
-use App\Shared\Paginator\PaginatedResult;
+use App\Shared\Domain\Paginator\PaginatedResult;
 
 class UserReader implements UserReaderInterface
 {

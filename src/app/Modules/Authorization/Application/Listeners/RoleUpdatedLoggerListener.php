@@ -3,7 +3,7 @@
 namespace App\Modules\Authorization\Application\Listeners;
 
 use App\Modules\Authorization\Domain\Events\RoleUpdated;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class RoleUpdatedLoggerListener
 {

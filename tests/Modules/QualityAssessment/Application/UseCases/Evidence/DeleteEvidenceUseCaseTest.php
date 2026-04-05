@@ -4,7 +4,7 @@ namespace Tests\Unit\Modules\QualityAssessment\Application\UseCases\Evidence;
 
 use App\Modules\QualityAssessment\Application\UseCases\Evidence\DeleteEvidenceUseCase;
 use App\Modules\QualityAssessment\Domain\Repositories\EvidenceRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;

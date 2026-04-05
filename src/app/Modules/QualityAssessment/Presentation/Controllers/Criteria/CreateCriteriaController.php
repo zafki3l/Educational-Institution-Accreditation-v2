@@ -5,9 +5,9 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Criteria;
 use App\Modules\QualityAssessment\Application\UseCases\Criteria\CreateCriteriaUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Criteria\CreateCriteriaRequest;
-use App\Shared\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Domain\Exception\DomainException;
+use App\Shared\Security\Session\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class CreateCriteriaController extends QualityAssessmentController
 {

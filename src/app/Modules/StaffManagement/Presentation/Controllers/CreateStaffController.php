@@ -5,10 +5,10 @@ namespace App\Modules\StaffManagement\Presentation\Controllers;
 use App\Modules\DepartmentManagement\Application\Readers\DepartmentReaderInterface;
 use App\Modules\StaffManagement\Presentation\Requests\CreateStaffRequest;
 use App\Modules\UserManagement\Application\UseCases\CreateUserUseCase;
-use App\Shared\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
-use App\Shared\Response\ViewResponse;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Domain\Exception\DomainException;
+use App\Shared\Security\Session\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class CreateStaffController extends StaffController
 {

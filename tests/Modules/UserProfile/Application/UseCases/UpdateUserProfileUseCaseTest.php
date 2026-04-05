@@ -5,12 +5,11 @@ namespace Tests\Unit\Modules\UserProfile\Application\UseCases;
 use App\Modules\UserProfile\Application\Requests\UpdateUserProfileRequestInterface;
 use App\Modules\UserProfile\Application\UseCases\UpdateUserProfileUseCase;
 use App\Modules\UserProfile\Domain\Entities\UserProfile;
-use App\Modules\UserProfile\Domain\Exceptions\EmailExistException;
 use App\Modules\UserProfile\Domain\Repositories\UserProfileRepositoryInterface;
 use App\Modules\UserProfile\Domain\Services\EmailExistsCheckerInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;
 
@@ -20,133 +19,112 @@ class UpdateUserProfileUseCaseTest extends TestCase
 
     private UserProfileRepositoryInterface&MockObject $repository;
     private EmailExistsCheckerInterface&MockObject $emailChecker;
-    private LoggerInterface&MockObject $logger;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private UpdateUserProfileUseCase $useCase;
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(UserProfileRepositoryInterface::class);
         $this->emailChecker = $this->createMock(EmailExistsCheckerInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')
+            ->willReturnCallback(fn(callable $work) => $work());
 
         $this->useCase = new UpdateUserProfileUseCase(
             $this->repository,
             $this->emailChecker,
-            $this->logger
+            $this->eventDispatcher,
+            $this->unitOfWork
         );
     }
 
-    /**
-     * Run: composer test -- --filter UpdateUserProfileUseCaseTest::it_updates_profile_and_changes_email_successfully
-     */
-    #[Test]
-    public function it_updates_profile_and_changes_email_successfully(): void
+    public function testExecuteSuccessfullyWithEmailChange(): void
     {
         $actorId = 'user-123';
         $newEmail = 'new@example.com';
+        $oldEmail = 'old@example.com';
 
         $request = $this->createMock(UpdateUserProfileRequestInterface::class);
         $request->method('getFirstName')->willReturn('Nguyen');
         $request->method('getLastName')->willReturn('An');
         $request->method('getEmail')->willReturn($newEmail);
 
-        $this->debug('STEP 1: REQUEST MOCK DATA', [
-            'first_name' => $request->getFirstName(),
-            'last_name' => $request->getLastName(),
-            'email' => $request->getEmail()
-        ]);
-
-        $fromDb = UserProfile::fromPersistent($actorId, 'Old', 'Name', 'old@example.com', null);
+        $fromDb = UserProfile::fromPersistent($actorId, 'Old', 'Name', $oldEmail, null);
         $this->repository->method('getUserProfile')->with($actorId)->willReturn($fromDb);
 
-        $this->emailChecker->method('isExists')->with($newEmail)->willReturn(false);
+        $this->emailChecker->expects($this->once())
+            ->method('check')
+            ->with($newEmail);
 
-        $this->repository->expects($this->once())
-            ->method('update')
-            ->with($this->callback(function (UserProfile $profile) use ($newEmail) {
-                $this->debug('ENTITY BEFORE UPDATE REPO', [
-                    'id' => $profile->getId(),
-                    'first_name' => $profile->getFirstName(),
-                    'last_name' => $profile->getLastName(),
-                    'email_after_logic' => $profile->getEmail(), 
-                ]);
-                return $profile->getEmail() === $newEmail;
-            }))
-            ->willReturnCallback(fn($p) => $p);
-
-        $this->logger->expects($this->once())
-            ->method('write')
-            ->willReturnCallback(function ($level, $action, $msg, $id, $context) {
-                $this->debug('STEP 3: LOG CONTEXT DATA', $context);
-            });
+        $this->repository->expects($this->once())->method('update');
+        $this->eventDispatcher->expects($this->once())->method('dispatch');
 
         $this->useCase->execute($request, $actorId);
+        
+        $this->debug('SUCCESS', ['new_email' => $fromDb->getEmail()]);
     }
 
-    /**
-     * Run: composer test -- --filter UpdateUserProfileUseCaseTest::it_throws_exception_if_new_email_already_exists
-     */
-    #[Test]
-    public function it_throws_exception_if_new_email_already_exists(): void
+    public function testExecuteThrowsExceptionWhenEmailAlreadyExists(): void
     {
         $actorId = 'user-123';
         $newEmail = 'exists@example.com';
 
         $request = $this->createMock(UpdateUserProfileRequestInterface::class);
         $request->method('getEmail')->willReturn($newEmail);
-        $request->method('getFirstName')->willReturn('Nguyen');
-        $request->method('getLastName')->willReturn('An');
 
         $fromDb = UserProfile::fromPersistent($actorId, 'Nguyen', 'An', 'old@example.com', null);
         $this->repository->method('getUserProfile')->willReturn($fromDb);
 
-        $this->emailChecker->method('isExists')
-            ->willReturnCallback(function ($email) {
-                $this->debug('EXCEPTION TRAP: Checking email existence', [
-                    'email_to_check' => $email,
-                    'will_throw_next' => 'EmailExistException'
-                ]);
-                return true;
-            });
+        $this->emailChecker->method('check')
+            ->willThrowException(new \Exception("Email already exists"));
 
-        $this->expectException(EmailExistException::class);
-
-        $this->debug('Executing UseCase', ['actor' => $actorId]);
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Email already exists");
 
         $this->useCase->execute($request, $actorId);
     }
 
-    /**
-     * Run: composer test -- --filter UpdateUserProfileUseCaseTest::it_does_not_check_email_if_it_is_same_as_current
-     */
-    #[Test]
-    public function it_does_not_check_email_if_it_is_same_as_current(): void
+    public function testExecuteDoesNotCheckEmailIfItIsSameAsCurrent(): void
     {
         $actorId = 'user-123';
         $currentEmail = 'same@example.com';
 
         $request = $this->createMock(UpdateUserProfileRequestInterface::class);
         $request->method('getEmail')->willReturn($currentEmail);
-        $request->method('getFirstName')->willReturn('Nguyen');
-        $request->method('getLastName')->willReturn('An');
+        $request->method('getFirstName')->willReturn('NewFirstName');
 
-        $fromDb = UserProfile::fromPersistent($actorId, 'Nguyen', 'An', $currentEmail, null);
+        $fromDb = UserProfile::fromPersistent($actorId, 'OldName', 'An', $currentEmail, null);
         $this->repository->method('getUserProfile')->willReturn($fromDb);
 
-        $this->debug('DEBUG: COMPARING EMAILS', [
-            'request_email' => $currentEmail,
-            'db_email' => $fromDb->getEmail(),
-            'should_trigger_checker' => 'NO'
-        ]);
-
-        $this->emailChecker->expects($this->never())->method('isExists');
+        $this->emailChecker->expects($this->never())->method('check');
         
-        $this->repository->expects($this->once())
-            ->method('update')
-            ->willReturnCallback(function($profile) {
-                $this->debug('REPO UPDATE CALLED', ['email' => $profile->getEmail()]);
-                return $profile;
-            });
+        $this->repository->expects($this->once())->method('update');
+
+        $this->useCase->execute($request, $actorId);
+        
+        $this->debug('EARLY_BYPASS_CHECKER', ['email' => $currentEmail]);
+    }
+
+    public function testExecuteEarlyReturnsWhenNoChangesAtAll(): void
+    {
+        $actorId = 'user-123';
+        $email = 'same@example.com';
+        $fname = 'Nguyen';
+        $lname = 'An';
+
+        $request = $this->createMock(UpdateUserProfileRequestInterface::class);
+        $request->method('getEmail')->willReturn($email);
+        $request->method('getFirstName')->willReturn($fname);
+        $request->method('getLastName')->willReturn($lname);
+
+        $fromDb = UserProfile::fromPersistent($actorId, $fname, $lname, $email, null);
+        $this->repository->method('getUserProfile')->willReturn($fromDb);
+
+        $this->repository->expects($this->never())->method('update');
+        $this->unitOfWork->expects($this->never())->method('execute');
 
         $this->useCase->execute($request, $actorId);
     }

@@ -3,7 +3,7 @@
 namespace App\Modules\Authentication\Application\Listeners;
 
 use App\Modules\Authentication\Domain\Events\UserLoginFailed;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class UserLoginFailedLoggerListener
 {

@@ -2,7 +2,7 @@
 
 namespace App\Modules\UserProfile\Presentation\Controllers;
 
-use App\Shared\Http\Traits\HttpResponse;
+use App\Shared\Web\Http\HttpResponse;
 
 abstract class UserProfileController
 {

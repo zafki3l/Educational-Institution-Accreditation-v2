@@ -5,7 +5,8 @@ namespace Tests\Unit\Modules\QualityAssessment\Application\UseCases\Criteria;
 use App\Modules\QualityAssessment\Application\UseCases\Criteria\DeleteCriteriaUseCase;
 use App\Modules\QualityAssessment\Domain\Entities\Criteria;
 use App\Modules\QualityAssessment\Domain\Repositories\CriteriaRepositoryInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TraitHelper\DebugHelper;
@@ -15,32 +16,36 @@ final class DeleteCriteriaUseCaseTest extends TestCase
     use DebugHelper;
 
     private CriteriaRepositoryInterface&MockObject $repository;
-    private LoggerInterface&MockObject $logger;
+    private EventDispatcherInterface&MockObject $eventDispatcher;
+    private UnitOfWorkInterface&MockObject $unitOfWork;
     private DeleteCriteriaUseCase $useCase;
+
+    private const VALID_ACTOR_ID = 'f47ac10b-58cc-4372-a567-0e02b2c3d479';
 
     protected function setUp(): void
     {
         $this->repository = $this->createMock(CriteriaRepositoryInterface::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
-        $this->useCase = new DeleteCriteriaUseCase($this->repository, $this->logger);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWork = $this->createMock(UnitOfWorkInterface::class);
+
+        $this->unitOfWork->method('execute')->willReturnCallback(fn($callback) => $callback());
+
+        $this->useCase = new DeleteCriteriaUseCase(
+            $this->repository,
+            $this->eventDispatcher,
+            $this->unitOfWork
+        );
     }
 
-    /**
-     * Run: composer test -- --filter DeleteCriteriaUseCaseTest::testDeleteCriteriaSuccessfully
-     * 
-     * @return void
-     */
     public function testDeleteCriteriaSuccessfully(): void
     {
         $id = '1.1';
-        $actorId = 'admin-user';
+        $actorId = self::VALID_ACTOR_ID;
 
         $criteria = $this->createMock(Criteria::class);
         $criteria->method('getId')->willReturn($id);
-        $criteria->method('getName')->willReturn('Tiêu chí kiểm định');
+        $criteria->method('getName')->willReturn('Assessment Criteria');
         $criteria->method('getStandardId')->willReturn('1');
-
-        $this->debug('STEP 1: Mock Criteria Prepared', ['id' => $id]);
 
         $this->repository->expects($this->once())
             ->method('findOrFail')
@@ -51,21 +56,13 @@ final class DeleteCriteriaUseCaseTest extends TestCase
             ->method('delete')
             ->with($criteria);
 
-        $this->logger->expects($this->once())
-            ->method('write')
-            ->willReturnCallback(function ($level, $action, $msg, $actor) use ($id) {
-                $this->debug('STEP 2: Logger Called', ['msg' => $msg]);
-                return true;
-            });
+        $this->eventDispatcher->expects($this->once())->method('dispatch');
 
         $this->useCase->execute($id, $actorId);
+
+        $this->debug('DELETE CRITERIA SUCCESS', ['id' => $id, 'actor_id' => $actorId]);
     }
 
-    /**
-     * Run: composer test -- --filter DeleteCriteriaUseCaseTest::testDeleteThrowsExceptionWhenCriteriaNotFound
-     * 
-     * @return void
-     */
     public function testDeleteThrowsExceptionWhenCriteriaNotFound(): void
     {
         $invalidId = '9.9';
@@ -75,12 +72,11 @@ final class DeleteCriteriaUseCaseTest extends TestCase
             ->willThrowException(new \Exception("Criteria not found"));
 
         $this->expectException(\Exception::class);
-
-        $this->debug('EXPECTATION: Should throw exception and stop execution', []);
+        $this->expectExceptionMessage("Criteria not found");
 
         $this->repository->expects($this->never())->method('delete');
-        $this->logger->expects($this->never())->method('write');
+        $this->eventDispatcher->expects($this->never())->method('dispatch');
 
-        $this->useCase->execute($invalidId, 'actor-1');
+        $this->useCase->execute($invalidId, self::VALID_ACTOR_ID);
     }
 }

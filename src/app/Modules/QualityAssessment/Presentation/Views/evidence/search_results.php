@@ -120,7 +120,7 @@
                                 <div class="result-item">
                                     <h3 class="result-title">
                                         <a href="/evidences/results/<?= htmlspecialchars($evidence['id']) ?>/view">
-                                            <?= htmlspecialchars("Tiêu chuẩn {$evidence['id']}: {$evidence['name']}") ?>
+                                            <?= htmlspecialchars("Minh chứng {$evidence['id']}: {$evidence['name']}") ?>
                                         </a>
                                     </h3>
                                 </div>
@@ -131,7 +131,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/parts/pagination.php'?>
+                        <?php include dirname(__DIR__, 5) . '/Shared/Web/Views/layouts/parts/pagination.php'?>
                     </div>
                 </div>
             </div>

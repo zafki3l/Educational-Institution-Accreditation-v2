@@ -3,7 +3,7 @@
 namespace App\Modules\UserManagement\Application\Listeners;
 
 use App\Modules\UserManagement\Domain\Events\UserDeleted;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class UserDeletedLoggerListener
 {

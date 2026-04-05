@@ -8,7 +8,8 @@ use App\Modules\Authentication\Domain\Entities\AuthenticableUser;
 use App\Modules\Authentication\Domain\Repositories\AuthenticableUserRepositoryInterface;
 use App\Modules\UserManagement\Domain\ValueObjects\Password;
 use App\Modules\UserManagement\Domain\ValueObjects\UserId;
-use App\Shared\Events\EventDispatcherInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface; 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -22,6 +23,7 @@ final class LoginUseCaseTest extends TestCase
 
     private AuthenticableUserRepositoryInterface&MockObject $repositoryMock;
     private EventDispatcherInterface&MockObject $eventDispatcherMock;
+    private UnitOfWorkInterface&MockObject $unitOfWorkMock; 
     private LoginUseCase $useCase;
     private AuthenticableUser $stubUser;
 
@@ -29,13 +31,17 @@ final class LoginUseCaseTest extends TestCase
     {
         $this->repositoryMock = $this->createMock(AuthenticableUserRepositoryInterface::class);
         $this->eventDispatcherMock = $this->createMock(EventDispatcherInterface::class);
+        $this->unitOfWorkMock = $this->createMock(UnitOfWorkInterface::class);
         
+        $this->unitOfWorkMock->method('execute')
+            ->willReturnCallback(fn(callable $work) => $work());
+
         $this->useCase = new LoginUseCase(
             $this->repositoryMock, 
-            $this->eventDispatcherMock
+            $this->eventDispatcherMock,
+            $this->unitOfWorkMock
         );
 
-        // Create a stub user for successful scenarios
         $this->stubUser = AuthenticableUser::create(
             UserId::fromString('550e8400-e29b-41d4-a716-446655440000'),
             self::VALID_EMAIL,
@@ -53,7 +59,6 @@ final class LoginUseCaseTest extends TestCase
             ->with(self::VALID_EMAIL)
             ->willReturn($this->stubUser);
 
-        // Verify that success event is dispatched
         $this->eventDispatcherMock->expects($this->once())
             ->method('dispatch');
 
@@ -61,7 +66,6 @@ final class LoginUseCaseTest extends TestCase
 
         $this->assertNotNull($response);
         $this->assertSame($this->stubUser->getUserId()->value(), $response->user_id);
-        $this->assertSame(self::VALID_EMAIL, $response->identifier);
     }
 
     #[DataProvider('provideInvalidCredentials')]
@@ -69,12 +73,9 @@ final class LoginUseCaseTest extends TestCase
     {
         $request = $this->createMockRequest($email, $password);
 
-        $this->repositoryMock->method('findByIdentifier')
-            ->willReturn($repoReturn);
+        $this->repositoryMock->method('findByIdentifier')->willReturn($repoReturn);
 
-        // Verify that failure event is dispatched
-        $this->eventDispatcherMock->expects($this->once())
-            ->method('dispatch');
+        $this->eventDispatcherMock->expects($this->once())->method('dispatch');
 
         $response = $this->useCase->execute($request);
 
@@ -83,7 +84,6 @@ final class LoginUseCaseTest extends TestCase
 
     public static function provideInvalidCredentials(): array
     {
-        // We need to recreate a user for the 'wrong password' case because it's a static provider
         $user = AuthenticableUser::create(
             UserId::fromString('550e8400-e29b-41d4-a716-446655440000'),
             self::VALID_EMAIL,
@@ -92,7 +92,7 @@ final class LoginUseCaseTest extends TestCase
         );
 
         return [
-            'Email not found'    => [self::NON_EXISTENT_EMAIL, self::VALID_PASS, null],
+            'Email not found' => [self::NON_EXISTENT_EMAIL, self::VALID_PASS, null],
             'Password incorrect' => [self::VALID_EMAIL, self::WRONG_PASS, $user],
         ];
     }

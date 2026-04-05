@@ -15,7 +15,7 @@
 <body>
 
 <div class="layout">
-    <?php include dirname(__DIR__, 4) . '/Shared/Views/layouts/user-management/sidebar.php' ?>
+    <?php include dirname(__DIR__, 4) . '/Shared/Web/Views/layouts/user-management/sidebar.php' ?>
 
     <main class="main">
         <div class="container">

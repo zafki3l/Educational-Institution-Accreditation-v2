@@ -5,9 +5,9 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\MilestoneEviden
 use App\Modules\QualityAssessment\Application\UseCases\MilestoneEvidence\DeleteMilestoneEvidenceUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\MilestoneEvidence\DeleteMilestoneEvidenceRequest;
-use App\Shared\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Domain\Exception\DomainException;
+use App\Shared\Security\Session\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class DeleteMilestoneEvidenceController extends QualityAssessmentController
 {

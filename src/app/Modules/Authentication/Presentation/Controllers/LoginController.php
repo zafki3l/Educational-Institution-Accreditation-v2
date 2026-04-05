@@ -4,8 +4,8 @@ namespace App\Modules\Authentication\Presentation\Controllers;
 
 use App\Modules\Authentication\Application\UseCases\LoginUseCase;
 use App\Modules\Authentication\Presentation\Requests\LoginRequest;
-use App\Shared\Response\ViewResponse;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Security\Session\AuthSession;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class LoginController extends AuthController
 {
@@ -34,7 +34,7 @@ final class LoginController extends AuthController
         if (!$auth_user) {
             $_SESSION['login_errors'] = 'Tài khoản hoặc mật khẩu không hợp lệ!';
 
-            $this->redirect(HOST . '/login');
+            $this->redirect('/login');
         }
 
         session_regenerate_id(true);

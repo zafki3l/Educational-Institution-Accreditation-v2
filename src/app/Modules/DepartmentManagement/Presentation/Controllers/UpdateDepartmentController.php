@@ -3,10 +3,11 @@
 namespace App\Modules\DepartmentManagement\Presentation\Controllers;
 
 use App\Modules\DepartmentManagement\Application\UseCases\UpdateDepartmentUseCase;
+use App\Modules\DepartmentManagement\Presentation\Controllers\DepartmentController;
 use App\Modules\DepartmentManagement\Presentation\Requests\UpdateDepartmentRequest;
-use App\Shared\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Domain\Exception\DomainException;
+use App\Shared\Security\Session\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class UpdateDepartmentController extends DepartmentController
 {

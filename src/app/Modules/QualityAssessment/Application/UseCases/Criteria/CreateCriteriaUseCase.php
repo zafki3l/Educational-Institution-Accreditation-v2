@@ -4,17 +4,20 @@ namespace App\Modules\QualityAssessment\Application\UseCases\Criteria;
 
 use App\Modules\QualityAssessment\Application\Requests\Criteria\CreateCriteriaRequestInterface;
 use App\Modules\QualityAssessment\Domain\Entities\Criteria;
+use App\Modules\QualityAssessment\Domain\Events\Criteria\CriteriaCreated;
 use App\Modules\QualityAssessment\Domain\Exception\Criteria\CriteriaIdExistsException;
 use App\Modules\QualityAssessment\Domain\Repositories\CriteriaRepositoryInterface;
 use App\Modules\QualityAssessment\Domain\Services\CriteriaIdExistsCheckerInterface;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Events\EventDispatcherInterface;
+use App\Shared\Contracts\UnitOfWork\UnitOfWorkInterface;
 
 final class CreateCriteriaUseCase
 {
     public function __construct(
         private CriteriaRepositoryInterface $repository,
-        private LoggerInterface $logger,
-        private CriteriaIdExistsCheckerInterface $criteriaIdExistsChecker
+        private CriteriaIdExistsCheckerInterface $criteriaIdExistsChecker,
+        private EventDispatcherInterface $eventDispatcher,
+        private UnitOfWorkInterface $unitOfWork
     ) {}
 
     public function execute(CreateCriteriaRequestInterface $request, string $actor_id): void
@@ -29,23 +32,15 @@ final class CreateCriteriaUseCase
             $request->getName()
         );
 
-        $this->repository->create($criteria);
+        $this->unitOfWork->execute(function () use ($criteria, $actor_id) {
+            $this->repository->create($criteria);
 
-        $this->writeLog($request, $actor_id);
-    }
-
-    private function writeLog(CreateCriteriaRequestInterface $request, string $actor_id): void
-    {
-        $this->logger->write(
-            'info',
-            'create', 
-            "Người dùng {$actor_id} đã thêm 1 tiêu chí mới", 
-            $actor_id, 
-            [
-                'id' => $request->getId(),
-                'name' => $request->getName(),
-                'standard_id' => $request->getStandardId()
-            ]
-        );
+            $this->eventDispatcher->dispatch(new CriteriaCreated(
+                $criteria->getId(),
+                $criteria->getName(),
+                $criteria->getStandardId(),
+                $actor_id
+            ));
+        });
     }
 }

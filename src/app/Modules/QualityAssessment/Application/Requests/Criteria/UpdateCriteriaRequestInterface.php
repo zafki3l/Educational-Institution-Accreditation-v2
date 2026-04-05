@@ -6,7 +6,5 @@ interface UpdateCriteriaRequestInterface
 {
     public function getId(): string;
 
-    public function getStandardId(): string;
-
     public function getName(): string;
 }

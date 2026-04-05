@@ -12,5 +12,5 @@ interface CriteriaRepositoryInterface
 
     public function delete(EntitiesCriteria $entitiesCriteria): void;
 
-    public function save(EntitiesCriteria $entitiesCriteria): void;
+    public function update(EntitiesCriteria $entitiesCriteria): void;
 }

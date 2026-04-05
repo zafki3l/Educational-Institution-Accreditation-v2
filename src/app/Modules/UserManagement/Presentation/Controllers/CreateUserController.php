@@ -5,10 +5,10 @@ namespace App\Modules\UserManagement\Presentation\Controllers;
 use App\Modules\Authorization\Application\Readers\RoleReaderInterface;
 use App\Modules\UserManagement\Application\UseCases\CreateUserUseCase;
 use App\Modules\UserManagement\Presentation\Requests\CreateUserRequest;
-use App\Shared\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
-use App\Shared\Response\ViewResponse;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Domain\Exception\DomainException;
+use App\Shared\Security\Session\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class CreateUserController extends UserController
 {

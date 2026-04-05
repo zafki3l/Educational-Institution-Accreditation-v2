@@ -5,9 +5,9 @@ namespace App\Modules\StaffManagement\Presentation\Controllers;
 use App\Modules\StaffManagement\Presentation\Requests\UpdateStaffRequest;
 use App\Modules\UserManagement\Application\Readers\UserReaderInterface;
 use App\Modules\UserManagement\Application\UseCases\UpdateUserUseCase;
-use App\Shared\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Domain\Exception\DomainException;
+use App\Shared\Security\Session\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class UpdateStaffController extends StaffController
 {

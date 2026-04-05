@@ -9,16 +9,17 @@ use App\Modules\QualityAssessment\Infrastructure\Models\Milestone;
 use App\Modules\QualityAssessment\Infrastructure\Models\Standard;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Evidence\CreateEvidenceRequest;
-use App\Shared\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
-use App\Shared\Response\ViewResponse;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Domain\Exception\DomainException;
+use App\Shared\Security\Session\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
+use App\Shared\Web\Responses\ViewResponse;
 
 final class CreateEvidenceController extends QualityAssessmentController
 {
     public function __construct(
         private CreateEvidenceUseCase $createEvidenceUseCase,
-        private StandardReaderInterface $standardReader
+        private StandardReaderInterface $standardReader,
+        private AuthSession $authSession
     ) {}
 
     public function create(): ViewResponse
@@ -36,7 +37,21 @@ final class CreateEvidenceController extends QualityAssessmentController
         );
     }
 
-    public function getAllStandard()
+    public function store(CreateEvidenceRequest $request): void
+    {
+        try {
+            $this->createEvidenceUseCase->execute($request, $this->authSession->authUser()->user_id);
+
+            $this->redirect("/criterias/{$request->getCriteriaId()}/evidences?success=created");
+        } catch (DomainException $e) {
+            $_SESSION['errors'] = [$e->getMessage()];
+
+            $_SESSION['old'] = $_POST;
+            $this->redirect('/evidences/create');
+        }
+    }
+
+    public function getAllStandard(): JsonResponse
     {
         $standards = (isAdmin()) 
             ? Standard::select('id', 'name')->orderByRaw('CAST(id AS UNSIGNED) ASC')->get()
@@ -47,7 +62,7 @@ final class CreateEvidenceController extends QualityAssessmentController
         ]);
     }
 
-    public function getAllCriteriasByStandard(string $standard_id)
+    public function getAllCriteriasByStandard(string $standard_id): JsonResponse
     {
         $criterias = Criteria::select('id', 'name')->where('standard_id', $standard_id)->get();
 
@@ -56,26 +71,12 @@ final class CreateEvidenceController extends QualityAssessmentController
         ]);
     }
 
-    public function getAllMilestonesByCriteria(string $criteria_id)
+    public function getAllMilestonesByCriteria(string $criteria_id): JsonResponse
     {
         $milestones = Milestone::select('id', 'name', 'order')->where('criteria_id', $criteria_id)->get();
 
         return new JsonResponse([
             'milestones' => $milestones
         ]);
-    }
-
-    public function store(CreateEvidenceRequest $request): void
-    {
-        try {
-            $this->createEvidenceUseCase->execute($request, AuthSession::getUserId());
-
-            $this->redirect("/criterias/{$request->getCriteriaId()}/evidences?success=created");
-        } catch (DomainException $e) {
-            $_SESSION['errors'] = [$e->getMessage()];
-
-            $_SESSION['old'] = $_POST;
-            $this->redirect('/evidences/create');
-        }
     }
 }

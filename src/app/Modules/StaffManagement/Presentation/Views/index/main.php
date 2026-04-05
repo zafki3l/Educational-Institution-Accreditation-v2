@@ -17,7 +17,7 @@
 <div id="toast-container" style="position: fixed; top: 24px; right: 24px; display: flex; flex-direction: column; gap: 10px; z-index: 9999;"></div>
 
 <div class="layout">
-    <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/user-management/sidebar.php' ?>
+    <?php include dirname(__DIR__, 5) . '/Shared/Web/Views/layouts/user-management/sidebar.php' ?>
 
     <main class="main">
         <div class="container">
@@ -34,7 +34,7 @@
             <div class="table-box">
                 <?php include 'partials/staffTable.php' ?>
 
-                <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/parts/pagination.php'?>
+                <?php include dirname(__DIR__, 5) . '/Shared/Web/Views/layouts/parts/pagination.php'?>
             </div>
         </div>
     </main>

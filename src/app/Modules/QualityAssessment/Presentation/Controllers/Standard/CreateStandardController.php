@@ -5,18 +5,21 @@ namespace App\Modules\QualityAssessment\Presentation\Controllers\Standard;
 use App\Modules\QualityAssessment\Application\UseCases\Standard\CreateStandardUseCase;
 use App\Modules\QualityAssessment\Presentation\Controllers\QualityAssessmentController;
 use App\Modules\QualityAssessment\Presentation\Requests\Standard\CreateStandardRequest;
-use App\Shared\Exception\DomainException;
-use App\Shared\Response\JsonResponse;
-use App\Shared\SessionManager\AuthSession;
+use App\Shared\Domain\Exception\DomainException;
+use App\Shared\Security\Session\AuthSession;
+use App\Shared\Web\Responses\JsonResponse;
 
 final class CreateStandardController extends QualityAssessmentController
 {
-    public function __construct(private CreateStandardUseCase $createStandardUseCase) {}
+    public function __construct(
+        private CreateStandardUseCase $createStandardUseCase,
+        private AuthSession $authSession
+    ) {}
 
     public function store(CreateStandardRequest $request): JsonResponse
     {
         try {
-            $this->createStandardUseCase->execute($request, AuthSession::getUserId());
+            $this->createStandardUseCase->execute($request, $this->authSession->authUser()->user_id);
 
             return new JsonResponse([]);
 

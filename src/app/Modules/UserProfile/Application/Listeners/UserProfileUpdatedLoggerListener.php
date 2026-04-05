@@ -3,7 +3,7 @@
 namespace App\Modules\UserProfile\Application\Listeners;
 
 use App\Modules\UserProfile\Domain\Events\UserProfileUpdated;
-use App\Shared\Logging\LoggerInterface;
+use App\Shared\Contracts\Logging\LoggerInterface;
 
 final class UserProfileUpdatedLoggerListener
 {
@@ -19,12 +19,7 @@ final class UserProfileUpdatedLoggerListener
                 $event->actor_id,
                 [
                     'id' => $event->actor_id,
-                    'old_first_name' => $event->old_first_name,
-                    'new_first_name' => $event->new_first_name,
-                    'old_last_name' => $event->old_last_name,
-                    'new_last_name' => $event->new_last_name,
-                    'old_email' => $event->old_email,
-                    'new_email' => $event->new_email
+                    'changes' => $event->changes
                 ]
             );
         } catch (\Throwable $e) {

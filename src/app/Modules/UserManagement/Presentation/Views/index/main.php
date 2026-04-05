@@ -16,7 +16,7 @@
 <body>
 
 <div class="layout">
-    <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/user-management/sidebar.php' ?>
+    <?php include dirname(__DIR__, 5) . '/Shared/Web/Views/layouts/user-management/sidebar.php' ?>
 
     <main class="main">
         <div class="container">
@@ -33,7 +33,7 @@
             <div class="table-box">
                 <?php include 'partials/userTable.php' ?>
 
-                <?php include dirname(__DIR__, 5) . '/Shared/Views/layouts/parts/pagination.php'?>
+                <?php include dirname(__DIR__, 5) . '/Shared/Web/Views/layouts/parts/pagination.php'?>
             </div>
         </div>
     </main>
